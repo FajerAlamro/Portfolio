@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fajr Alamro | Portfolio</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Custom Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-deep': '#042E7B',
+            'ocean-royal': '#004EE0',
+            'ocean-bright': '#1883FF',
+            'ocean-sky': '#99CAFF',
+            'ocean-mist': '#E3F2FF',
+            background: '#f8fafc',
+            foreground: '#0f172a',
+            card: '#ffffff',
+            'card-foreground': '#0f172a',
+            border: '#e2e8f0',
+            muted: '#f1f5f9',
+            'muted-foreground': '#64748b',
+            secondary: '#E3F2FF',
+            'secondary-foreground': '#042E7B',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Component Styles -->
+  <style>
+    :root {
+      --ocean-deep: #042E7B;
+      --ocean-royal: #004EE0;
+      --ocean-bright: #1883FF;
+      --ocean-sky: #99CAFF;
+      --ocean-mist: #E3F2FF;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .gradient-hero {
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(24, 131, 255, 0.55), transparent 60%),
+        radial-gradient(800px 400px at 10% 20%, rgba(0, 78, 224, 0.6), transparent 60%),
+        linear-gradient(180deg, #042E7B, #021a47);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #042E7B, #1883FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .gradient-band {
+      background: linear-gradient(135deg, rgba(227, 242, 255, 0.6), #ffffff);
+    }
+
+    .card-hover {
+      transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 400ms, border-color 300ms;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px -22px rgba(0, 78, 224, 0.4);
+      border-color: rgba(24, 131, 255, 0.55);
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-slow {
+      animation: float-slow 6s ease-in-out infinite;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up {
+      animation: fade-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    @keyframes text-shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .text-shimmer {
+      background: linear-gradient(90deg, #E3F2FF, #99CAFF, #1883FF, #99CAFF, #E3F2FF);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: text-shimmer 5s linear infinite;
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 800ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Shine sweep */
+    .shine {
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes shine {
+      0% { transform: translateX(-120%) skewX(-20deg); }
+      100% { transform: translateX(220%) skewX(-20deg); }
+    }
+    .shine::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: translateX(-120%) skewX(-20deg);
+    }
+    .shine:hover::after {
+      animation: shine 1.2s ease-in-out;
+    }
+
+    /* Typewriter effect */
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      background: currentColor;
+      margin-left: 2px;
+      animation: cursor-blink 0.8s step-end infinite;
+    }
+    @keyframes cursor-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Cyber floating icons in hero background */
+    .cyber-icon {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.03);
+      stroke-width: 1;
+      pointer-events: none;
+    }
+    @keyframes cyber-float-1 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(14px, -22px) rotate(8deg); }
+    }
+    @keyframes cyber-float-2 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-18px, 16px) rotate(-6deg); }
+    }
+    @keyframes cyber-float-3 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(10px, 20px) rotate(10deg); }
+    }
+    @keyframes cyber-drift {
+      0% { transform: translateY(0); opacity: 0.14; }
+      50% { opacity: 0.26; }
+      100% { transform: translateY(-26px); opacity: 0.14; }
+    }
+    .cyber-anim-1 { animation: cyber-float-1 7s ease-in-out infinite; }
+    .cyber-anim-2 { animation: cyber-float-2 9s ease-in-out infinite; }
+    .cyber-anim-3 { animation: cyber-float-3 8s ease-in-out infinite; }
+    .cyber-anim-4 { animation: cyber-drift 10s ease-in-out infinite; }
+
+    /* Binary code streams */
+    .binary-stream {
+      position: absolute;
+      color: rgba(153, 202, 255, 0.035);
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      letter-spacing: 0.15em;
+      white-space: pre;
+      pointer-events: none;
+      animation: cyber-drift 12s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground">
+
+  <!-- Header -->
+  <header id="header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <a href="#top" class="group flex items-center gap-2">
+        <span class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-ocean-royal to-ocean-bright text-white shadow-md transition-transform group-hover:rotate-3">
+          <span class="font-display text-sm font-bold">F</span>
+        </span>
+        <span id="header-title" class="font-display text-sm font-semibold tracking-tight transition-colors text-white">
+          Fajr Alamro
+        </span>
+      </a>
+
+      <nav class="hidden items-center gap-1 md:flex">
+        <a href="#about" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">About</a>
+        <a href="#projects" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Projects</a>
+        <a href="#achievements" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Achievements</a>
+        <a href="#publications" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Publications</a>
+        <a href="#certifications" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Certifications</a>
+        <a href="#volunteering" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Volunteering</a>
+        <a href="#skills" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Skills</a>
+        <a href="#contact" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Contact</a>
+      </nav>
+
+      <button id="menu-btn" class="md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white" aria-label="Menu">
+        Menu
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-background">
+      <div class="mx-auto flex max-w-6xl flex-col px-5 py-3">
+        <a href="#about" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">About</a>
+        <a href="#projects" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Projects</a>
+        <a href="#achievements" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Achievements</a>
+        <a href="#publications" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Publications</a>
+        <a href="#certifications" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Certifications</a>
+        <a href="#volunteering" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Volunteering</a>
+        <a href="#skills" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Skills</a>
+        <a href="#contact" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="top" class="relative overflow-hidden gradient-hero">
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+    <div class="absolute -left-24 top-40 h-72 w-72 rounded-full bg-ocean-bright/30 blur-3xl float-slow"></div>
+    <div class="absolute -right-16 top-24 h-64 w-64 rounded-full bg-ocean-sky/25 blur-3xl float-slow [animation-delay:1.5s]"></div>
+
+    <!-- Floating cyber-security icons (decorative) -->
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <i data-lucide="shield-check" class="cyber-icon cyber-anim-1" style="top:8%; left:4%; width:130px; height:130px;"></i>
+      <i data-lucide="lock-keyhole" class="cyber-icon cyber-anim-2" style="top:12%; right:5%; width:100px; height:100px; animation-delay:0.6s;"></i>
+      <i data-lucide="fingerprint" class="cyber-icon cyber-anim-3" style="bottom:16%; left:6%; width:110px; height:110px; animation-delay:1.2s;"></i>
+      <i data-lucide="key-round" class="cyber-icon cyber-anim-1" style="bottom:10%; right:6%; width:100px; height:100px; animation-delay:1.8s;"></i>
+      <i data-lucide="binary" class="cyber-icon cyber-anim-4" style="top:44%; right:2%; width:90px; height:90px; animation-delay:1.5s;"></i>
+      <i data-lucide="bug" class="cyber-icon cyber-anim-2" style="top:42%; left:2%; width:85px; height:85px; animation-delay:2.4s;"></i>
+      <i data-lucide="code-2" class="cyber-icon cyber-anim-3" style="bottom:4%; left:38%; width:80px; height:80px; animation-delay:0.9s;"></i>
+
+      <div class="binary-stream" style="top:6%; left:40%; font-size:18px;">01001<br>11010<br>00101</div>
+      <div class="binary-stream" style="bottom:8%; right:34%; animation-delay:1.4s; font-size:18px;">10110<br>01001<br>11100</div>
+    </div>
+
+    <div class="relative mx-auto flex min-h-[92vh] max-w-6xl flex-col items-center justify-center px-5 pt-28 pb-20 text-center">
+
+      <p id="typewriter" class="fade-up mb-3 text-lg font-medium text-ocean-sky sm:text-xl [animation-delay:0ms]">
+        <span id="typewriter-text"></span><span class="typewriter-cursor">&nbsp;</span>
+      </p>
+
+      <h1 class="fade-up text-5xl font-bold leading-[1.05] sm:text-6xl md:text-7xl [animation-delay:80ms]">
+        <span class="text-white">Fajr </span>
+        <span class="text-shimmer">
+          Alamro
+        </span>
+      </h1>
+
+      <p class="fade-up mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-base text-white/85 sm:text-lg [animation-delay:160ms]">
+        <span>First Class Honors IT Graduate | Cybersecurity Track</span>
+      </p>
+
+      <div class="fade-up mt-9 flex flex-wrap items-center justify-center gap-3 [animation-delay:320ms]">
+        <a href="#" class="shine group inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ocean-deep shadow-lg shadow-black/10 transition-all hover:-translate-y-0.5 hover:shadow-xl">
+                   <i data-lucide="download" class="h-4 w-4"></i>
+ Download CV
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="relative">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          About Me
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          A short introduction
+        </h2>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-5">
+        <div class="md:col-span-3 rounded-2xl border border-border bg-card p-7 shadow-sm card-hover">
+          <p class="text-base leading-relaxed text-muted-foreground">
+            I am a Senior IT graduate from King Saud University on the Cybersecurity track. My academic journey has been driven by a passion for building technology that genuinely helps people — from assistive AI systems for the visually impaired to smart solutions for pilgrims. I graduated with First Honors and had the honor of delivering the graduation speech. I am interested in cybersecurity, AI, and the intersection of technology and real-world impact.
+          </p>
+
+          <div class="mt-7">
+            <div class="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+              Core Interests
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
+                <i data-lucide="shield" class="h-3.5 w-3.5"></i> Cybersecurity
+              </span>
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
+                <i data-lucide="brain" class="h-3.5 w-3.5"></i> Artificial Intelligence
+              </span>
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
+                <i data-lucide="accessibility" class="h-3.5 w-3.5"></i> Assistive Technology
+              </span>
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
+                <i data-lucide="lightbulb" class="h-3.5 w-3.5"></i> Entrepreneurship
+              </span>
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
+                <i data-lucide="search" class="h-3.5 w-3.5"></i> Research
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="md:col-span-2 grid grid-cols-2 gap-3">
+          <div class="rounded-2xl border border-border bg-card p-5 card-hover">
+            <div class="font-display text-3xl font-bold gradient-text">First</div>
+            <div class="mt-1 text-xs text-muted-foreground">Class Honors</div>
+          </div>
+          <div class="rounded-2xl border border-border bg-card p-5 card-hover">
+            <div class="font-display text-3xl font-bold gradient-text">1</div>
+            <div class="mt-1 text-xs text-muted-foreground">Published Paper</div>
+          </div>
+          <div class="rounded-2xl border border-border bg-card p-5 card-hover">
+            <div class="font-display text-3xl font-bold gradient-text">5+</div>
+            <div class="mt-1 text-xs text-muted-foreground">Certifications</div>
+          </div>
+          <div class="rounded-2xl border border-border bg-card p-5 card-hover">
+            <div class="font-display text-3xl font-bold gradient-text">2+</div>
+            <div class="mt-1 text-xs text-muted-foreground">Volunteering Roles</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="relative gradient-band">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Featured Projects
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          Work I'm proud of
+        </h2>
+        <p class="mt-3 text-base text-muted-foreground">
+          A selection of projects where I combined research, design and code to solve real problems.
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        <!-- Project 1 -->
+        <article class="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 card-hover">
+          <div class="mb-5 flex h-40 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-ocean-deep via-ocean-royal to-ocean-bright">
+            <div class="absolute inset-0 grid-pattern opacity-25"></div>
+            <i data-lucide="glasses" class="relative h-16 w-16 text-white/90 transition-transform duration-500 group-hover:scale-110"></i>
+          </div>
+          <div class="mb-1 text-[11px] font-semibold uppercase tracking-widest text-ocean-royal">
+            Graduation Project · AI · Accessibility
+          </div>
+          <h3 class="text-xl font-bold text-foreground">Munir</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+            An AI-powered smart glasses system connected to a mobile application, designed to support visually impaired individuals through real-time visual understanding.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-1.5">
+            <span class="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">Computer Vision</span>
+            <span class="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">Mobile App</span>
+            <span class="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">Assistive AI</span>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 card-hover">
+          <div class="mb-5 flex h-40 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-ocean-deep via-ocean-royal to-ocean-bright">
+            <div class="absolute inset-0 grid-pattern opacity-25"></div>
+            <i data-lucide="compass" class="relative h-16 w-16 text-white/90 transition-transform duration-500 group-hover:scale-110"></i>
+          </div>
+          <div class="mb-1 text-[11px] font-semibold uppercase tracking-widest text-ocean-royal">
+            Entrepreneurship Project · IoT · HajjTech
+          </div>
+          <h3 class="text-xl font-bold text-foreground">Yusr</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+            A smart Hajj wristband concept designed to enhance pilgrims' safety and experience through technology.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-1.5">
+            <span class="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">IoT</span>
+            <span class="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">Wearables</span>
+            <span class="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">Safety</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Achievements Section -->
+  <section id="achievements" class="relative">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Achievements · Honors · Awards
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          Recognitions along the way
+        </h2>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 card-hover">
+          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-mist to-ocean-sky/50 text-ocean-royal">
+            <i data-lucide="trophy" class="h-5 w-5"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="font-semibold text-foreground">First Class Honors</div>
+            <div class="mt-0.5 text-sm text-muted-foreground">Graduated with First Honors — King Saud University</div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 card-hover">
+          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-mist to-ocean-sky/50 text-ocean-royal">
+            <i data-lucide="presentation" class="h-5 w-5"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="font-semibold text-foreground">Graduation Speaker</div>
+            <div class="mt-0.5 text-sm text-muted-foreground">Delivered the official graduation speech on behalf of peers</div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 card-hover">
+          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-mist to-ocean-sky/50 text-ocean-royal">
+            <i data-lucide="medal" class="h-5 w-5"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="font-semibold text-foreground">Published Researcher</div>
+            <div class="mt-0.5 text-sm text-muted-foreground">Peer-reviewed paper in an MDPI journal (Sensors)</div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 card-hover">
+          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-mist to-ocean-sky/50 text-ocean-royal">
+            <i data-lucide="star" class="h-5 w-5"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="font-semibold text-foreground">Conference Presenter</div>
+            <div class="mt-0.5 text-sm text-muted-foreground">Selected to present Munir at ICAN 2026 Conference</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Publications Section -->
+  <section id="publications" class="relative bg-ocean-deep text-white">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+          <span class="h-px w-8 bg-ocean-sky/60"></span>
+          Publications
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          Research & papers
+        </h2>
+      </div>
+
+      <div class="grid gap-4">
+        <a href="#" target="_blank" rel="noreferrer" class="group flex items-start gap-5 rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-ocean-sky/50 hover:bg-white/[0.07]">
+          <div class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-sky text-white">
+            <i data-lucide="book-open" class="h-5 w-5"></i>
+          </div>
+          <div class="min-w-0 flex-1">
+            <h3 class="text-lg font-semibold leading-snug text-white">
+              Munir: A Multimodal Smart-Glasses System for Enhancing Human–Computer Interaction for Visually Impaired Individuals
+            </h3>
+            <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
+              <span>Journal: Sensors — MDPI</span>
+              <span>Year: 2026</span>
+            </div>
+            <span class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-ocean-bright px-3 py-1.5 text-xs font-semibold text-white transition-transform group-hover:translate-x-0.5">
+              Read Paper <i data-lucide="external-link" class="h-3.5 w-3.5"></i>
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section id="certifications" class="relative">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Certifications
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          Continuous learning
+        </h2>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="group rounded-2xl border border-border bg-card p-6 text-center card-hover">
+          <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-ocean-mist to-ocean-sky/60 text-ocean-royal transition-transform duration-500 group-hover:rotate-6">
+            <i data-lucide="shield-check" class="h-6 w-6"></i>
+          </div>
+          <h3 class="mt-4 text-sm font-semibold text-foreground">Cybersecurity Fundamentals</h3>
+          <div class="mt-2 inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+            Global Security Institute
+          </div>
+        </div>
+
+        <div class="group rounded-2xl border border-border bg-card p-6 text-center card-hover">
+          <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-ocean-mist to-ocean-sky/60 text-ocean-royal transition-transform duration-500 group-hover:rotate-6">
+            <i data-lucide="network" class="h-6 w-6"></i>
+          </div>
+          <h3 class="mt-4 text-sm font-semibold text-foreground">Network Defense Architecture</h3>
+          <div class="mt-2 inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+            Tech Systems Academy
+          </div>
+        </div>
+
+        <div class="group rounded-2xl border border-border bg-card p-6 text-center card-hover">
+          <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-ocean-mist to-ocean-sky/60 text-ocean-royal transition-transform duration-500 group-hover:rotate-6">
+            <i data-lucide="lock" class="h-6 w-6"></i>
+          </div>
+          <h3 class="mt-4 text-sm font-semibold text-foreground">Information Security Management</h3>
+          <div class="mt-2 inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+            Cyber Management Board
+          </div>
+        </div>
+
+        <div class="group rounded-2xl border border-border bg-card p-6 text-center card-hover">
+          <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-ocean-mist to-ocean-sky/60 text-ocean-royal transition-transform duration-500 group-hover:rotate-6">
+            <i data-lucide="server-cog" class="h-6 w-6"></i>
+          </div>
+          <h3 class="mt-4 text-sm font-semibold text-foreground">Cloud Security Essentials</h3>
+          <div class="mt-2 inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+            Cloud Learning Hub
+          </div>
+        </div>
+
+        <div class="group rounded-2xl border border-border bg-card p-6 text-center card-hover">
+          <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-ocean-mist to-ocean-sky/60 text-ocean-royal transition-transform duration-500 group-hover:rotate-6">
+            <i data-lucide="file-check-2" class="h-6 w-6"></i>
+          </div>
+          <h3 class="mt-4 text-sm font-semibold text-foreground">Ethical Hacking Basics</h3>
+          <div class="mt-2 inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+            SecTraining Online
+          </div>
+        </div>
+
+        <div class="group rounded-2xl border border-border bg-card p-6 text-center card-hover">
+          <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-ocean-mist to-ocean-sky/60 text-ocean-royal transition-transform duration-500 group-hover:rotate-6">
+            <i data-lucide="award" class="h-6 w-6"></i>
+          </div>
+          <h3 class="mt-4 text-sm font-semibold text-foreground">AI for Everyone</h3>
+          <div class="mt-2 inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+            Coursera
+          </div>
+        </div>
+      </div>
+      <p class="mt-8 text-center text-xs text-muted-foreground">
+        + Certificates updated regularly
+      </p>
+    </div>
+  </section>
+
+  <!-- Volunteering Section -->
+  <section id="volunteering" class="relative bg-ocean-deep text-white">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+          <span class="h-px w-8 bg-ocean-sky/60"></span>
+          Volunteering
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          Giving back to the community
+        </h2>
+      </div>
+
+      <div class="grid gap-5 md:grid-cols-2">
+        <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-ocean-sky/50">
+          <div class="absolute inset-0 grid-pattern opacity-30"></div>
+          <div class="relative flex gap-5">
+            <div class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-ocean-bright to-ocean-sky text-white transition-transform group-hover:scale-105">
+              <i data-lucide="presentation" class="h-6 w-6"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-lg font-semibold text-white">ICAN 2026 Conference</h3>
+              <div class="mt-0.5 text-xs text-ocean-sky">Project Presenter · King Saud University, 2026</div>
+              <p class="mt-3 text-sm leading-relaxed text-white/75">
+                Presented the Munir project to conference visitors, engaged with attendees and discussed AI-powered assistive technology solutions.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-ocean-sky/50">
+          <div class="absolute inset-0 grid-pattern opacity-30"></div>
+          <div class="relative flex gap-5">
+            <div class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-ocean-bright to-ocean-sky text-white transition-transform group-hover:scale-105">
+              <i data-lucide="users" class="h-6 w-6"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-lg font-semibold text-white">Career Guidance Fair</h3>
+              <div class="mt-0.5 text-xs text-ocean-sky">Participant · Riyadh, 2026</div>
+              <p class="mt-3 text-sm leading-relaxed text-white/75">
+                Attended the career guidance fair, connected with leading organizations and industry professionals in the field.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="relative">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Skills
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          Technical & professional skills
+        </h2>
+      </div>
+
+      <div class="grid gap-5 md:grid-cols-2">
+        <div class="rounded-2xl border border-border bg-card p-6 card-hover">
+          <div class="mb-4 flex items-center gap-3">
+            <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="shield" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-semibold text-foreground">Cybersecurity</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Network Security</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Information Security</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Threat Analysis</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Security Auditing</span>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-border bg-card p-6 card-hover">
+          <div class="mb-4 flex items-center gap-3">
+            <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="cpu" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-semibold text-foreground">AI & Development</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Machine Learning</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Computer Vision</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">OCR</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Python</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Mobile App Development</span>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-border bg-card p-6 card-hover">
+          <div class="mb-4 flex items-center gap-3">
+            <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="pen-tool" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-semibold text-foreground">Research & Academia</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Academic Writing</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Research Methodology</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Data Analysis</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Published Author</span>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-border bg-card p-6 card-hover">
+          <div class="mb-4 flex items-center gap-3">
+            <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="messages-square" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-semibold text-foreground">Soft Skills</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Teamwork</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Public Speaking</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Project Management</span>
+            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Entrepreneurship</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="relative bg-ocean-deep text-white">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="text-center">
+        <div class="mb-3 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+          <span class="h-px w-8 bg-ocean-sky/60"></span>
+          Contact
+          <span class="h-px w-8 bg-ocean-sky/60"></span>
+        </div>
+        <h2 class="text-3xl font-bold text-white sm:text-5xl">
+          Get in Touch
+        </h2>
+        <p class="mx-auto mt-3 max-w-xl text-sm text-white/60">
+          I'm open to opportunities, collaborations and interesting conversations.
+        </p>
+      </div>
+
+      <div class="mx-auto mt-12 grid max-w-4xl gap-4 md:grid-cols-3">
+        <a href="mailto:fajeralamro@example.com" class="group flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.05] p-6 text-center backdrop-blur transition-all hover:-translate-y-1 hover:border-ocean-sky/40">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-ocean-bright to-ocean-sky text-white transition-transform group-hover:scale-110">
+            <i data-lucide="mail" class="h-5 w-5"></i>
+          </div>
+          <div class="mt-4 text-[11px] font-semibold uppercase tracking-widest text-ocean-sky">Email</div>
+          <div class="mt-1 text-sm font-medium text-white">fajeralamro@example.com</div>
+        </a>
+
+        <a href="tel:+9665000000000" class="group flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.05] p-6 text-center backdrop-blur transition-all hover:-translate-y-1 hover:border-ocean-sky/40">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-ocean-bright to-ocean-sky text-white transition-transform group-hover:scale-110">
+            <i data-lucide="phone" class="h-5 w-5"></i>
+          </div>
+          <div class="mt-4 text-[11px] font-semibold uppercase tracking-widest text-ocean-sky">Phone</div>
+          <div class="mt-1 text-sm font-medium text-white">+966 5X XXX XXXX</div>
+        </a>
+
+        <a href="https://linkedin.com" target="_blank" rel="noreferrer" class="group flex flex-col items-center rounded-2xl border border-ocean-sky/40 bg-gradient-to-br from-ocean-bright to-ocean-royal p-6 text-center transition-all hover:-translate-y-1">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-white text-ocean-royal transition-transform group-hover:scale-110">
+            <i data-lucide="linkedin" class="h-5 w-5"></i>
+          </div>
+          <div class="mt-4 text-[11px] font-semibold uppercase tracking-widest text-ocean-sky">LinkedIn</div>
+          <div class="mt-1 text-sm font-medium text-white">View Profile</div>
+          <span class="mt-4 inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-ocean-royal">
+            Connect
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-border bg-background">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row">
+      <div class="flex items-center gap-2">
+        <i data-lucide="code-2" class="h-3.5 w-3.5 text-ocean-royal"></i>
+        <span>Fajr Alamro · Cybersecurity & IT · King Saud University</span>
+      </div>
+      <span id="copyright">© 2026 All rights reserved.</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Typewriter effect for greeting (loops: type, pause, erase, repeat)
+    (function () {
+      const text = "Hello! I'm";
+      const el = document.getElementById('typewriter-text');
+      let i = 0;
+
+      function type() {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, 90);
+        } else {
+          setTimeout(erase, 2000);
+        }
+      }
+
+      function erase() {
+        if (i > 0) {
+          el.textContent = text.substring(0, i - 1);
+          i--;
+          setTimeout(erase, 50);
+        } else {
+          setTimeout(type, 400);
+        }
+      }
+
+      setTimeout(type, 500);
+    })();
+
+    // Dynamically update Copyright Year
+    document.getElementById('copyright').innerText = `© ${new Date().getFullYear()} All rights reserved.`;
+
+    // Header Scroll behavior
+    const header = document.getElementById('header');
+    const headerTitle = document.getElementById('header-title');
+    const navItems = document.querySelectorAll('.nav-item');
+    const menuBtn = document.getElementById('menu-btn');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 12) {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
+        headerTitle.className = "font-display text-sm font-semibold tracking-tight transition-colors text-foreground";
+        navItems.forEach(item => {
+          item.className = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-muted-foreground hover:text-ocean-royal";
+        });
+        menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
+      } else {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
+        headerTitle.className = "font-display text-sm font-semibold tracking-tight transition-colors text-white";
+        navItems.forEach(item => {
+          item.className = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white";
+        });
+        menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
+      }
+    });
+
+    // Mobile Menu Toggle
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (isHidden) {
+        mobileMenu.classList.remove('hidden');
+        menuBtn.innerText = 'Close';
+      } else {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      }
+    });
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      });
+    });
+
+    // Intersection Observer for Reveal animations
+    const els = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            el.classList.add('reveal-in');
+            io.unobserve(el);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+      els.forEach((el) => io.observe(el));
+    } else {
+      els.forEach((e) => e.classList.add('reveal-in'));
+    }
+  </script>
+</body>
+</html>
