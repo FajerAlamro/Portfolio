@@ -217,6 +217,32 @@
       pointer-events: none;
       animation: cyber-drift 12s ease-in-out infinite;
     }
+
+    /* Active nav item (scrollspy) — underline + blue */
+    .nav-item {
+      position: relative;
+    }
+    .nav-item.active {
+      color: #004EE0 !important;
+      font-weight: 700;
+    }
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 2px;
+      height: 2.5px;
+      border-radius: 2px;
+      background: #004EE0;
+      animation: fade-up 300ms ease both;
+    }
+
+    .mobile-nav-link.active {
+      color: #004EE0 !important;
+      font-weight: 700;
+      background-color: #E3F2FF;
+    }
   </style>
 </head>
 <body class="min-h-screen bg-background text-foreground">
@@ -302,7 +328,7 @@
       </p>
 
       <div class="fade-up mt-9 flex flex-wrap items-center justify-center gap-3 [animation-delay:320ms]">
-        <a href="#" class="shine group inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ocean-deep shadow-lg shadow-black/10 transition-all hover:-translate-y-0.5 hover:shadow-xl">
+        <a href="Fajr Alamro_CV.pdf" class="shine group inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ocean-deep shadow-lg shadow-black/10 transition-all hover:-translate-y-0.5 hover:shadow-xl">
                    <i data-lucide="download" class="h-4 w-4"></i>
  Download CV
         </a>
@@ -314,7 +340,7 @@
   <!-- About Section -->
   <section id="about" class="relative">
     <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
-      <div class="mb-10 max-w-2xl">
+      <div class="mx-auto mb-10 max-w-3xl">
         <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
           <span class="h-px w-8 bg-ocean-royal/50"></span>
           About Me
@@ -324,14 +350,17 @@
         </h2>
       </div>
 
-      <div class="grid gap-8 md:grid-cols-5">
-        <div class="md:col-span-3 rounded-2xl border border-border bg-card p-7 shadow-sm card-hover">
-          <p class="text-base leading-relaxed text-muted-foreground">
-            I am a Senior IT graduate from King Saud University on the Cybersecurity track. My academic journey has been driven by a passion for building technology that genuinely helps people — from assistive AI systems for the visually impaired to smart solutions for pilgrims. I graduated with First Honors and had the honor of delivering the graduation speech. I am interested in cybersecurity, AI, and the intersection of technology and real-world impact.
-          </p>
+      <div class="grid gap-8">
+        <div class="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-10 shadow-sm card-hover">
+          <p class="text-base text-justify leading-relaxed text-muted-foreground">
+First Class Honors graduate from King Saud University with a Bachelor's degree in Information Technology, specializing in Cybersecurity.
+
+Gained hands-on experience through cybersecurity projects, technical clubs, and an IBM-collaborated graduation project focused on developing an AI- and IoT-based assistive solution for visually impaired individuals.
+
+Co-authored peer-reviewed research publications and passionate about building secure, resilient digital systems while continuously expanding my cybersecurity expertise.          </p>
 
           <div class="mt-7">
-            <div class="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+            <div class="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-ocean-royal">
               Core Interests
             </div>
             <div class="flex flex-wrap gap-2">
@@ -339,37 +368,18 @@
                 <i data-lucide="shield" class="h-3.5 w-3.5"></i> Cybersecurity
               </span>
               <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
-                <i data-lucide="brain" class="h-3.5 w-3.5"></i> Artificial Intelligence
+                <i data-lucide="scale" class="h-3.5 w-3.5"></i> GRC
               </span>
               <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
-                <i data-lucide="accessibility" class="h-3.5 w-3.5"></i> Assistive Technology
+                <i data-lucide="monitor-check" class="h-3.5 w-3.5"></i> SOC
               </span>
               <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
-                <i data-lucide="lightbulb" class="h-3.5 w-3.5"></i> Entrepreneurship
+                <i data-lucide="siren" class="h-3.5 w-3.5"></i> Incident Response
               </span>
               <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
-                <i data-lucide="search" class="h-3.5 w-3.5"></i> Research
+                <i data-lucide="code-2" class="h-3.5 w-3.5"></i> Application Security
               </span>
             </div>
-          </div>
-        </div>
-
-        <div class="md:col-span-2 grid grid-cols-2 gap-3">
-          <div class="rounded-2xl border border-border bg-card p-5 card-hover">
-            <div class="font-display text-3xl font-bold gradient-text">First</div>
-            <div class="mt-1 text-xs text-muted-foreground">Class Honors</div>
-          </div>
-          <div class="rounded-2xl border border-border bg-card p-5 card-hover">
-            <div class="font-display text-3xl font-bold gradient-text">1</div>
-            <div class="mt-1 text-xs text-muted-foreground">Published Paper</div>
-          </div>
-          <div class="rounded-2xl border border-border bg-card p-5 card-hover">
-            <div class="font-display text-3xl font-bold gradient-text">5+</div>
-            <div class="mt-1 text-xs text-muted-foreground">Certifications</div>
-          </div>
-          <div class="rounded-2xl border border-border bg-card p-5 card-hover">
-            <div class="font-display text-3xl font-bold gradient-text">2+</div>
-            <div class="mt-1 text-xs text-muted-foreground">Volunteering Roles</div>
           </div>
         </div>
       </div>
@@ -382,56 +392,66 @@
       <div class="mb-10 max-w-2xl">
         <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
           <span class="h-px w-8 bg-ocean-royal/50"></span>
-          Featured Projects
+           My Work
         </div>
         <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
-          Work I'm proud of
+         Projects
         </h2>
-        <p class="mt-3 text-base text-muted-foreground">
-          A selection of projects where I combined research, design and code to solve real problems.
-        </p>
       </div>
 
-      <div class="grid gap-6 md:grid-cols-2">
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         <!-- Project 1 -->
-        <article class="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 card-hover">
-          <div class="mb-5 flex h-40 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-ocean-deep via-ocean-royal to-ocean-bright">
-            <div class="absolute inset-0 grid-pattern opacity-25"></div>
-            <i data-lucide="glasses" class="relative h-16 w-16 text-white/90 transition-transform duration-500 group-hover:scale-110"></i>
-          </div>
-          <div class="mb-1 text-[11px] font-semibold uppercase tracking-widest text-ocean-royal">
-            Graduation Project · AI · Accessibility
-          </div>
-          <h3 class="text-xl font-bold text-foreground">Munir</h3>
-          <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
-            An AI-powered smart glasses system connected to a mobile application, designed to support visually impaired individuals through real-time visual understanding.
-          </p>
-          <div class="mt-4 flex flex-wrap gap-1.5">
-            <span class="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">Computer Vision</span>
-            <span class="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">Mobile App</span>
-            <span class="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">Assistive AI</span>
-          </div>
-        </article>
+<!-- Project 1 -->
+<article class="group relative overflow-hidden rounded-2xl border border-ocean-royal p-5 card-hover flex flex-col" style="background: linear-gradient(180deg, rgba(4,46,123,0.28) 0%, rgba(24,131,255,0.14) 30%, #F8FBFF 60%);">
+  <div class="shine mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-xl" style="position:relative; overflow:hidden; height:16rem;">
+    <img src="munir.png" alt="Munir project preview" class="relative h-full w-full object-contain p-3 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:100%; width:100%; object-fit:contain; padding:12px; box-sizing:border-box; filter: drop-shadow(0 18px 24px rgba(0,0,0,0.25));" onload="this.style.opacity=1" onerror="this.remove()">
+  </div>
+  <span class="self-start mb-2 inline-block rounded-full border border-ocean-royal bg-transparent px-2.5 py-1 text-[11px] font-medium text-ocean-royal">
+    Graduation Project
+  </span>
+  <h3 class="mt-2 text-xl font-bold gradient-text">Munir</h3>
+  <p class="mt-2 text-sm leading-relaxed text-muted-foreground text-justify">
+Smart glasses and a mobile app for visually impaired users, enabling face recognition, text reading, currency identification, and more.       </p>
+  <a href="#" target="_blank" rel="noreferrer" 
+     class="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-blue-900 transition-colors hover:text-ocean-royal">
+    View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+  </a>
+</article>
 
-        <!-- Project 2 -->
-        <article class="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 card-hover">
-          <div class="mb-5 flex h-40 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-ocean-deep via-ocean-royal to-ocean-bright">
-            <div class="absolute inset-0 grid-pattern opacity-25"></div>
-            <i data-lucide="compass" class="relative h-16 w-16 text-white/90 transition-transform duration-500 group-hover:scale-110"></i>
-          </div>
-          <div class="mb-1 text-[11px] font-semibold uppercase tracking-widest text-ocean-royal">
-            Entrepreneurship Project · IoT · HajjTech
-          </div>
-          <h3 class="text-xl font-bold text-foreground">Yusr</h3>
-          <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
-            A smart Hajj wristband concept designed to enhance pilgrims' safety and experience through technology.
-          </p>
-          <div class="mt-4 flex flex-wrap gap-1.5">
-            <span class="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">IoT</span>
-            <span class="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">Wearables</span>
-            <span class="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">Safety</span>
-          </div>
-        </article>
+<!-- Project 2 -->
+<article class="group relative overflow-hidden rounded-2xl border border-ocean-royal p-5 card-hover flex flex-col" style="background: linear-gradient(180deg, rgba(4,46,123,0.28) 0%, rgba(24,131,255,0.14) 30%, #F8FBFF 60%);">
+  <div class="shine mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-xl" style="position:relative; overflow:hidden; height:16rem;">
+    <img src="yusr.png" alt="Yusr project preview" class="relative h-full w-full object-contain p-3 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:100%; width:100%; object-fit:contain; padding:12px; box-sizing:border-box; filter: drop-shadow(0 18px 24px rgba(0,0,0,0.25));" onload="this.style.opacity=1" onerror="this.remove()">
+  </div>
+  <span class="self-start mb-2 inline-block rounded-full border border-ocean-royal bg-transparent px-2.5 py-1 text-[11px] font-medium text-ocean-royal">
+    Entrepreneurship Project 
+  </span>
+  <h3 class="mt-2 text-xl font-bold gradient-text">Yusr</h3>
+  <p class="mt-2 text-sm leading-relaxed text-muted-foreground text-justify">
+Smart wristband for Hajj & Umrah pilgrims, featuring automatic ritual counting, health monitoring, GPS, and SOS.  </p>
+  <a href="#" target="_blank" rel="noreferrer" 
+     class="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-blue-900 transition-colors hover:text-ocean-royal">
+    View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+  </a>
+</article>
+
+<!-- Project 3 -->
+<article class="group relative overflow-hidden rounded-2xl border border-ocean-royal p-5 card-hover flex flex-col" style="background: linear-gradient(180deg, rgba(4,46,123,0.28) 0%, rgba(24,131,255,0.14) 30%, #F8FBFF 60%);">
+  <div class="shine mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-xl" style="position:relative; overflow:hidden; height:16rem;">
+    <img src="diva.png" alt="Diva project preview" class="relative h-full w-full object-contain p-3 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:85%; width:85%; object-fit:contain; padding:12px; box-sizing:border-box; filter: drop-shadow(0 18px 24px rgba(0,0,0,0.25));" onload="this.style.opacity=1" onerror="this.remove()">
+  </div>
+  <span class="self-start mb-2 inline-block rounded-full border border-ocean-royal bg-transparent px-2.5 py-1 text-[11px] font-medium text-ocean-royal">
+   Penetration Testing
+  </span>
+  <h2 class="mt-2 text-lg font-bold gradient-text">
+Mobile App Security Assessment </h2>
+  <p class="mt-2 text-sm leading-relaxed text-muted-foreground text-justify">
+Conducted a security assessment of Diva Android application, identifying vulnerabilities through reverse engineering.  </p>
+  <a href="#" target="_blank" rel="noreferrer" 
+     class="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-blue-900 transition-colors hover:text-ocean-royal">
+    View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+  </a>
+</article>
       </div>
     </div>
   </section>
@@ -831,29 +851,76 @@
     // Dynamically update Copyright Year
     document.getElementById('copyright').innerText = `© ${new Date().getFullYear()} All rights reserved.`;
 
-    // Header Scroll behavior
+    // Header refs
     const header = document.getElementById('header');
     const headerTitle = document.getElementById('header-title');
     const navItems = document.querySelectorAll('.nav-item');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
     const menuBtn = document.getElementById('menu-btn');
+    const sections = document.querySelectorAll('main section[id], section[id]');
 
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 12) {
+    let isScrolled = false;
+    let activeSection = 'top';
+
+    // Applies both the "scrolled vs top" header look AND the active-section
+    // highlight (blue text + underline) together, so they never conflict.
+    function applyNavStyles() {
+      if (isScrolled) {
         header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
         headerTitle.className = "font-display text-sm font-semibold tracking-tight transition-colors text-foreground";
-        navItems.forEach(item => {
-          item.className = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-muted-foreground hover:text-ocean-royal";
-        });
         menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
       } else {
         header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
         headerTitle.className = "font-display text-sm font-semibold tracking-tight transition-colors text-white";
-        navItems.forEach(item => {
-          item.className = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white";
-        });
         menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
       }
+
+      navItems.forEach(item => {
+        const targetId = item.getAttribute('href').replace('#', '');
+        const isActive = targetId === activeSection;
+        const baseClasses = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors";
+        const inactiveColor = isScrolled
+          ? "text-muted-foreground hover:text-ocean-royal"
+          : "text-white/75 hover:text-white";
+
+        item.className = isActive
+          ? `${baseClasses} active`
+          : `${baseClasses} ${inactiveColor}`;
+      });
+
+      mobileNavLinks.forEach(link => {
+        const targetId = link.getAttribute('href').replace('#', '');
+        const isActive = targetId === activeSection;
+        const base = "mobile-nav-link rounded-md px-2 py-2 text-sm hover:bg-secondary";
+        link.className = isActive
+          ? `${base} active`
+          : `${base} text-foreground`;
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      isScrolled = window.scrollY > 12;
+      applyNavStyles();
     });
+
+    // Scrollspy: watch each section and mark the one currently in view as active
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeSection = entry.target.id;
+            applyNavStyles();
+          }
+        });
+      }, {
+        threshold: 0,
+        rootMargin: '-45% 0px -50% 0px' // triggers when a section crosses the middle of the viewport
+      });
+
+      sections.forEach((section) => sectionObserver.observe(section));
+    }
+
+    applyNavStyles();
 
     // Mobile Menu Toggle
     const mobileMenu = document.getElementById('mobile-menu');
@@ -868,7 +935,7 @@
       }
     });
 
-    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+    mobileNavLinks.forEach(link => {
       link.addEventListener('click', () => {
         mobileMenu.classList.add('hidden');
         menuBtn.innerText = 'Menu';
@@ -876,7 +943,7 @@
     });
 
     // Intersection Observer for Reveal animations
-    const els = document.querySelectorAll('.reveal');
+    const revealEls = document.querySelectorAll('.reveal');
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -888,9 +955,9 @@
         });
       }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
-      els.forEach((el) => io.observe(el));
+      revealEls.forEach((el) => io.observe(el));
     } else {
-      els.forEach((e) => e.classList.add('reveal-in'));
+      revealEls.forEach((e) => e.classList.add('reveal-in'));
     }
   </script>
 </body>
