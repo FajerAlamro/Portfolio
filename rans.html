@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ransomware | Fajer Alamro</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <!-- Tailwind Custom Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-deep': '#042E7B',
+            'ocean-royal': '#004EE0',
+            'ocean-bright': '#1883FF',
+            'ocean-sky': '#99CAFF',
+            'ocean-mist': '#E3F2FF',
+            background: '#f8fafc',
+            foreground: '#0f172a',
+            card: '#ffffff',
+            'card-foreground': '#0f172a',
+            border: '#e2e8f0',
+            muted: '#f1f5f9',
+            'muted-foreground': '#64748b',
+            secondary: '#E3F2FF',
+            'secondary-foreground': '#042E7B',
+            'crit-red': '#dc2626',
+            'high-red': '#ef4444',
+            'med-amber': '#f59e0b',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Component Styles -->
+  <style>
+    :root {
+      --ocean-deep: #042E7B;
+      --ocean-royal: #004EE0;
+      --ocean-bright: #1883FF;
+      --ocean-sky: #99CAFF;
+      --ocean-mist: #E3F2FF;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .gradient-hero {
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(24, 131, 255, 0.55), transparent 60%),
+        radial-gradient(800px 400px at 10% 20%, rgba(0, 78, 224, 0.6), transparent 60%),
+        linear-gradient(180deg, #042E7B, #021a47);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #042E7B, #1883FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .gradient-band {
+      background: linear-gradient(135deg, rgba(227, 242, 255, 0.6), #ffffff);
+    }
+
+    .card-hover {
+      transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 400ms, border-color 300ms;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px -22px rgba(0, 78, 224, 0.4);
+      border-color: rgba(24, 131, 255, 0.55);
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-slow { animation: float-slow 6s ease-in-out infinite; }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fade-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+    @keyframes text-shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .text-shimmer {
+      background: linear-gradient(90deg, #E3F2FF, #99CAFF, #1883FF, #99CAFF, #E3F2FF);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: text-shimmer 5s linear infinite;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 800ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-in { opacity: 1; transform: translateY(0); }
+
+    .shine { position: relative; overflow: hidden; }
+    @keyframes shine {
+      0% { transform: translateX(-120%) skewX(-20deg); }
+      100% { transform: translateX(220%) skewX(-20deg); }
+    }
+    .shine::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: translateX(-120%) skewX(-20deg);
+    }
+    .shine:hover::after { animation: shine 1.2s ease-in-out; }
+
+    .cyber-icon {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.03);
+      stroke-width: 1;
+      pointer-events: none;
+    }
+    @keyframes cyber-float-1 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(14px, -22px) rotate(8deg); }
+    }
+    @keyframes cyber-float-2 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-18px, 16px) rotate(-6deg); }
+    }
+    @keyframes cyber-float-3 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(10px, 20px) rotate(10deg); }
+    }
+    @keyframes cyber-drift {
+      0% { transform: translateY(0); opacity: 0.14; }
+      50% { opacity: 0.26; }
+      100% { transform: translateY(-26px); opacity: 0.14; }
+    }
+    .cyber-anim-1 { animation: cyber-float-1 7s ease-in-out infinite; }
+    .cyber-anim-2 { animation: cyber-float-2 9s ease-in-out infinite; }
+    .cyber-anim-3 { animation: cyber-float-3 8s ease-in-out infinite; }
+    .cyber-anim-4 { animation: cyber-drift 10s ease-in-out infinite; }
+
+    .binary-stream {
+      position: absolute;
+      color: rgba(153, 202, 255, 0.035);
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      letter-spacing: 0.15em;
+      white-space: pre;
+      pointer-events: none;
+      animation: cyber-drift 12s ease-in-out infinite;
+    }
+
+    .step-badge { font-family: 'Space Grotesk', sans-serif; }
+
+    .nav-item { position: relative; }
+    .nav-item.active { color: #004EE0 !important; font-weight: 700; }
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      left: 14px; right: 14px; bottom: 2px;
+      height: 2.5px; border-radius: 2px;
+      background: #004EE0;
+      animation: fade-up 300ms ease both;
+    }
+    .mobile-nav-link.active {
+      color: #004EE0 !important;
+      font-weight: 700;
+      background-color: #E3F2FF;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      background: currentColor;
+      margin-left: 2px;
+      animation: cursor-blink 0.8s step-end infinite;
+    }
+    @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* Severity badge */
+    .severity-pulse {
+      box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.55);
+      animation: severityPulse 2.2s ease-out infinite;
+    }
+    @keyframes severityPulse {
+      0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.45); }
+      70% { box-shadow: 0 0 0 14px rgba(220, 38, 38, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+    }
+
+    /* Attack timeline (mirrors ForenX investigation timeline) */
+    #attack-timeline { position: relative; }
+    .fx-track {
+      position: absolute;
+      top: 0; bottom: 0; left: 27px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(153,202,255,0.05), rgba(153,202,255,0.55) 8%, rgba(153,202,255,0.55) 92%, rgba(153,202,255,0.05));
+    }
+    @media (min-width: 768px) { .fx-track { left: 50%; margin-left: -1px; } }
+    .fx-progress {
+      position: absolute; top: 0; left: 0; width: 100%; height: 0%;
+      background: linear-gradient(180deg, #99CAFF, #1883FF);
+      transition: height 100ms linear;
+      box-shadow: 0 0 14px rgba(153,202,255,0.7);
+    }
+    .fx-node {
+      transition: transform 500ms cubic-bezier(0.2,0.8,0.2,1), background 400ms, border-color 400ms, box-shadow 400ms;
+      transform: scale(0.72);
+    }
+    .fx-node.lit {
+      transform: scale(1);
+      background: linear-gradient(145deg, #1883FF, #004EE0);
+      border-color: #99CAFF;
+      box-shadow: 0 0 0 6px rgba(153,202,255,0.12), 0 8px 24px rgba(24,131,255,0.5);
+    }
+    .fx-card {
+      opacity: 0.35;
+      transform: translateY(14px);
+      transition: opacity 600ms cubic-bezier(0.2,0.8,0.2,1), transform 600ms cubic-bezier(0.2,0.8,0.2,1);
+    }
+    .fx-card.lit { opacity: 1; transform: translateY(0); }
+
+    /* Incident log style (used for the attack timeline) */
+    .log-rail {
+      position: absolute;
+      top: 0; bottom: 0; left: 0;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(153,202,255,0.05), rgba(153,202,255,0.5) 10%, rgba(153,202,255,0.5) 90%, rgba(153,202,255,0.05));
+    }
+    .log-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 9999px;
+      background: #004EE0;
+      box-shadow: 0 0 0 3px rgba(0,78,224,0.15);
+    }
+    .log-dot.warn { background: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.18); }
+    .log-dot.crit { background: #dc2626; box-shadow: 0 0 0 3px rgba(220,38,38,0.18); }
+    .log-dot.ok   { background: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.18); }
+
+    .mono { font-family: 'Space Grotesk', monospace; }
+    .case-tab { font-family: 'Space Grotesk', monospace; font-size: 11px; letter-spacing: 0.15em; }
+
+    .sev-tag { font-family: 'Space Grotesk', monospace; font-size: 10px; letter-spacing: 0.08em; }
+    .sev-info { color: #004EE0; border-color: rgba(0,78,224,0.3); }
+    .sev-warn { color: #f59e0b; border-color: rgba(245,158,11,0.3); }
+    .sev-crit { color: #dc2626; border-color: rgba(220,38,38,0.3); }
+    .sev-ok   { color: #16a34a; border-color: rgba(22,163,74,0.3); }
+
+    /* Impact stat cards */
+    .stat-card {
+      transition: transform 400ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 400ms, border-color 300ms;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -20px rgba(0,78,224,0.35);
+    }
+
+    /* Prevention checklist — lightened navy terminal card (matches scope.yaml style) */
+    .scope-mono{ font-family:'JetBrains Mono', monospace; }
+
+    .scope-card{
+      background:#123B72;
+      box-shadow: 0 25px 60px -20px rgba(10,46,92,0.35);
+      border:1px solid rgba(24,131,255,0.25);
+    }
+
+    .scope-caret{
+      display:inline-block; width:8px; height:1.1em; background:#4FC3F7;
+      margin-inline-start:2px; vertical-align:-2px;
+      animation: scope-blink 1s steps(1) infinite;
+    }
+    @keyframes scope-blink{ 50%{ opacity:0 } }
+
+    .scope-line{
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 550ms ease, transform 550ms ease;
+    }
+    .scope-line.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Lightbox */
+    #lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(4, 46, 123, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: fade-up 250ms ease both;
+    }
+    #lightbox-overlay.open { display: flex; }
+    #lightbox-overlay img {
+      max-width: min(90vw, 900px);
+      max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 30px 60px -15px rgba(0,0,0,0.6);
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      color: #fff;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 9999px;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: background 200ms ease;
+    }
+    #lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
+    /* Video frame */
+.video-frame {
+  position: relative;
+  width: 80%;      /* أو 70% */
+  max-width: 900px;
+  margin: 0 auto;
+  padding-top: 45%; /* أو خله 56.25% إذا تبي 16:9 */
+  border-radius: 16px;
+  overflow: hidden;
+}
+.video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground">
+
+  <!-- Header -->
+  <header id="header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-4">
+        <a href="index.html#projects" id="back-link" class="group hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full border-[6px] border-ocean-sky/80 transition-all hover:border-ocean-sky hover:bg-white/10">
+          <i data-lucide="arrow-left" class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"></i>
+        </a>
+        <a href="index.html" class="group flex items-center gap-5">
+          <span class="relative flex h-9 items-center font-display text-2xl font-bold tracking-tight">
+            <span class="relative z-10 text-ocean-royal transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">F</span>
+            <span class="relative -ml-1 text-ocean-sky transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5">A</span>
+          </span>
+        </a>
+      </div>
+
+      <nav class="hidden items-center gap-1 md:flex">
+        <a href="#idea" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Idea</a>
+        <a href="#attack" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">The Attack</a>
+        <a href="#prevent" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Prevention</a>
+        <a href="#video" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Video</a>
+      </nav>
+
+      <button id="menu-btn" class="md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white" aria-label="Menu">
+        Menu
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-background">
+      <div class="mx-auto flex max-w-6xl flex-col px-5 py-3">
+        <a href="index.html#projects" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">← Back to Portfolio</a>
+        <a href="#idea" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Idea</a>
+        <a href="#attack" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">The Attack</a>
+        <a href="#prevent" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Prevention</a>
+        <a href="#video" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Video</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="top" class="relative overflow-hidden gradient-hero">
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+    <div class="absolute -left-24 top-40 h-72 w-72 rounded-full bg-ocean-bright/30 blur-3xl float-slow"></div>
+    <div class="absolute -right-16 top-24 h-64 w-64 rounded-full bg-ocean-sky/25 blur-3xl float-slow [animation-delay:1.5s]"></div>
+
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <i data-lucide="mail-warning" class="cyber-icon cyber-anim-1" style="top:10%; left:5%; width:120px; height:120px;"></i>
+      <i data-lucide="lock" class="cyber-icon cyber-anim-2" style="top:14%; right:6%; width:110px; height:110px; animation-delay:0.6s;"></i>
+      <i data-lucide="monitor-x" class="cyber-icon cyber-anim-3" style="bottom:18%; left:6%; width:100px; height:100px; animation-delay:1.2s;"></i>
+      <i data-lucide="shield-alert" class="cyber-icon cyber-anim-1" style="bottom:12%; right:7%; width:100px; height:100px; animation-delay:1.8s;"></i>
+      <i data-lucide="network" class="cyber-icon cyber-anim-4" style="top:46%; right:3%; width:85px; height:85px; animation-delay:1.5s;"></i>
+      <i data-lucide="bitcoin" class="cyber-icon cyber-anim-2" style="top:44%; left:3%; width:80px; height:80px; animation-delay:2.4s;"></i>
+
+      <div class="binary-stream" style="top:6%; left:40%; font-size:18px;">01001<br>11010<br>00101</div>
+      <div class="binary-stream" style="bottom:8%; right:34%; animation-delay:1.4s; font-size:18px;">10110<br>01001<br>11100</div>
+    </div>
+
+    <div class="relative mx-auto flex min-h-[86vh] max-w-6xl flex-col items-center justify-center px-5 pt-28 pb-16 text-center">
+
+      <p id="typewriter" class="fade-up mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-ocean-sky [animation-delay:0ms]">
+        <span id="typewriter-text"></span><span class="typewriter-cursor">&nbsp;</span>
+      </p>
+
+      <h1 class="fade-up text-4xl font-bold leading-[1.05] sm:text-5xl md:text-5xl [animation-delay:80ms]">
+        <span class="text-shimmer">Ransomware Attack</span>
+      </h1>
+
+      <p class="fade-up mt-8 max-w-2xl text-sm text-white/85 sm:text-base [animation-delay:160ms]">
+An educational video simulating a ransomware attack through a phishing email      </p>
+    </div>
+  </section>
+
+  <!-- Idea / Overview Section -->
+  <section id="idea" class="relative">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mx-auto mb-10 max-w-3xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          The Idea
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          What is this project?
+        </h2>
+      </div>
+
+<div class="grid gap-6 sm:gap-8">
+  <div class="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-6 sm:p-10 shadow-sm card-hover"
+       style="border: 1px solid rgba(24,131,255,0.4);">
+
+    <p class="text-sm sm:text-base text-justify leading-7 sm:leading-relaxed text-muted-foreground">
+      This project is an <span class="font-semibold text-ocean-deep">educational animation video</span> simulating a ransomware attack triggered by a phishing email. It follows an employee who opens a malicious attachment, leading to file encryption and the spread of ransomware across the network.
+    </p>
+
+    <p class="mt-4 sm:mt-5 text-sm sm:text-base text-justify leading-7 sm:leading-relaxed text-muted-foreground">
+      The video also explains the impact of ransomware and highlights key practices to
+      <span class="font-semibold text-ocean-deep">
+        detect phishing attempts, prevent infections, and respond effectively
+      </span>
+      to security incidents.
+    </p>
+
+    <div class="mt-6 sm:mt-8 flex items-center justify-center gap-3 rounded-2xl bg-ocean-mist/60 px-4 sm:px-6 py-3 sm:py-4">
+      <i data-lucide="octagon-alert" class="h-5 w-5 shrink-0 text-crit-red"></i>
+
+<p class="text-xs sm:text-sm font-medium text-ocean-deep text-left">
+  One click on a phishing email can encrypt an entire organization's files within minutes.
+</p>
+    </div>
+
+  </div>
+</div>
+    </div>
+  </section>
+<!-- The Attack Section (Incident Log style) -->
+<section id="attack" class="relative py-24 bg-white">
+  <div class="reveal mx-auto max-w-4xl px-5">
+
+    <div class="mb-10">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        The Scenario
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+        How it Unfolded
+      </h2>
+    </div>
+
+    <div id="attack-timeline" class="relative mt-14 pl-8 md:pl-0">
+      <!-- Rail: left on mobile, centered on desktop -->
+      <div class="log-rail absolute left-0 md:left-1/2 top-0 h-full w-px md:-translate-x-1/2"></div>
+
+      <!-- 00:00 -->
+      <div class="log-entry relative mb-8 md:mb-10 md:flex md:items-start md:justify-between">
+        <div class="hidden md:block md:w-[45%]"></div>
+        <span class="log-dot absolute -left-8 md:left-1/2 top-1.5 md:-translate-x-1/2"></span>
+        <div class="w-full md:w-[45%] md:pl-8">
+          <div class="flex flex-wrap items-baseline gap-2">
+            <span class="mono text-xs text-ocean-royal">00:00</span>
+            <span class="sev-tag sev-info rounded-sm border px-1.5 py-0.5">INFO</span>
+          </div>
+          <p class="mt-1.5 text-sm text-muted-foreground">A phishing email arrives disguised as an urgent invoice request</p>
+        </div>
+      </div>
+
+      <!-- 00:14 -->
+      <div class="log-entry relative mb-8 md:mb-10 md:flex md:items-start md:justify-between">
+        <div class="w-full md:w-[45%] md:pr-8 md:text-right">
+          <div class="flex flex-wrap items-baseline gap-2 md:justify-end">
+            <span class="mono text-xs text-ocean-royal">00:14</span>
+            <span class="sev-tag sev-info rounded-sm border px-1.5 py-0.5">INFO</span>
+          </div>
+          <p class="mt-1.5 text-sm text-muted-foreground">The attachment is opened, a macro runs quietly in the background</p>
+        </div>
+        <span class="log-dot absolute -left-8 md:left-1/2 top-1.5 md:-translate-x-1/2"></span>
+        <div class="hidden md:block md:w-[45%]"></div>
+      </div>
+
+      <!-- 00:41 -->
+      <div class="log-entry relative mb-8 md:mb-10 md:flex md:items-start md:justify-between">
+        <div class="hidden md:block md:w-[45%]"></div>
+        <span class="log-dot warn absolute -left-8 md:left-1/2 top-1.5 md:-translate-x-1/2"></span>
+        <div class="w-full md:w-[45%] md:pl-8">
+          <div class="flex flex-wrap items-baseline gap-2">
+            <span class="mono text-xs text-ocean-royal">00:41</span>
+            <span class="sev-tag sev-warn rounded-sm border px-1.5 py-0.5">WARNING</span>
+          </div>
+          <p class="mt-1.5 text-sm text-muted-foreground">Files begin encrypting across the local machine</p>
+        </div>
+      </div>
+
+      <!-- 00:58 -->
+      <div class="log-entry relative mb-8 md:mb-10 md:flex md:items-start md:justify-between">
+        <div class="w-full md:w-[45%] md:pr-8 md:text-right">
+          <div class="flex flex-wrap items-baseline gap-2 md:justify-end">
+            <span class="mono text-xs text-ocean-royal">00:58</span>
+            <span class="sev-tag sev-crit rounded-sm border px-1.5 py-0.5">CRITICAL</span>
+          </div>
+          <p class="mt-1.5 text-sm text-muted-foreground">A ransom note appears, demanding payment in cryptocurrency within 48 hours</p>
+        </div>
+        <span class="log-dot crit absolute -left-8 md:left-1/2 top-1.5 md:-translate-x-1/2"></span>
+        <div class="hidden md:block md:w-[45%]"></div>
+      </div>
+
+      <!-- 01:20 -->
+      <div class="log-entry relative mb-8 md:mb-10 md:flex md:items-start md:justify-between">
+        <div class="hidden md:block md:w-[45%]"></div>
+        <span class="log-dot crit absolute -left-8 md:left-1/2 top-1.5 md:-translate-x-1/2"></span>
+        <div class="w-full md:w-[45%] md:pl-8">
+          <div class="flex flex-wrap items-baseline gap-2">
+            <span class="mono text-xs text-ocean-royal">01:20</span>
+            <span class="sev-tag sev-crit rounded-sm border px-1.5 py-0.5">CRITICAL</span>
+          </div>
+          <p class="mt-1.5 text-sm text-muted-foreground">The infection spreads automatically to every connected device on the network</p>
+        </div>
+      </div>
+
+      <!-- 01:47 -->
+      <div class="log-entry relative mb-8 md:mb-10 md:flex md:items-start md:justify-between">
+        <div class="w-full md:w-[45%] md:pr-8 md:text-right">
+          <div class="flex flex-wrap items-baseline gap-2 md:justify-end">
+            <span class="mono text-xs text-ocean-royal">01:47</span>
+            <span class="sev-tag sev-ok rounded-sm border px-1.5 py-0.5">RESOLVED</span>
+          </div>
+          <p class="mt-1.5 text-sm text-muted-foreground">Suspicious activity is verified and reported before any payment is made</p>
+        </div>
+        <span class="log-dot ok absolute -left-8 md:left-1/2 top-1.5 md:-translate-x-1/2"></span>
+        <div class="hidden md:block md:w-[45%]"></div>
+      </div>
+
+      <!-- 02:10 -->
+      <div class="log-entry relative md:flex md:items-start md:justify-between">
+        <div class="hidden md:block md:w-[45%]"></div>
+        <span class="log-dot ok absolute -left-8 md:left-1/2 top-1.5 md:-translate-x-1/2"></span>
+        <div class="w-full md:w-[45%] md:pl-8">
+          <div class="flex flex-wrap items-baseline gap-2">
+            <span class="mono text-xs text-ocean-royal">02:10</span>
+            <span class="sev-tag sev-ok rounded-sm border px-1.5 py-0.5">RESOLVED</span>
+          </div>
+          <p class="mt-1.5 text-sm text-muted-foreground">The lesson: prevention habits that stop this before step one</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- Prevention Section -->
+  <section id="prevent" class="relative bg-white">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Staying Protected
+        </div>
+<h2 class="text-2xl font-bold tracking-tight sm:text-4xl gradient-text">
+  Preventing Future Attacks
+</h2>
+      </div>
+
+     <div class="scope-card mx-auto max-w-full sm:max-w-2xl overflow-hidden rounded-xl sm:rounded-2xl">
+
+  <div class="flex items-center gap-2 border-b border-white/10 bg-white/[0.04] px-3 py-2.5 sm:px-4 sm:py-3">
+    <span class="h-2 w-2 rounded-full sm:h-2.5 sm:w-2.5" style="background:#ff5f57;"></span>
+    <span class="h-2 w-2 rounded-full sm:h-2.5 sm:w-2.5" style="background:#febc2e;"></span>
+    <span class="h-2 w-2 rounded-full sm:h-2.5 sm:w-2.5" style="background:#28c840;"></span>
+
+    <span class="scope-mono ms-2 sm:ms-3 text-[10px] sm:text-[11px] text-white/40">
+      prevention_checklist.yaml
+    </span>
+
+    <span class="ms-auto rounded-full bg-ocean-royal/15 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px] font-bold tracking-widest text-[#4FC3F7] scope-mono">
+      STAY PROTECTED
+    </span>
+  </div>
+
+  <div class="px-4 py-5 sm:px-8 sm:py-7">
+    <p class="scope-mono mb-4 sm:mb-5 text-[12px] sm:text-[13px] text-white/40">
+      <span class="text-[#4FC3F7]">$</span> cat prevention_checklist.yaml<span class="scope-caret"></span>
+    </p>
+
+    <div class="space-y-3 sm:space-y-4">
+
+      <div class="scope-line flex items-start gap-2.5 sm:gap-3">
+        <i data-lucide="mail-check" class="mt-0.5 h-4 w-4 shrink-0 text-[#4FC3F7]"></i>
+        <p class="scope-mono text-xs sm:text-sm leading-relaxed">
+          <span class="text-[#4FC3F7]">verify_senders:</span>
+          <span class="text-white/90">check the actual address, not just the display name</span>
+        </p>
+      </div>
+
+      <div class="scope-line flex items-start gap-2.5 sm:gap-3">
+        <i data-lucide="ban" class="mt-0.5 h-4 w-4 shrink-0 text-[#4FC3F7]"></i>
+        <p class="scope-mono text-xs sm:text-sm leading-relaxed">
+          <span class="text-[#4FC3F7]">disable_macros:</span>
+          <span class="text-white/90">never enable macros on an unexpected document</span>
+        </p>
+      </div>
+
+      <div class="scope-line flex items-start gap-2.5 sm:gap-3">
+        <i data-lucide="hard-drive-download" class="mt-0.5 h-4 w-4 shrink-0 text-[#4FC3F7]"></i>
+        <p class="scope-mono text-xs sm:text-sm leading-relaxed">
+          <span class="text-[#4FC3F7]">backup_offline:</span>
+          <span class="text-white/90">keep backups ransomware can't reach</span>
+        </p>
+      </div>
+
+      <div class="scope-line flex items-start gap-2.5 sm:gap-3">
+        <i data-lucide="network" class="mt-0.5 h-4 w-4 shrink-0 text-[#4FC3F7]"></i>
+        <p class="scope-mono text-xs sm:text-sm leading-relaxed">
+          <span class="text-[#4FC3F7]">segment_network:</span>
+          <span class="text-white/90">stop one infection from reaching everything</span>
+        </p>
+      </div>
+
+      <div class="scope-line flex items-start gap-2.5 sm:gap-3">
+        <i data-lucide="siren" class="mt-0.5 h-4 w-4 shrink-0 text-[#4FC3F7]"></i>
+        <p class="scope-mono text-xs sm:text-sm leading-relaxed">
+          <span class="text-[#4FC3F7]">report_immediately:</span>
+          <span class="text-white/90">speed is what contains it</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+    </div>
+  </section>
+
+  <script>
+(function () {
+  const items = document.querySelectorAll('#prevent .scope-line');
+  if (!items.length || !('IntersectionObserver' in window)) return;
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        items.forEach((item, i) => {
+          setTimeout(() => item.classList.add('show'), i * 350);
+        });
+        io.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const wrapper = document.querySelector('#prevent .scope-card');
+  if (wrapper) io.observe(wrapper);
+})();
+  </script>
+
+  <!-- Video Section -->
+  <section id="video" class="relative bg-ocean-deep text-white overflow-hidden">
+    <div class="pointer-events-none absolute top-1/3 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-ocean-sky/10 blur-3xl"></div>
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+          <span class="h-px w-8 bg-ocean-sky/60"></span>
+          Watch the Full Story
+        </div>
+<h2 class="text-2xl font-bold tracking-tight text-white sm:text-4xl">
+  Animation Video
+</h2>
+      </div>
+
+      <div class="video-frame">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/u4AOgSPJcck?si=JlEnmsHfrDvI68hE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-border bg-background">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row">
+      <div class="flex items-center gap-2">
+        <i data-lucide="code-2" class="h-3.5 w-3.5 text-ocean-royal"></i>
+        <span>Fajer Mohammed Alamro</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox modal -->
+  <div id="lightbox-overlay" onclick="if(event.target===this) closeLightbox()">
+    <button id="lightbox-close" onclick="closeLightbox()" aria-label="Close">
+      <i data-lucide="x" class="h-4 w-4"></i>
+    </button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    function openLightbox(src) {
+      var overlay = document.getElementById('lightbox-overlay');
+      var img = document.getElementById('lightbox-img');
+      img.src = src;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      var overlay = document.getElementById('lightbox-overlay');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    (function () {
+      const text = "Security Awareness";
+      const el = document.getElementById('typewriter-text');
+      let i = 0;
+
+      function type() {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, 45);
+        } else {
+          setTimeout(erase, 2200);
+        }
+      }
+
+      function erase() {
+        if (i > 0) {
+          el.textContent = text.substring(0, i - 1);
+          i--;
+          setTimeout(erase, 25);
+        } else {
+          setTimeout(type, 400);
+        }
+      }
+
+      setTimeout(type, 500);
+    })();
+
+    const header = document.getElementById('header');
+    const backLink = document.getElementById('back-link');
+    const navItems = document.querySelectorAll('.nav-item');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const menuBtn = document.getElementById('menu-btn');
+    const sections = document.querySelectorAll('section[id]');
+
+    let isScrolled = false;
+    let activeSection = 'top';
+
+    function applyNavStyles() {
+      if (isScrolled) {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
+        menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-royal/40 px-3.5 py-1.5 text-xs font-medium text-ocean-royal transition-all hover:border-ocean-royal hover:bg-ocean-mist";
+      } else {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
+        menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-sky/50 px-3.5 py-1.5 text-xs font-medium text-white/90 transition-all hover:border-ocean-sky hover:bg-white/10";
+      }
+
+      navItems.forEach(item => {
+        const targetId = item.getAttribute('href').replace('#', '');
+        const isActive = targetId === activeSection;
+        const baseClasses = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors";
+        const inactiveColor = isScrolled
+          ? "text-muted-foreground hover:text-ocean-royal"
+          : "text-white/75 hover:text-white";
+
+        item.className = isActive
+          ? `${baseClasses} active`
+          : `${baseClasses} ${inactiveColor}`;
+      });
+
+      mobileNavLinks.forEach(link => {
+        const targetId = link.getAttribute('href').replace(/^.*#/, '');
+        const isActive = targetId === activeSection;
+        const base = "mobile-nav-link rounded-md px-2 py-2 text-sm hover:bg-secondary";
+        link.className = isActive
+          ? `${base} active`
+          : `${base} text-foreground`;
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      isScrolled = window.scrollY > 12;
+      applyNavStyles();
+    });
+
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeSection = entry.target.id;
+            applyNavStyles();
+          }
+        });
+      }, {
+        threshold: 0,
+        rootMargin: '-45% 0px -50% 0px'
+      });
+      sections.forEach((section) => sectionObserver.observe(section));
+    }
+
+    applyNavStyles();
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (isHidden) {
+        mobileMenu.classList.remove('hidden');
+        menuBtn.innerText = 'Close';
+      } else {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      }
+    });
+
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      });
+    });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach((el) => io.observe(el));
+    } else {
+      revealEls.forEach((e) => e.classList.add('reveal-in'));
+    }
+
+    /* Attack timeline: fill the connecting line and light up nodes as the user scrolls */
+    (function () {
+      const wrap = document.getElementById('attack-timeline');
+      const progress = document.getElementById('fx-progress');
+      if (!wrap || !progress) return;
+
+      const nodes = Array.from(document.querySelectorAll('.fx-step'));
+
+      function update() {
+        const rect = wrap.getBoundingClientRect();
+        const viewportH = window.innerHeight;
+        const total = rect.height;
+
+        const raw = (viewportH * 0.6 - rect.top) / total;
+        const pct = Math.max(0, Math.min(1, raw));
+        progress.style.height = (pct * 100) + '%';
+
+        nodes.forEach((node) => {
+          const nRect = node.getBoundingClientRect();
+          const nodeCenter = nRect.top + nRect.height / 2;
+          const lit = nodeCenter < viewportH * 0.62;
+          const nodeEl = node.querySelector('.fx-node');
+          const cardEl = node.querySelector('.fx-card');
+          if (lit) {
+            nodeEl.classList.add('lit');
+            cardEl.classList.add('lit');
+          } else {
+            nodeEl.classList.remove('lit');
+            cardEl.classList.remove('lit');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+  </script>
+</body>
+</html>

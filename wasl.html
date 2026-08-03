@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wasl | Fajer Alamro</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&family=Outfit:wght@500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind Custom Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-deep': '#042E7B',
+            'ocean-royal': '#004EE0',
+            'ocean-bright': '#1883FF',
+            'ocean-sky': '#99CAFF',
+            'ocean-mist': '#E3F2FF',
+            background: '#f8fafc',
+            foreground: '#0f172a',
+            card: '#ffffff',
+            'card-foreground': '#0f172a',
+            border: '#e2e8f0',
+            muted: '#f1f5f9',
+            'muted-foreground': '#64748b',
+            secondary: '#E3F2FF',
+            'secondary-foreground': '#042E7B',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Component Styles -->
+  <style>
+    :root {
+      --ocean-deep: #042E7B;
+      --ocean-royal: #004EE0;
+      --ocean-bright: #1883FF;
+      --ocean-sky: #99CAFF;
+      --ocean-mist: #E3F2FF;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .gradient-hero {
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(24, 131, 255, 0.55), transparent 60%),
+        radial-gradient(800px 400px at 10% 20%, rgba(0, 78, 224, 0.6), transparent 60%),
+        linear-gradient(180deg, #042E7B, #021a47);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #042E7B, #1883FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .gradient-band {
+      background: linear-gradient(135deg, rgba(227, 242, 255, 0.6), #ffffff);
+    }
+
+    .card-hover {
+      transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 400ms, border-color 300ms;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px -22px rgba(0, 78, 224, 0.4);
+      border-color: rgba(24, 131, 255, 0.55);
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-slow { animation: float-slow 6s ease-in-out infinite; }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fade-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+    @keyframes text-shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .text-shimmer {
+      background: linear-gradient(90deg, #E3F2FF, #99CAFF, #1883FF, #99CAFF, #E3F2FF);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: text-shimmer 5s linear infinite;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 800ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-in { opacity: 1; transform: translateY(0); }
+
+    .shine { position: relative; overflow: hidden; }
+    @keyframes shine {
+      0% { transform: translateX(-120%) skewX(-20deg); }
+      100% { transform: translateX(220%) skewX(-20deg); }
+    }
+    .shine::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: translateX(-120%) skewX(-20deg);
+    }
+    .shine:hover::after { animation: shine 1.2s ease-in-out; }
+
+    .cyber-icon {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.03);
+      stroke-width: 1;
+      pointer-events: none;
+    }
+    @keyframes cyber-float-1 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(14px, -22px) rotate(8deg); }
+    }
+    @keyframes cyber-float-2 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-18px, 16px) rotate(-6deg); }
+    }
+    @keyframes cyber-float-3 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(10px, 20px) rotate(10deg); }
+    }
+    @keyframes cyber-drift {
+      0% { transform: translateY(0); opacity: 0.14; }
+      50% { opacity: 0.26; }
+      100% { transform: translateY(-26px); opacity: 0.14; }
+    }
+    .cyber-anim-1 { animation: cyber-float-1 7s ease-in-out infinite; }
+    .cyber-anim-2 { animation: cyber-float-2 9s ease-in-out infinite; }
+    .cyber-anim-3 { animation: cyber-float-3 8s ease-in-out infinite; }
+    .cyber-anim-4 { animation: cyber-drift 10s ease-in-out infinite; }
+
+    .step-badge { font-family: 'Space Grotesk', sans-serif; }
+
+    .nav-item { position: relative; }
+    .nav-item.active { color: #004EE0 !important; font-weight: 700; }
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      left: 14px; right: 14px; bottom: 2px;
+      height: 2.5px; border-radius: 2px;
+      background: #004EE0;
+      animation: fade-up 300ms ease both;
+    }
+    .mobile-nav-link.active {
+      color: #004EE0 !important;
+      font-weight: 700;
+      background-color: #E3F2FF;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      background: currentColor;
+      margin-left: 2px;
+      animation: cursor-blink 0.8s step-end infinite;
+    }
+    @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* Connection section (Innovator <-> Investor) */
+    .side-card {
+      transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 400ms, border-color 300ms, background 400ms;
+    }
+    .side-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(24, 131, 255, 0.75) !important;
+      box-shadow: 0 22px 48px -22px rgba(0, 78, 224, 0.45);
+    }
+    .side-card-innovator {
+      background: linear-gradient(200deg, #ffffff 0%, #eef6ff 55%, #dcecff 100%);
+    }
+    .side-card-innovator:hover {
+      background: linear-gradient(200deg, #ffffff 0%, #e4f1ff 50%, #cde3ff 100%);
+    }
+    .side-card-investor {
+      background: linear-gradient(250deg, #ffffff 0%, #eef6ff 55%, #dcecff 100%);
+    }
+    .side-card-investor:hover {
+      background: linear-gradient(250deg, #ffffff 0%, #e4f1ff 50%, #cde3ff 100%);
+    }
+    .side-card-watermark {
+      position: absolute;
+      top: -22px;
+      right: -22px;
+      width: 150px;
+      height: 150px;
+      color: rgba(24, 131, 255, 0.09);
+      stroke-width: 1;
+      transition: transform 500ms cubic-bezier(0.2,0.8,0.2,1), color 400ms;
+      pointer-events: none;
+    }
+    .side-card:hover .side-card-watermark {
+      transform: scale(1.08) rotate(4deg);
+      color: rgba(24, 131, 255, 0.14);
+    }
+
+    .link-rail {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      transform: translateY(-50%);
+      border-radius: 2px;
+      background: linear-gradient(90deg, rgba(153,202,255,0.05), rgba(24,131,255,0.55) 15%, rgba(24,131,255,0.55) 85%, rgba(153,202,255,0.05));
+    }
+    .link-rail-v {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      transform: translateX(-50%);
+      border-radius: 2px;
+      background: linear-gradient(180deg, rgba(153,202,255,0.05), rgba(24,131,255,0.55) 15%, rgba(24,131,255,0.55) 85%, rgba(153,202,255,0.05));
+    }
+
+    .link-hub {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      box-shadow: 0 8px 20px -4px rgba(0,78,224,0.55);
+      animation: link-hub-pulse 2.6s ease-in-out infinite;
+    }
+    @keyframes link-hub-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(24,131,255,0.45), 0 8px 20px -4px rgba(0,78,224,0.55); }
+      50% { box-shadow: 0 0 0 9px rgba(24,131,255,0), 0 8px 20px -4px rgba(0,78,224,0.55); }
+    }
+
+    .link-pulse {
+      position: absolute;
+      top: 50%;
+      width: 7px;
+      height: 7px;
+      border-radius: 9999px;
+      background: #ffffff;
+      box-shadow: 0 0 10px 2px rgba(24,131,255,0.85), 0 0 2px 1px #fff;
+      transform: translateY(-50%);
+      z-index: 2;
+      opacity: 0;
+    }
+    .link-pulse.dir-a { animation: link-pulse-a 3s cubic-bezier(0.4,0,0.2,1) infinite; }
+    .link-pulse.dir-b { animation: link-pulse-b 3s cubic-bezier(0.4,0,0.2,1) infinite; animation-delay: 1.5s; }
+    @keyframes link-pulse-a {
+      0% { left: 2%; opacity: 0; }
+      12% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { left: 98%; opacity: 0; }
+    }
+    @keyframes link-pulse-b {
+      0% { left: 98%; opacity: 0; }
+      12% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { left: 2%; opacity: 0; }
+    }
+
+    .link-pulse-v {
+      position: absolute;
+      left: 50%;
+      width: 7px;
+      height: 7px;
+      border-radius: 9999px;
+      background: #ffffff;
+      box-shadow: 0 0 10px 2px rgba(24,131,255,0.85), 0 0 2px 1px #fff;
+      transform: translateX(-50%);
+      z-index: 2;
+      opacity: 0;
+      animation: link-pulse-vert 3s cubic-bezier(0.4,0,0.2,1) infinite;
+    }
+    @keyframes link-pulse-vert {
+      0% { top: 4%; opacity: 0; }
+      12% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { top: 96%; opacity: 0; }
+    }
+
+    /* Features section (divided list, no cards) */
+    .feature-row { transition: background 250ms; }
+    .feature-icon { transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), color 300ms; }
+    .feature-row:hover .feature-icon {
+      transform: translateX(3px) scale(1.08);
+      color: #ffffff;
+    }
+    .feature-row:hover h3 { color: #99CAFF; }
+    .feature-row h3 { transition: color 250ms; }
+
+    /* Comparison table */
+    .compare-table th, .compare-table td { vertical-align: middle; }
+    .compare-check { color: #1883FF; }
+    .compare-cross { color: #cbd5e1; }
+    .compare-row-wasl {
+      background: linear-gradient(135deg, rgba(181, 220, 253, 0.55), rgba(255,255,255,0.4));
+    }
+
+    /* Timeline (Journey section) */
+    .timeline-track {
+      position: absolute;
+      top: 0; bottom: 0; left: 27px; width: 2px;
+      background: linear-gradient(180deg, rgba(153,202,255,0.05), rgba(153,202,255,0.55) 8%, rgba(153,202,255,0.55) 92%, rgba(153,202,255,0.05));
+    }
+    @media (min-width: 768px) {
+      .timeline-track { left: 50%; margin-left: -1px; }
+    }
+    .timeline-progress {
+      position: absolute; top: 0; left: 0; width: 100%; height: 0%;
+      background: linear-gradient(180deg, #99CAFF, #1883FF);
+      transition: height 100ms linear;
+      box-shadow: 0 0 14px rgba(153,202,255,0.7);
+    }
+    .timeline-node {
+      transition: transform 500ms cubic-bezier(0.2,0.8,0.2,1), background 400ms, border-color 400ms, box-shadow 400ms;
+      transform: scale(0.72);
+    }
+    .timeline-node.lit {
+      transform: scale(1);
+      background: linear-gradient(145deg, #1883FF, #004EE0);
+      border-color: #99CAFF;
+      box-shadow: 0 0 0 6px rgba(153,202,255,0.12), 0 8px 24px rgba(24,131,255,0.5);
+    }
+    .timeline-card {
+      opacity: 0.35; transform: translateY(14px);
+      transition: opacity 600ms cubic-bezier(0.2,0.8,0.2,1), transform 600ms cubic-bezier(0.2,0.8,0.2,1);
+    }
+    .timeline-card.lit { opacity: 1; transform: translateY(0); }
+
+    /* How it works */
+    .hiw-node {
+      transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 400ms;
+    }
+    .hiw-card:hover .hiw-node {
+      transform: scale(1.1);
+      box-shadow: 0 10px 24px -6px rgba(0,78,224,0.5);
+    }
+    .hiw-track-mobile {
+      display: none;
+      position: absolute; top: 0; bottom: 0; left: 50%; width: 2px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, rgba(0,78,224,0.04), rgba(0,78,224,0.4) 6%, rgba(0,78,224,0.4) 94%, rgba(0,78,224,0.04));
+      z-index: 0;
+    }
+    .bridge-line{
+    stroke-dasharray:1400;
+    stroke-dashoffset:1400;
+    animation:
+        drawLine 2.8s ease forwards,
+        glowLine 3s ease-in-out infinite;
+}
+
+@keyframes drawLine{
+    to{
+        stroke-dashoffset:0;
+    }
+}
+
+@keyframes glowLine{
+    0%,100%{
+        filter:drop-shadow(0 0 2px rgba(24,131,255,.3));
+    }
+    50%{
+        filter:drop-shadow(0 0 12px rgba(24,131,255,.9));
+    }
+}
+
+.bridge-card{
+    transition:.35s ease;
+}
+
+.bridge-card:hover{
+    transform:translateY(-8px);
+}
+
+.bridge-node{
+    box-shadow:0 0 25px rgba(24,131,255,.18);
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.08);
+        box-shadow:0 0 25px rgba(24,131,255,.5);
+    }
+}
+    #how .hiw-line{position:absolute;top:34px;left:8%;right:8%;height:2px;display:flex;gap:0;background:transparent;}
+    #how .hiw-seg{position:relative;flex:1;height:2px;background:rgba(24,131,255,0.15);overflow:hidden;}
+    #how .hiw-seg-fill{position:absolute;inset:0 100% 0 0;background:linear-gradient(90deg,var(--ocean-royal,#1883ff),var(--ocean-bright,#4fb6ff));}
+    #how.in-view .hiw-seg:nth-child(1) .hiw-seg-fill{animation:hiwSegGrow 1.6s ease-in-out 1.0s both;}
+    #how.in-view .hiw-seg:nth-child(2) .hiw-seg-fill{animation:hiwSegGrow 1.6s ease-in-out 3.6s both;}
+    #how.in-view .hiw-seg:nth-child(3) .hiw-seg-fill{animation:hiwSegGrow 1.6s ease-in-out 6.2s both;}
+    #how .hiw-node{transform:scale(1);transition:none;}
+    #how.in-view .hiw-card:nth-child(2) .hiw-node{animation:hiwPop 1.2s ease-out .1s both;}
+    #how.in-view .hiw-card:nth-child(3) .hiw-node{animation:hiwPop 1.2s ease-out 2.7s both;}
+    #how.in-view .hiw-card:nth-child(4) .hiw-node{animation:hiwPop 1.2s ease-out 5.3s both;}
+    #how.in-view .hiw-card:nth-child(5) .hiw-node{animation:hiwPop 1.2s ease-out 7.9s both;}
+    @keyframes hiwPop{
+      0%{transform:scale(1);box-shadow:0 10px 15px -3px rgba(24,131,255,0.3);}
+      50%{transform:scale(1.18);box-shadow:0 0 0 10px rgba(24,131,255,0.15),0 10px 25px -3px rgba(24,131,255,0.5);}
+      100%{transform:scale(1);box-shadow:0 10px 15px -3px rgba(24,131,255,0.3);}
+    }
+    @keyframes hiwSegGrow{ 0%{inset:0 100% 0 0;} 100%{inset:0 0 0 0;} }
+    @media (max-width: 1023px) { .hiw-line { display: none !important; } }
+    @media (max-width: 639px) {
+      .hiw-card:not(:last-child)::after {
+        content: "";
+        position: absolute; left: 50%; bottom: -2rem;
+        width: 2px; height: 2rem; transform: translateX(-50%);
+        background: repeating-linear-gradient(180deg, rgba(0,78,224,0.35) 0 6px, transparent 6px 12px);
+        z-index: 0;
+      }
+    }
+
+    /* Stats / results cards */
+    .stat-card {
+      transition: transform 400ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 400ms, border-color 300ms;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    #results.in-view .stat-card { animation: statFadeUp .7s ease-out forwards; }
+    #results.in-view .stat-card:nth-child(1){animation-delay:.05s;}
+    #results.in-view .stat-card:nth-child(2){animation-delay:.2s;}
+    #results.in-view .stat-card:nth-child(3){animation-delay:.35s;}
+    #results.in-view .stat-card:nth-child(4){animation-delay:.5s;}
+    @keyframes statFadeUp{ 0%{opacity:0;transform:translateY(24px);} 100%{opacity:1;transform:translateY(0);} }
+    .stat-card:hover{
+      transform:translateY(-6px);
+      border-color:rgba(139,197,255,0.5);
+      background:rgba(255,255,255,0.08);
+      box-shadow:0 12px 30px -8px rgba(24,131,255,0.35);
+    }
+
+    /* Objective cards */
+    .obj-card { transition: transform 400ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 400ms, border-color 300ms; }
+    .obj-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(24,131,255,0.5);
+      box-shadow: 0 20px 40px -20px rgba(0,78,224,0.35);
+    }
+
+    /* Links section */
+    .link-card { transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 300ms, border-color 300ms; }
+    .link-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(24,131,255,0.55);
+      box-shadow: 0 20px 40px -20px rgba(0,78,224,0.4);
+    }
+
+    /* Journey bridge - vertical (mobile/tablet) */
+    .bridge-line-v {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation:
+        drawLineV 2.8s ease forwards,
+        glowLine 3s ease-in-out infinite;
+    }
+    @keyframes drawLineV {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* Interfaces showcase / slider */
+    .iface-viewport {
+      position: relative;
+      background: transparent;
+    }
+    .iface-track {
+      display: flex;
+      transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: transform;
+    }
+    .iface-slide {
+      flex: 0 0 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .iface-slide-inner {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+.iface-slide-inner img {
+  max-height: 50vh;   /* الجوال */
+}
+@media (min-width: 640px) {
+  .iface-slide-inner img { max-height: 70vh; }  /* تابلت */
+}
+@media (min-width: 1024px) {
+  .iface-slide-inner img { max-height: 70vh; }  /* لابتوب */
+}
+    .iface-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 9999px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(24,131,255,0.35);
+      color: #004EE0;
+      box-shadow: 0 10px 25px -10px rgba(0,78,224,0.5);
+      transition: transform 250ms, background 250ms, box-shadow 250ms;
+      cursor: pointer;
+    }
+    .iface-arrow:hover {
+      background: #004EE0;
+      color: #ffffff;
+      transform: translateY(-50%) scale(1.08);
+      box-shadow: 0 14px 30px -10px rgba(0,78,224,0.6);
+    }
+    .iface-arrow.prev { left: 0.75rem; }
+    .iface-arrow.next { right: 0.75rem; }
+    @media (min-width: 640px) {
+      .iface-arrow.prev { left: -1.25rem; }
+      .iface-arrow.next { right: -1.25rem; }
+    }
+    .iface-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+    .iface-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: rgba(0,78,224,0.25);
+      transition: background 250ms, transform 250ms, width 250ms;
+      cursor: pointer;
+    }
+    .iface-dot.active {
+      background: #004EE0;
+      width: 22px;
+      border-radius: 9999px;
+    }
+    .iface-caption {
+      text-align: center;
+      margin-top: 0.75rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground">
+
+  <!-- Header -->
+  <header id="header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-4">
+        <a href="index.html#projects" id="back-link" class="group hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full border-[6px] border-ocean-sky/80 transition-all hover:border-ocean-sky hover:bg-white/10">
+          <i data-lucide="arrow-left" class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"></i>
+        </a>
+        <a href="index.html" class="group flex items-center gap-5">
+          <span class="relative flex h-9 items-center font-display text-2xl font-bold tracking-tight">
+            <span class="relative z-10 text-ocean-royal transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">F</span>
+            <span class="relative -ml-1 text-ocean-sky transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5">A</span>
+          </span>
+        </a>
+      </div>
+
+      <nav class="hidden items-center gap-1 md:flex">
+        <a href="#idea" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Idea</a>
+        <a href="#connect" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Connect</a>
+        <a href="#features" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Features</a>
+        <a href="#interfaces" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Interfaces</a>
+                <a href="#journey" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Roadmap</a>
+        <a href="#results" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Results</a>
+      </nav>
+
+      <button id="menu-btn" class="md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white" aria-label="Menu">
+        Menu
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-background">
+      <div class="mx-auto flex max-w-6xl flex-col px-5 py-3">
+        <a href="index.html#projects" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">← Back to Portfolio</a>
+        <a href="#idea" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Idea</a>
+        <a href="#connect" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Connect</a>
+                <a href="#features" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Features</a>
+        <a href="#interfaces" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Interfaces</a>
+                        <a href="#journey" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Roadmap</a>
+        <a href="#results" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Results</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="top" class="relative overflow-hidden gradient-hero">
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+    <div class="absolute -left-24 top-40 h-72 w-72 rounded-full bg-ocean-bright/30 blur-3xl float-slow"></div>
+    <div class="absolute -right-16 top-24 h-64 w-64 rounded-full bg-ocean-sky/25 blur-3xl float-slow [animation-delay:1.5s]"></div>
+
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <i data-lucide="lightbulb" class="cyber-icon cyber-anim-1" style="top:10%; left:5%; width:120px; height:120px;"></i>
+      <i data-lucide="handshake" class="cyber-icon cyber-anim-2" style="top:14%; right:6%; width:110px; height:110px; animation-delay:0.6s;"></i>
+      <i data-lucide="trending-up" class="cyber-icon cyber-anim-3" style="bottom:18%; left:6%; width:100px; height:100px; animation-delay:1.2s;"></i>
+      <i data-lucide="link-2" class="cyber-icon cyber-anim-1" style="bottom:12%; right:7%; width:100px; height:100px; animation-delay:1.8s;"></i>
+      <i data-lucide="search" class="cyber-icon cyber-anim-4" style="top:46%; right:3%; width:85px; height:85px; animation-delay:1.5s;"></i>
+      <i data-lucide="heart" class="cyber-icon cyber-anim-2" style="top:44%; left:3%; width:80px; height:80px; animation-delay:2.4s;"></i>
+    </div>
+
+    <div class="relative mx-auto flex min-h-[86vh] max-w-6xl flex-col items-center justify-center px-5 pt-28 pb-16 text-center">
+
+      <p id="typewriter" class="fade-up mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-ocean-sky [animation-delay:0ms]">
+        <span id="typewriter-text"></span><span class="typewriter-cursor">&nbsp;</span>
+      </p>
+
+      <h1 class="fade-up text-5xl font-bold leading-[1.05] sm:text-6xl md:text-7xl [animation-delay:80ms]">
+        <span class="text-shimmer">Wasl</span>
+      </h1>
+
+      <p class="fade-up mt-8 max-w-2xl text-sm text-white/85 sm:text-base [animation-delay:160ms]">
+A full-stack website connecting innovators with investors      </p>
+    </div>
+  </section>
+
+  <!-- Idea / Overview Section -->
+  <section id="idea" class="relative">
+<div class="reveal mx-auto max-w-6xl px-5 py-14 sm:py-20 md:py-24">
+      <div class="mx-auto mb-10 max-w-3xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          The Idea
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          What is Wasl?
+        </h2>
+      </div>
+
+      <div class="grid gap-8">
+<div class="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-6 sm:p-10 shadow-sm card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+          <p class="text-base text-justify leading-relaxed text-muted-foreground">
+Many innovators struggle to present their ideas due to high website fees, while investors often struggle to discover promising projects. Wasl bridges this gap through a structured platform where innovators showcase ideas and investors explore opportunities using filtering and categorization.          </p>
+          <p class="mt-5 text-base text-justify leading-relaxed text-muted-foreground">
+            Wasl was developed as a complete <span class="font-semibold text-ocean-deep">software engineering project</span>, from requirements gathering and system design documentation to implementation, testing, and evaluation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <section id="connect" class="relative gradient-band overflow-hidden">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-14 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Two Sides, One Link
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          Roles in Wasl
+        </h2>
+      </div>
+
+      <div class="relative grid gap-10 md:grid-cols-[1fr_auto_1fr] md:items-stretch md:gap-6">
+
+        <!-- Innovator card -->
+        <div class="side-card side-card-innovator relative overflow-hidden rounded-3xl border p-8" style="border-color: rgba(24,131,255,0.35);">
+          <i data-lucide="lightbulb" class="side-card-watermark"></i>
+          <div class="relative mb-5 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white shadow-lg shadow-ocean-royal/30">
+              <i data-lucide="lightbulb" class="h-5 w-5"></i>
+            </div>
+            <div>
+              <span class="step-badge text-[11px] font-bold uppercase tracking-[0.2em] text-ocean-royal">Innovator</span>
+              <h3 class="text-lg font-bold text-ocean-deep">Brings the idea</h3>
+            </div>
+          </div>
+          <ul class="relative space-y-3 text-sm text-slate-600">
+            <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-ocean-royal"></i>Creates a free account and profile</li>
+            <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-ocean-royal"></i>Submits ideas with details, category, and media</li>
+            <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-ocean-royal"></i>Edits or removes listings anytime from "My Ideas"</li>
+            <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-ocean-royal"></i>Reviews investment requests and chooses who to accept</li>
+          </ul>
+        </div>
+
+        <!-- Center spine (desktop) -->
+        <div class="relative hidden md:block md:w-16">
+          <div class="link-rail"></div>
+          <span class="link-pulse dir-a"></span>
+          <span class="link-pulse dir-b"></span>
+          <span class="link-hub absolute grid h-9 w-9 place-items-center rounded-full bg-ocean-royal text-white">
+            <i data-lucide="link-2" class="h-4 w-4"></i>
+          </span>
+        </div>
+
+        <!-- Center spine (mobile, vertical) -->
+        <div class="relative flex h-14 items-center justify-center md:hidden">
+          <div class="link-rail-v"></div>
+          <span class="link-pulse-v"></span>
+          <span class="link-hub absolute grid h-9 w-9 place-items-center rounded-full bg-ocean-royal text-white">
+            <i data-lucide="link-2" class="h-4 w-4"></i>
+          </span>
+        </div>
+
+        <!-- Investor card -->
+        <div class="side-card side-card-investor relative overflow-hidden rounded-3xl border p-8" style="border-color: rgba(24,131,255,0.35);">
+          <i data-lucide="handshake" class="side-card-watermark"></i>
+          <div class="relative mb-5 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white shadow-lg shadow-ocean-royal/30">
+              <i data-lucide="handshake" class="h-5 w-5"></i>
+            </div>
+            <div>
+              <span class="step-badge text-[11px] font-bold uppercase tracking-[0.2em] text-ocean-royal">Investor</span>
+              <h3 class="text-lg font-bold text-ocean-deep">Finds the fit</h3>
+            </div>
+          </div>
+          <ul class="relative space-y-3 text-sm text-slate-600">
+            <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-ocean-royal"></i>Searches and browses the full idea catalog</li>
+            <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-ocean-royal"></i>Filters ideas by category and upload date</li>
+            <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-ocean-royal"></i>Saves promising ideas to an auto-updating favorites list</li>
+            <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-ocean-royal"></i>Requests to connect, then views contact info once accepted</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="relative bg-ocean-deep text-white overflow-hidden">
+    <div class="pointer-events-none absolute top-0 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-ocean-sky/10 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-ocean-bright/10 blur-3xl"></div>
+    <div class="reveal relative mx-auto max-w-5xl px-5 py-20 sm:py-24">
+      <div class="mb-14 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+          <span class="h-px w-8 bg-ocean-sky/60"></span>
+          On Every Account
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+Core Features        </h2>
+      </div>
+
+      <div class="grid gap-x-12 md:grid-cols-2">
+
+        <div class="divide-y divide-white/10 border-t border-white/10 md:border-t-0">
+
+          <div class="feature-row group flex items-start gap-4 py-6 first:pt-0">
+            <i data-lucide="gift" class="feature-icon mt-0.5 h-5 w-5 shrink-0 text-ocean-sky"></i>
+            <div>
+              <h3 class="text-sm font-bold text-white">Free, always</h3>
+              <p class="mt-1 text-xs leading-relaxed text-white/60">No listing fees or commissions on either side of the connection</p>
+            </div>
+          </div>
+
+          <div class="feature-row group flex items-start gap-4 py-6">
+            <i data-lucide="layout-template" class="feature-icon mt-0.5 h-5 w-5 shrink-0 text-ocean-sky"></i>
+            <div>
+              <h3 class="text-sm font-bold text-white">Structured idea submission</h3>
+              <p class="mt-1 text-xs leading-relaxed text-white/60">Title, description and category in one clear format</p>
+            </div>
+          </div>
+
+          <div class="feature-row group flex items-start gap-4 py-6 md:pb-0">
+            <i data-lucide="sliders-horizontal" class="feature-icon mt-0.5 h-5 w-5 shrink-0 text-ocean-sky"></i>
+            <div>
+              <h3 class="text-sm font-bold text-white">Category and date filters</h3>
+              <p class="mt-1 text-xs leading-relaxed text-white/60">Narrow the catalog by idea category or the year it was posted</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="divide-y divide-white/10 border-t border-white/10 md:border-t-0">
+
+          <div class="feature-row group flex items-start gap-4 py-6 md:pt-0">
+            <i data-lucide="bookmark" class="feature-icon mt-0.5 h-5 w-5 shrink-0 text-ocean-sky"></i>
+            <div>
+              <h3 class="text-sm font-bold text-white">A favorites list that keeps itself</h3>
+              <p class="mt-1 text-xs leading-relaxed text-white/60">Saved ideas land automatically in a dedicated list for easy comparison</p>
+            </div>
+          </div>
+
+          <div class="feature-row group flex items-start gap-4 py-6">
+            <i data-lucide="send" class="feature-icon mt-0.5 h-5 w-5 shrink-0 text-ocean-sky"></i>
+            <div>
+              <h3 class="text-sm font-bold text-white">Requests, accepted or declined</h3>
+              <p class="mt-1 text-xs leading-relaxed text-white/60">Innovators see every incoming request and decide who gets access</p>
+            </div>
+          </div>
+
+          <div class="feature-row group flex items-start gap-4 py-6 pb-0">
+            <i data-lucide="user-cog" class="feature-icon mt-0.5 h-5 w-5 shrink-0 text-ocean-sky"></i>
+            <div>
+              <h3 class="text-sm font-bold text-white">Full account control</h3>
+              <p class="mt-1 text-xs leading-relaxed text-white/60">Register, log in, and edit a profile with all account details in one place</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Interfaces Section -->
+  <section id="interfaces" class="relative overflow-hidden">
+    <div class="reveal mx-auto max-w-5xl px-5 py-20 sm:py-24">
+      <div class="mb-12 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          A Look Inside
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          Interfaces
+        </h2>
+        <p class="mt-3 text-sm text-muted-foreground">
+Explore key interfaces designed for innovators & investors       </p>
+      </div>
+
+      <div class="relative mx-auto max-w-3xl">
+        <div id="iface-viewport" class="iface-viewport">
+          <div id="iface-track" class="iface-track">
+
+<div class="iface-slide"  data-caption="Home Page">
+  <div class="iface-slide-inner">
+    <img src="w1.png" alt="Home Page">
+  </div>
+</div>
+
+<div class="iface-slide" data-caption="Login">
+  <div class="iface-slide-inner">
+    <img src="w2.png" alt="Login">
+  </div>
+</div>
+
+<div class="iface-slide" data-caption="Sign Up">
+  <div class="iface-slide-inner">
+    <img src="w3.png" alt="Sign Up">
+  </div>
+</div>
+<div class="iface-slide" data-caption="Profile">
+  <div class="iface-slide-inner">
+    <img src="w4.png" alt="Profile">
+  </div>
+</div>
+<div class="iface-slide" data-caption="Edit Profile" >
+  <div class="iface-slide-inner">
+    <img src="w5.png" alt="Edit Profile">
+  </div>
+</div>
+       <div class="iface-slide" data-caption="Navigation Menu">
+  <div class="iface-slide-inner">
+    <img src="w6.png" alt="Navigation Menu">
+  </div>
+</div> 
+<div class="iface-slide" data-caption="Browse Ideas">
+  <div class="iface-slide-inner">
+    <img src="w7.png" alt="Browse Ideas">
+  </div>
+</div>
+<div class="iface-slide" data-caption="Filter">
+  <div class="iface-slide-inner">
+    <img src="w8.png" alt="Filter">
+  </div>
+</div>
+<div class="iface-slide" data-caption="Add Idea">
+  <div class="iface-slide-inner">
+    <img src="w9.png" alt="Add Idea">
+  </div>
+</div>
+<div class="iface-slide" data-caption="Innovator Profile">
+  <div class="iface-slide-inner">
+    <img src="w10.png" alt="Innovator Profile">
+  </div>
+</div>
+<div class="iface-slide" data-caption="Idea Details">
+  <div class="iface-slide-inner">
+    <img src="w11.png" alt="Idea Details">
+  </div>
+</div>
+<div class="iface-slide" data-caption="Favorites">
+  <div class="iface-slide-inner">
+    <img src="w12.png" alt="Favorites">
+  </div>
+</div>
+<div class="iface-slide" data-caption="Sent Requests">
+  <div class="iface-slide-inner">
+    <img src="w13.png" alt="Sent Requests">
+  </div>
+</div>
+<div class="iface-slide" data-caption="Received Requests">
+  <div class="iface-slide-inner">
+    <img src="w14.png" alt="Received Requests">
+  </div>
+</div>
+<div class="iface-slide" data-caption="Logout">
+  <div class="iface-slide-inner">
+    <img src="w15.png" alt="Logout">
+  </div>
+</div>
+</div>
+
+          <button id="iface-prev" class="iface-arrow prev" aria-label="Previous">
+            <i data-lucide="chevron-left" class="h-5 w-5"></i>
+          </button>
+          <button id="iface-next" class="iface-arrow next" aria-label="Next">
+            <i data-lucide="chevron-right" class="h-5 w-5"></i>
+          </button>
+        </div>
+<p id="iface-caption" class="iface-caption text-2xl font-semibold text-ocean-deep" style="font-family: 'Caveat', cursive;"></p>
+<p id="iface-counter" class="text-lg font-semibold text-ocean-deep text-center mt-3" style="font-family: 'Caveat', cursive;"></p>    </div>
+  </section>
+ <!-- Journey Section: bridge spans -->
+  <style>
+    #journey .bridge-cable-svg path { opacity: 0.35; }
+  </style>
+  <section id="journey" class="relative gradient-band overflow-hidden">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-16 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          From Requirements to Release
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          Development Roadmap
+        </h2>
+      </div>
+
+      <div class="relative grid grid-cols-1 gap-y-16 lg:grid-cols-5 lg:gap-x-6 lg:gap-y-12">
+
+  <!-- Animated Bridge (desktop, horizontal) -->
+  <svg class="pointer-events-none absolute left-0 right-0 top-8 hidden h-16 w-full lg:block"
+       viewBox="0 0 1000 100"
+       preserveAspectRatio="none">
+
+    <defs>
+      <path id="bridgePath"
+            d="M20 90 Q140 10 260 90 T500 90 T740 90 T980 90"/>
+    </defs>
+
+    <!-- Main Line -->
+    <use href="#bridgePath"
+         class="bridge-line"
+         fill="none"
+         stroke="#1883FF"
+         stroke-width="2"
+         stroke-linecap="round"/>
+
+    <!-- Moving Light -->
+    <circle r="5" fill="#6CC7FF">
+      <animateMotion
+          dur="5s"
+          repeatCount="indefinite"
+          rotate="auto">
+        <mpath href="#bridgePath"/>
+      </animateMotion>
+    </circle>
+
+  </svg>
+
+  <!-- Animated Bridge (mobile/tablet, vertical) -->
+  <svg class="pointer-events-none absolute inset-y-0 left-1/2 block h-full w-16 -translate-x-1/2 lg:hidden"
+       viewBox="0 0 100 1000"
+       preserveAspectRatio="none">
+
+    <defs>
+      <path id="bridgePathMobile"
+            d="M50 20 Q90 140 50 260 Q10 380 50 500 Q90 620 50 740 Q10 860 50 980"/>
+    </defs>
+
+    <!-- Main Line -->
+    <use href="#bridgePathMobile"
+         class="bridge-line-v"
+         fill="none"
+         stroke="#1883FF"
+         stroke-width="2"
+         stroke-linecap="round"
+         pathLength="1000"/>
+
+    <!-- Moving Light -->
+    <circle r="5" fill="#6CC7FF">
+      <animateMotion
+          dur="5s"
+          repeatCount="indefinite"
+          rotate="auto">
+        <mpath href="#bridgePathMobile"/>
+      </animateMotion>
+    </circle>
+
+  </svg>
+
+  <!-- Card 1 -->
+  <div class="bridge-card relative flex flex-col items-center text-center">
+    <div class="bridge-node relative z-10 grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+      <i data-lucide="search" class="h-5 w-5"></i>
+    </div>
+
+    <span class="mt-3 text-[11px] font-bold uppercase tracking-[0.2em] text-ocean-royal">
+      Sprint 00
+    </span>
+
+    <h3 class="mt-1 text-sm font-bold text-ocean-deep">
+      Discover
+    </h3>
+
+    <p class="mt-2 text-xs leading-relaxed text-slate-600">
+      Interviews and competitor research.
+    </p>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="bridge-card relative flex flex-col items-center text-center">
+    <div class="bridge-node relative z-10 grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+      <i data-lucide="list-checks" class="h-5 w-5"></i>
+    </div>
+
+    <span class="mt-3 text-[11px] font-bold uppercase tracking-[0.2em] text-ocean-royal">
+      Sprint 01
+    </span>
+
+    <h3 class="mt-1 text-sm font-bold text-ocean-deep">
+      Define
+    </h3>
+
+    <p class="mt-2 text-xs leading-relaxed text-slate-600">
+      Use cases and backlog.
+    </p>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="bridge-card relative flex flex-col items-center text-center">
+    <div class="bridge-node relative z-10 grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+      <i data-lucide="compass" class="h-5 w-5"></i>
+    </div>
+
+    <span class="mt-3 text-[11px] font-bold uppercase tracking-[0.2em] text-ocean-royal">
+      Sprint 02
+    </span>
+
+    <h3 class="mt-1 text-sm font-bold text-ocean-deep">
+      Design
+    </h3>
+
+    <p class="mt-2 text-xs leading-relaxed text-slate-600">
+      Architecture and diagrams.
+    </p>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="bridge-card relative flex flex-col items-center text-center">
+    <div class="bridge-node relative z-10 grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+      <i data-lucide="hammer" class="h-5 w-5"></i>
+    </div>
+
+    <span class="mt-3 text-[11px] font-bold uppercase tracking-[0.2em] text-ocean-royal">
+      Sprint 03
+    </span>
+
+    <h3 class="mt-1 text-sm font-bold text-ocean-deep">
+      Build
+    </h3>
+
+    <p class="mt-2 text-xs leading-relaxed text-slate-600">
+      Agile implementation.
+    </p>
+  </div>
+
+  <!-- Card 5 -->
+  <div class="bridge-card relative flex flex-col items-center text-center">
+    <div class="bridge-node relative z-10 grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+      <i data-lucide="check-check" class="h-5 w-5"></i>
+    </div>
+
+    <span class="mt-3 text-[11px] font-bold uppercase tracking-[0.2em] text-ocean-royal">
+      Sprint 04
+    </span>
+
+    <h3 class="mt-1 text-sm font-bold text-ocean-deep">
+      Validate
+    </h3>
+
+    <p class="mt-2 text-xs leading-relaxed text-slate-600">
+      Integration and user testing.
+    </p>
+  </div>
+
+</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results / Testing Section -->
+  <style>
+    #results .stat-card:hover .stat-icon{ animation: statIconPulse .6s ease; }
+    @keyframes statIconPulse{ 0%{transform:scale(1);} 50%{transform:scale(1.15);} 100%{transform:scale(1);} }
+  </style>
+  <section id="results" class="relative bg-ocean-deep text-white overflow-hidden">
+    <div class="pointer-events-none absolute top-0 left-1/2 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-ocean-sky/10 blur-3xl"></div>
+    <div class="reveal relative mx-auto max-w-4xl px-5 py-20 sm:py-24">
+
+      <div class="mb-6 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+        <span class="h-px w-8 bg-ocean-sky/60"></span>
+        User Acceptance Testing
+        <span class="h-px w-8 bg-ocean-sky/60"></span>
+      </div>
+      <h2 class="mb-10 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        What Real Users Found
+      </h2>
+
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="stat-card rounded-2xl border border-white/15 bg-white/[0.05] p-6 text-center backdrop-blur">
+          <div class="stat-icon mx-auto grid h-12 w-12 place-items-center rounded-xl bg-white/10 text-ocean-sky">
+            <i data-lucide="check-circle-2" class="h-5 w-5"></i>
+          </div>
+          <div class="step-badge mt-3 text-lg font-bold text-white">100%</div>
+          <p class="mt-1 text-xs text-white/55">Completed tasks with no errors</p>
+        </div>
+        <div class="stat-card rounded-2xl border border-white/15 bg-white/[0.05] p-6 text-center backdrop-blur">
+          <div class="stat-icon mx-auto grid h-12 w-12 place-items-center rounded-xl bg-white/10 text-ocean-sky">
+            <i data-lucide="layout-template" class="h-5 w-5"></i>
+          </div>
+          <div class="step-badge mt-3 text-lg font-bold text-white">100%</div>
+          <p class="mt-1 text-xs text-white/55">Found the interface clear and easy</p>
+        </div>
+        <div class="stat-card rounded-2xl border border-white/15 bg-white/[0.05] p-6 text-center backdrop-blur">
+          <div class="stat-icon mx-auto grid h-12 w-12 place-items-center rounded-xl bg-white/10 text-ocean-sky">
+            <i data-lucide="thumbs-up" class="h-5 w-5"></i>
+          </div>
+          <div class="step-badge mt-3 text-lg font-bold text-white">11 Questions</div>
+          <p class="mt-1 text-xs text-white/55">Completed in the usability questionnaire</p>
+        </div>
+        <div class="stat-card rounded-2xl border border-white/15 bg-white/[0.05] p-6 text-center backdrop-blur">
+          <div class="stat-icon mx-auto grid h-12 w-12 place-items-center rounded-xl bg-white/10 text-ocean-sky">
+            <i data-lucide="users" class="h-5 w-5"></i>
+          </div>
+          <div class="step-badge mt-3 text-lg font-bold text-white">16 users</div>
+          <p class="mt-1 text-xs text-white/55">Took part in acceptance testing</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      var el = document.getElementById('results');
+      if(!el) return;
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            el.classList.add('in-view');
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.25 });
+      obs.observe(el);
+    })();
+  </script>
+
+  <!-- Visit Website Section -->
+  <section id="visit" class="relative overflow-hidden gradient-band">
+    <div class="reveal mx-auto max-w-4xl px-5 py-16 sm:py-20 text-center">
+      <div class="mx-auto mb-4 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        Try It Yourself
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text mb-4">
+        Visit Wasl
+      </h2>
+      <p class="mx-auto mb-8 max-w-xl text-sm text-muted-foreground">
+Explore the website and see it in action      </p>
+      <a
+        href="https://hadeelbjs.github.io/WaslWebsite/Login.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="shine group inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-ocean-royal to-ocean-bright px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-ocean-royal/30 transition-transform duration-300 hover:-translate-y-0.5"
+      >
+        <i data-lucide="external-link" class="h-4 w-4"></i>
+         Wasl Website
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-border bg-background">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row">
+      <div class="flex items-center gap-2">
+        <i data-lucide="code-2" class="h-3.5 w-3.5 text-ocean-royal"></i>
+        <span>Fajer Mohammed Alamro</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    (function () {
+      const text = "Software Engineering";
+      const el = document.getElementById('typewriter-text');
+      let i = 0;
+
+      function type() {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, 45);
+        } else {
+          setTimeout(erase, 2200);
+        }
+      }
+
+      function erase() {
+        if (i > 0) {
+          el.textContent = text.substring(0, i - 1);
+          i--;
+          setTimeout(erase, 25);
+        } else {
+          setTimeout(type, 400);
+        }
+      }
+
+      setTimeout(type, 500);
+    })();
+
+    const header = document.getElementById('header');
+    const backLink = document.getElementById('back-link');
+    const navItems = document.querySelectorAll('.nav-item');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const menuBtn = document.getElementById('menu-btn');
+    const sections = document.querySelectorAll('section[id]');
+
+    let isScrolled = false;
+    let activeSection = 'top';
+
+    function applyNavStyles() {
+      if (isScrolled) {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
+        menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-royal/40 px-3.5 py-1.5 text-xs font-medium text-ocean-royal transition-all hover:border-ocean-royal hover:bg-ocean-mist";
+      } else {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
+        menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-sky/50 px-3.5 py-1.5 text-xs font-medium text-white/90 transition-all hover:border-ocean-sky hover:bg-white/10";
+      }
+
+      navItems.forEach(item => {
+        const targetId = item.getAttribute('href').replace('#', '');
+        const isActive = targetId === activeSection;
+        const baseClasses = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors";
+        const inactiveColor = isScrolled
+          ? "text-muted-foreground hover:text-ocean-royal"
+          : "text-white/75 hover:text-white";
+
+        item.className = isActive
+          ? `${baseClasses} active`
+          : `${baseClasses} ${inactiveColor}`;
+      });
+
+      mobileNavLinks.forEach(link => {
+        const targetId = link.getAttribute('href').replace(/^.*#/, '');
+        const isActive = targetId === activeSection;
+        const base = "mobile-nav-link rounded-md px-2 py-2 text-sm hover:bg-secondary";
+        link.className = isActive
+          ? `${base} active`
+          : `${base} text-foreground`;
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      isScrolled = window.scrollY > 12;
+      applyNavStyles();
+    });
+
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeSection = entry.target.id;
+            applyNavStyles();
+          }
+        });
+      }, {
+        threshold: 0,
+        rootMargin: '-45% 0px -50% 0px'
+      });
+      sections.forEach((section) => sectionObserver.observe(section));
+    }
+
+    applyNavStyles();
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (isHidden) {
+        mobileMenu.classList.remove('hidden');
+        menuBtn.innerText = 'Close';
+      } else {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      }
+    });
+
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      });
+    });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach((el) => io.observe(el));
+    } else {
+      revealEls.forEach((e) => e.classList.add('reveal-in'));
+    }
+
+    /* Journey timeline: fill the connecting line and light up nodes as the user scrolls */
+  (function () {
+  const track = document.getElementById('iface-track');
+  const counterEl = document.getElementById('iface-counter');
+  const prevBtn = document.getElementById('iface-prev');
+  const nextBtn = document.getElementById('iface-next');
+  const viewport = document.getElementById('iface-viewport');
+  if (!track || !prevBtn || !nextBtn) return;
+
+  const slides = Array.from(track.children);
+  let index = 0;
+  const captionEl = document.getElementById('iface-caption');
+
+  function render() {
+    track.style.transform = `translateX(-${index * 100}%)`;
+    if (captionEl) {
+      captionEl.textContent = slides[index].dataset.caption || '';
+    }
+    if (counterEl) {
+      counterEl.textContent = `${index + 1} / ${slides.length}`;
+    }
+  }
+
+  function goTo(i) {
+    index = (i + slides.length) % slides.length;
+    render();
+  }
+
+  prevBtn.addEventListener('click', () => goTo(index - 1));
+  nextBtn.addEventListener('click', () => goTo(index + 1));
+
+  let startX = 0;
+  let isDown = false;
+  viewport.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDown = true;
+  }, { passive: true });
+  viewport.addEventListener('touchend', (e) => {
+    if (!isDown) return;
+    isDown = false;
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - startX;
+    if (Math.abs(diff) > 40) {
+      if (diff < 0) goTo(index + 1);
+      else goTo(index - 1);
+    }
+  });
+
+  viewport.setAttribute('tabindex', '0');
+  viewport.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(index + 1);
+    if (e.key === 'ArrowLeft') goTo(index - 1);
+  });
+
+  render();
+})();
+  </script>
+</body>
+</html>

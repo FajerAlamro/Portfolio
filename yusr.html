@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yusr | Fajer Alamro</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <!-- Tailwind Custom Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-deep': '#042E7B',
+            'ocean-royal': '#004EE0',
+            'ocean-bright': '#1883FF',
+            'ocean-sky': '#99CAFF',
+            'ocean-mist': '#E3F2FF',
+            background: '#f8fafc',
+            foreground: '#0f172a',
+            card: '#ffffff',
+            'card-foreground': '#0f172a',
+            border: '#e2e8f0',
+            muted: '#f1f5f9',
+            'muted-foreground': '#64748b',
+            secondary: '#E3F2FF',
+            'secondary-foreground': '#042E7B',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Component Styles -->
+  <style>
+    :root {
+      --ocean-deep: #042E7B;
+      --ocean-royal: #004EE0;
+      --ocean-bright: #1883FF;
+      --ocean-sky: #99CAFF;
+      --ocean-mist: #E3F2FF;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .gradient-hero {
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(24, 131, 255, 0.55), transparent 60%),
+        radial-gradient(800px 400px at 10% 20%, rgba(0, 78, 224, 0.6), transparent 60%),
+        linear-gradient(180deg, #042E7B, #021a47);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #042E7B, #1883FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .gradient-band {
+      background: linear-gradient(135deg, rgba(227, 242, 255, 0.6), #ffffff);
+    }
+
+    .card-hover {
+      transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 400ms, border-color 300ms;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px -22px rgba(0, 78, 224, 0.4);
+      border-color: rgba(24, 131, 255, 0.55);
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-slow {
+      animation: float-slow 6s ease-in-out infinite;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up {
+      animation: fade-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    @keyframes text-shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .text-shimmer {
+      background: linear-gradient(90deg, #E3F2FF, #99CAFF, #1883FF, #99CAFF, #E3F2FF);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: text-shimmer 5s linear infinite;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 800ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .shine {
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes shine {
+      0% { transform: translateX(-120%) skewX(-20deg); }
+      100% { transform: translateX(220%) skewX(-20deg); }
+    }
+    .shine::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: translateX(-120%) skewX(-20deg);
+    }
+    .shine:hover::after {
+      animation: shine 1.2s ease-in-out;
+    }
+
+    .cyber-icon {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.03);
+      stroke-width: 1;
+      pointer-events: none;
+    }
+    @keyframes cyber-float-1 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(14px, -22px) rotate(8deg); }
+    }
+    @keyframes cyber-float-2 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-18px, 16px) rotate(-6deg); }
+    }
+    @keyframes cyber-float-3 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(10px, 20px) rotate(10deg); }
+    }
+    @keyframes cyber-drift {
+      0% { transform: translateY(0); opacity: 0.14; }
+      50% { opacity: 0.26; }
+      100% { transform: translateY(-26px); opacity: 0.14; }
+    }
+    .cyber-anim-1 { animation: cyber-float-1 7s ease-in-out infinite; }
+    .cyber-anim-2 { animation: cyber-float-2 9s ease-in-out infinite; }
+    .cyber-anim-3 { animation: cyber-float-3 8s ease-in-out infinite; }
+    .cyber-anim-4 { animation: cyber-drift 10s ease-in-out infinite; }
+
+    .binary-stream {
+      position: absolute;
+      color: rgba(153, 202, 255, 0.035);
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      letter-spacing: 0.15em;
+      white-space: pre;
+      pointer-events: none;
+      animation: cyber-drift 12s ease-in-out infinite;
+    }
+
+    .step-badge {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+    .nav-item.active {
+      color: #004EE0 !important;
+      font-weight: 700;
+    }
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 2px;
+      height: 2.5px;
+      border-radius: 2px;
+      background: #004EE0;
+      animation: fade-up 300ms ease both;
+    }
+
+    .mobile-nav-link.active {
+      color: #004EE0 !important;
+      font-weight: 700;
+      background-color: #E3F2FF;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      background: currentColor;
+      margin-left: 2px;
+      animation: cursor-blink 0.8s step-end infinite;
+    }
+    @keyframes cursor-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .carousel-slide {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .carousel-slide.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Timeline (Journey section) */
+    .timeline-track {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 27px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(153,202,255,0.05), rgba(153,202,255,0.55) 8%, rgba(153,202,255,0.55) 92%, rgba(153,202,255,0.05));
+    }
+    @media (min-width: 768px) {
+      .timeline-track { left: 50%; margin-left: -1px; }
+    }
+    .timeline-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0%;
+      background: linear-gradient(180deg, #99CAFF, #1883FF);
+      transition: height 100ms linear;
+      box-shadow: 0 0 14px rgba(153,202,255,0.7);
+    }
+    .timeline-node {
+      transition: transform 500ms cubic-bezier(0.2,0.8,0.2,1), background 400ms, border-color 400ms, box-shadow 400ms;
+      transform: scale(0.72);
+    }
+    .timeline-node.lit {
+      transform: scale(1);
+      background: linear-gradient(145deg, #1883FF, #004EE0);
+      border-color: #99CAFF;
+      box-shadow: 0 0 0 6px rgba(153,202,255,0.12), 0 8px 24px rgba(24,131,255,0.5);
+    }
+    .timeline-card {
+      opacity: 0.35;
+      transform: translateY(14px);
+      transition: opacity 600ms cubic-bezier(0.2,0.8,0.2,1), transform 600ms cubic-bezier(0.2,0.8,0.2,1);
+    }
+    .timeline-card.lit {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .timeline-percent {
+      font-variant-numeric: tabular-nums;
+    }
+
+.phone-frame {
+  position: relative;
+  width: min(220px, 68vw);
+  margin: 0 auto;
+}
+.phone-screen {
+  position: relative;
+  width: 100%;
+}
+.phone-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.hardware-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: linear-gradient(150deg, rgba(255,255,255,0.65), rgba(227,242,255,0.4));
+  overflow: hidden;
+}
+.hardware-frame img {
+  max-width: 90%;
+  max-height: 250px;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 30px rgba(0,78,224,0.2));
+  animation: wristband-float 4.5s ease-in-out infinite;
+}
+
+@keyframes wristband-float {
+  0%, 90% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+    .proto-nav-btn {
+      transition: transform 200ms, color 200ms;
+    }
+    .proto-nav-btn:hover {
+      transform: scale(1.12);
+    }
+
+    /* Problem stats */
+    .stat-card {
+      transition: transform 400ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 400ms, border-color 300ms;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -20px rgba(0,78,224,0.35);
+    }
+
+    /* Comparison table */
+    .compare-table th, .compare-table td {
+      vertical-align: middle;
+    }
+    .compare-check {
+      color: #1883FF;
+    }
+    .compare-cross {
+      color: #cbd5e1;
+    }
+    .compare-row-yusr {
+      background: linear-gradient(135deg, rgba(181, 220, 253, 0.55), rgba(255,255,255,0.4));
+    }
+
+    /* How it works */
+    .hiw-line {
+      position: absolute;
+      top: 34px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(24,131,255,0.35), rgba(24,131,255,0.35), transparent);
+    }
+    .hiw-node {
+      transition: transform 400ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 400ms;
+    }
+    .hiw-card:hover .hiw-node {
+      transform: scale(1.1);
+      box-shadow: 0 10px 24px -6px rgba(0,78,224,0.5);
+    }
+
+    /* Specs */
+    .spec-card {
+      transition: transform 400ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 400ms, border-color 300ms;
+    }
+    .spec-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(24,131,255,0.5);
+      box-shadow: 0 20px 40px -20px rgba(0,78,224,0.35);
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground">
+
+  <!-- Header -->
+  <header id="header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-4">
+        <a href="index.html#projects" id="back-link" class="group hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full border-[6px] border-ocean-sky/80 transition-all hover:border-ocean-sky hover:bg-white/10">
+          <i data-lucide="arrow-left" class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"></i>
+        </a>
+        <a href="index.html" class="group flex items-center gap-5">
+          <span class="relative flex h-9 items-center font-display text-2xl font-bold tracking-tight">
+            <span class="relative z-10 text-ocean-royal transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">F</span>
+            <span class="relative -ml-1 text-ocean-sky transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5">A</span>
+          </span>
+        </a>
+      </div>
+
+      <nav class="hidden items-center gap-1 md:flex">
+        <a href="#idea" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Idea</a>
+        <a href="#features" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Features</a>
+        <a href="#compare" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Compare</a>
+        <a href="#how" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">How it Works</a>
+        <a href="#journey" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Journey</a>
+        <a href="#product" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Product</a>
+        <a href="#numbers" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Numbers</a>
+      </nav>
+
+      <button id="menu-btn" class="md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white" aria-label="Menu">
+        Menu
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-background">
+      <div class="mx-auto flex max-w-6xl flex-col px-5 py-3">
+        <a href="index.html#projects" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">← Back to Portfolio</a>
+        <a href="#idea" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Idea</a>
+        <a href="#features" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Features</a>
+        <a href="#compare" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Compare</a>
+        <a href="#how" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">How it Works</a>
+        <a href="#journey" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Journey</a>
+        <a href="#product" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Product</a>
+        <a href="#numbers" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">numbers</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+ <section id="top" class="relative overflow-hidden gradient-hero">
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+    <div class="absolute -left-24 top-40 h-72 w-72 rounded-full bg-ocean-bright/30 blur-3xl float-slow"></div>
+    <div class="absolute -right-16 top-24 h-64 w-64 rounded-full bg-ocean-sky/25 blur-3xl float-slow [animation-delay:1.5s]"></div>
+
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <i data-lucide="map-pin" class="cyber-icon cyber-anim-1" style="top:10%; left:5%; width:120px; height:120px;"></i>
+      <i data-lucide="heart-pulse" class="cyber-icon cyber-anim-2" style="top:14%; right:6%; width:110px; height:110px; animation-delay:0.6s;"></i>
+      <i data-lucide="shield-check" class="cyber-icon cyber-anim-3" style="bottom:18%; left:6%; width:100px; height:100px; animation-delay:1.2s;"></i>
+      <i data-lucide="siren" class="cyber-icon cyber-anim-1" style="bottom:12%; right:7%; width:100px; height:100px; animation-delay:1.8s;"></i>
+      <i data-lucide="footprints" class="cyber-icon cyber-anim-4" style="top:46%; right:3%; width:85px; height:85px; animation-delay:1.5s;"></i>
+      <i data-lucide="moon" class="cyber-icon cyber-anim-2" style="top:44%; left:3%; width:80px; height:80px; animation-delay:2.4s;"></i>
+
+      <svg class="cyber-icon cyber-anim-3" style="bottom:6%; left:46%; width:95px; height:95px; animation-delay:2s;"
+           viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="5" width="16" height="16"></rect>
+        <line x1="4" y1="9" x2="20" y2="9"></line>
+        <rect x="10" y="15" width="4" height="6"></rect>
+      </svg>
+    </div>
+
+    <div class="relative mx-auto flex min-h-[86vh] max-w-6xl flex-col items-center justify-center px-5 pt-28 pb-16 text-center">
+
+      <p id="typewriter" class="fade-up mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-ocean-sky [animation-delay:0ms]">
+        <span id="typewriter-text"></span><span class="typewriter-cursor">&nbsp;</span>
+      </p>
+
+      <h1 class="fade-up text-5xl font-bold leading-[1.05] sm:text-6xl md:text-7xl [animation-delay:80ms]">
+        <span class="text-shimmer">Yusr</span>
+      </h1>
+
+      <p class="fade-up mt-8 max-w-2xl text-sm text-white/85 sm:text-base [animation-delay:160ms]">
+Smart Hajj wristband & app for safer pilgrimages      </p>
+    </div>
+  </section>
+
+ <!-- Idea / Overview Section -->
+<section id="idea" class="relative">
+  <div class="reveal mx-auto max-w-6xl px-5 py-14 sm:py-20 md:py-24">
+    <div class="mx-auto mb-10 max-w-3xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        The Idea
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+        What is Yusr?
+      </h2>
+    </div>
+
+    <div class="grid gap-8">
+      <div class="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-5 sm:p-10 shadow-sm card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <p class="text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+Every Hajj season brings over two million pilgrims into crowded holy sites, where losing track of Tawaf or Sa'i rounds or finding help can be challenging. Yusr is a smart wristband paired with a mobile app that uses AI-powered motion sensing to automatically count rituals and includes an SOS button that instantly shares the pilgrim's live location with emergency contacts.
+        </p>
+        <p class="mt-4 sm:mt-5 text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+          The companion app also guides pilgrims to nearby exits, restrooms, and meeting points. Yusr was developed as a complete<span class="font-semibold text-ocean-deep"> entrepreneurship project, simulating the journey of building a startup</span> from market research and MVP development to business modeling, marketing strategy, and financial planning.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+  <!-- Features Section -->
+  <section id="features" class="relative gradient-band">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Capabilities
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          Features
+        </h2>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="repeat" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">AI Tawaf & Sa'i Counter</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Auto-counts rituals so pilgrims stay focused.
+          </p>
+        </div>
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="siren" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">SOS Emergency System</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            One press shares live location with responders instantly.
+          </p>
+        </div>
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="map" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">Navigation in the Holy Sites</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Guides pilgrims to exits and meeting points.
+          </p>
+        </div>
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="users" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">Group Safety Tracking</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Keeps families connected in large crowds.
+          </p>
+        </div>
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="heart-pulse" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">Basic Health Monitoring</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Flags early signs of exhaustion or heat stress.
+          </p>
+        </div>
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="languages" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">Bilingual Experience</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Supports Arabic, Urdu, and English.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+<!-- Comparison Section -->
+  <section id="compare" class="relative">
+    <div class="reveal mx-auto max-w-5xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          How We're Different
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+Yusr vs. Existing Solutions        </h2>
+      </div>
+
+      <div class="overflow-x-auto rounded-2xl border border-border bg-card shadow-sm mx-auto" style="border: 1px solid rgba(24,131,255,0.35); max-width: 900px;">
+        <table class="compare-table border-collapse text-sm" style="width: 100%;">
+          <thead>
+            <tr class="border-b border-border bg-ocean-mist/50">
+              <th class="px-5 py-4 text-left font-semibold text-ocean-deep">Capability</th>
+              <th class="px-5 py-4 text-center font-semibold text-slate-500">Nusuk App</th>
+              <th class="px-5 py-4 text-center font-semibold text-slate-500">Pilgrim App</th>
+              <th class="px-5 py-4 text-center font-semibold text-ocean-royal">Yusr</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-border">
+              <td class="px-5 py-4 text-slate-700">Wearable Device</td>
+              <td class="px-5 py-4 text-center"><i data-lucide="x" class="compare-cross mx-auto h-4 w-4"></i></td>
+              <td class="px-5 py-4 text-center"><i data-lucide="x" class="compare-cross mx-auto h-4 w-4"></i></td>
+              <td class="px-5 py-4 text-center compare-row-yusr"><i data-lucide="check" class="compare-check mx-auto h-4 w-4"></i></td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="px-5 py-4 text-slate-700">Auto Ritual Counter</td>
+              <td class="px-5 py-4 text-center"><i data-lucide="x" class="compare-cross mx-auto h-4 w-4"></i></td>
+              <td class="px-5 py-4 text-center"><i data-lucide="x" class="compare-cross mx-auto h-4 w-4"></i></td>
+              <td class="px-5 py-4 text-center compare-row-yusr"><i data-lucide="check" class="compare-check mx-auto h-4 w-4"></i></td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="px-5 py-4 text-slate-700">Emergency SOS</td>
+              <td class="px-5 py-4 text-center"><i data-lucide="x" class="compare-cross mx-auto h-4 w-4"></i></td>
+              <td class="px-5 py-4 text-center"><i data-lucide="x" class="compare-cross mx-auto h-4 w-4"></i></td>
+              <td class="px-5 py-4 text-center compare-row-yusr"><i data-lucide="check" class="compare-check mx-auto h-4 w-4"></i></td>
+            </tr>
+            <tr class="border-b border-border">
+              <td class="px-5 py-4 text-slate-700">Voice Commands</td>
+              <td class="px-5 py-4 text-center"><i data-lucide="x" class="compare-cross mx-auto h-4 w-4"></i></td>
+              <td class="px-5 py-4 text-center"><i data-lucide="x" class="compare-cross mx-auto h-4 w-4"></i></td>
+              <td class="px-5 py-4 text-center compare-row-yusr"><i data-lucide="check" class="compare-check mx-auto h-4 w-4"></i></td>
+            </tr>
+            <tr>
+              <td class="px-5 py-4 text-slate-700">Gate Status</td>
+              <td class="px-5 py-4 text-center"><i data-lucide="check" class="compare-check mx-auto h-4 w-4"></i></td>
+              <td class="px-5 py-4 text-center"><i data-lucide="x" class="compare-cross mx-auto h-4 w-4"></i></td>
+              <td class="px-5 py-4 text-center compare-row-yusr"><i data-lucide="check" class="compare-check mx-auto h-4 w-4"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+<p class="mx-auto mt-4 max-w-[900px] px-5 text-[11px] text-muted-foreground">
+Comparison of Available Features (2026)</p>
+    </div>
+  </section>
+<!-- How It Works Section -->
+  <style>
+    #how .hiw-line{position:absolute;top:34px;left:8%;right:8%;height:2px;display:flex;gap:0;background:transparent;}
+    #how .hiw-seg{position:relative;flex:1;height:2px;background:rgba(24,131,255,0.15);overflow:hidden;}
+    #how .hiw-seg-fill{position:absolute;inset:0 100% 0 0;background:linear-gradient(90deg,var(--ocean-royal,#1883ff),var(--ocean-bright,#4fb6ff));}
+    #how.in-view .hiw-seg:nth-child(1) .hiw-seg-fill{animation:hiwSegGrow 1.6s ease-in-out 1.0s both;}
+    #how.in-view .hiw-seg:nth-child(2) .hiw-seg-fill{animation:hiwSegGrow 1.6s ease-in-out 3.6s both;}
+    #how.in-view .hiw-seg:nth-child(3) .hiw-seg-fill{animation:hiwSegGrow 1.6s ease-in-out 6.2s both;}
+
+    #how .hiw-node{transform:scale(1);transition:none;}
+    #how.in-view .hiw-card:nth-child(2) .hiw-node{animation:hiwPop 1.2s ease-out .1s both;}
+    #how.in-view .hiw-card:nth-child(3) .hiw-node{animation:hiwPop 1.2s ease-out 2.7s both;}
+    #how.in-view .hiw-card:nth-child(4) .hiw-node{animation:hiwPop 1.2s ease-out 5.3s both;}
+    #how.in-view .hiw-card:nth-child(5) .hiw-node{animation:hiwPop 1.2s ease-out 7.9s both;}
+
+    @keyframes hiwPop{
+      0%{transform:scale(1);box-shadow:0 10px 15px -3px rgba(24,131,255,0.3);}
+      50%{transform:scale(1.18);box-shadow:0 0 0 10px rgba(24,131,255,0.15),0 10px 25px -3px rgba(24,131,255,0.5);}
+      100%{transform:scale(1);box-shadow:0 10px 15px -3px rgba(24,131,255,0.3);}
+    }
+    @keyframes hiwSegGrow{
+      0%{inset:0 100% 0 0;}
+      100%{inset:0 0 0 0;}
+    }
+.hiw-track-mobile {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg,
+    rgba(0,78,224,0.04),
+    rgba(0,78,224,0.4) 6%,
+    rgba(0,78,224,0.4) 94%,
+    rgba(0,78,224,0.04)
+  );
+  z-index: 0;
+}
+@media (max-width: 1023px) {
+  .hiw-line { display: none !important; }
+}
+@media (max-width: 639px) {
+  .hiw-card:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -2rem;      /* بالضبط قيمة gap-8 = 2rem */
+    width: 2px;
+    height: 2rem;        /* بالضبط ارتفاع الفراغ، مو أكثر */
+    transform: translateX(-50%);
+    background: repeating-linear-gradient(180deg, rgba(0,78,224,0.35) 0 6px, transparent 6px 12px);
+    z-index: 0;
+  }
+}
+  </style>
+  <section id="how" class="relative gradient-band">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-14 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Simple by Design
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          How Yusr Works
+        </h2>
+      </div>
+
+<div class="relative grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">        <div class="hiw-line hidden lg:block">
+          <div class="hiw-seg"><div class="hiw-seg-fill"></div></div>
+          <div class="hiw-seg"><div class="hiw-seg-fill"></div></div>
+          <div class="hiw-seg"><div class="hiw-seg-fill"></div></div>
+        </div>
+  <div class="hiw-track-mobile"></div>  <!-- ← جديد -->
+
+        <div class="hiw-card relative flex flex-col items-center text-center">
+          <div class="hiw-node relative z-10 grid h-[68px] w-[68px] place-items-center rounded-full bg-gradient-to-br from-ocean-royal to-ocean-bright text-white shadow-lg shadow-ocean-royal/30">
+            <i data-lucide="watch" class="h-6 w-6"></i>
+          </div>
+          <span class="step-badge mt-4 text-xs font-bold uppercase tracking-[0.2em] text-ocean-royal">Step 01</span>
+          <h3 class="mt-1 text-sm font-bold text-ocean-deep">Wear the wristband</h3>
+          <p class="mt-2 text-xs leading-relaxed text-slate-600">Put it on and pair it with the app</p>
+        </div>
+
+        <div class="hiw-card relative flex flex-col items-center text-center">
+          <div class="hiw-node relative z-10 grid h-[68px] w-[68px] place-items-center rounded-full bg-gradient-to-br from-ocean-royal to-ocean-bright text-white shadow-lg shadow-ocean-royal/30">
+            <i data-lucide="repeat" class="h-6 w-6"></i>
+          </div>
+          <span class="step-badge mt-4 text-xs font-bold uppercase tracking-[0.2em] text-ocean-royal">Step 02</span>
+          <h3 class="mt-1 text-sm font-bold text-ocean-deep">Rituals tracked automatically</h3>
+          <p class="mt-2 text-xs leading-relaxed text-slate-600">Every Tawaf and Sa'i round counted live</p>
+        </div>
+
+        <div class="hiw-card relative flex flex-col items-center text-center">
+          <div class="hiw-node relative z-10 grid h-[68px] w-[68px] place-items-center rounded-full bg-gradient-to-br from-ocean-royal to-ocean-bright text-white shadow-lg shadow-ocean-royal/30">
+            <i data-lucide="siren" class="h-6 w-6"></i>
+          </div>
+          <span class="step-badge mt-4 text-xs font-bold uppercase tracking-[0.2em] text-ocean-royal">Step 03</span>
+          <h3 class="mt-1 text-sm font-bold text-ocean-deep">Press SOS if needed</h3>
+          <p class="mt-2 text-xs leading-relaxed text-slate-600">One press triggers an instant alert</p>
+        </div>
+
+        <div class="hiw-card relative flex flex-col items-center text-center">
+          <div class="hiw-node relative z-10 grid h-[68px] w-[68px] place-items-center rounded-full bg-gradient-to-br from-ocean-royal to-ocean-bright text-white shadow-lg shadow-ocean-royal/30">
+            <i data-lucide="map-pin" class="h-6 w-6"></i>
+          </div>
+          <span class="step-badge mt-4 text-xs font-bold uppercase tracking-[0.2em] text-ocean-royal">Step 04</span>
+          <h3 class="mt-1 text-sm font-bold text-ocean-deep">Family gets the location</h3>
+          <p class="mt-2 text-xs leading-relaxed text-slate-600">Contacts get the live location instantly</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      var el = document.getElementById('how');
+      if(!el) return;
+
+      var CYCLE_END = 9.1;   // seconds — when the last pop animation finishes
+      var PAUSE = 2;         // seconds to wait before replaying
+      var TOTAL = (CYCLE_END + PAUSE) * 1000;
+
+      function playCycle(){
+        el.classList.remove('in-view');
+        // force reflow so the browser registers the class removal
+        void el.offsetWidth;
+        el.classList.add('in-view');
+      }
+
+      var started = false;
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting && !started){
+            started = true;
+            playCycle();
+            setInterval(playCycle, TOTAL);
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+      obs.observe(el);
+    })();
+  </script>
+<!-- Journey / Process Section -->
+  <section id="journey" class="relative bg-ocean-deep text-white overflow-hidden">
+    <div class="pointer-events-none absolute top-1/3 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-ocean-sky/10 blur-3xl"></div>
+    <div class="reveal mx-auto max-w-4xl px-5 py-20 sm:py-24">
+      <div class="mb-16 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+          <span class="h-px w-8 bg-ocean-sky/60"></span>
+          From Idea to Feasibility
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          The Startup Journey
+        </h2>
+      </div>
+
+      <div id="timeline" class="relative">
+        <!-- Track + animated progress fill -->
+        <div class="timeline-track">
+          <div id="timeline-progress" class="timeline-progress"></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="timeline-step relative mb-14 flex md:mb-20 md:items-center" data-index="0">
+          <div class="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center">
+            <div class="timeline-node flex h-11 w-11 items-center justify-center rounded-full border-2 border-white/25 bg-white/[0.06]">
+              <i data-lucide="search" class="h-5 w-5 text-white"></i>
+            </div>
+          </div>
+          <div class="timeline-card ml-6 flex-1 rounded-2xl border border-white/15 bg-white/[0.05] p-4 backdrop-blur md:ml-10 md:max-w-sm">
+            <span class="step-badge text-xs font-bold uppercase tracking-[0.2em] text-ocean-sky">Stage 01 · Discover</span>
+            <h3 class="mt-2 font-semibold text-white">Market Research & Validation</h3>
+            <p class="mt-2 text-xs text-white/80">
+              Validated the problem by studying pilgrim needs and existing competitors.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="timeline-step relative mb-14 flex md:mb-20 md:items-center md:flex-row-reverse" data-index="1">
+          <div class="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center">
+            <div class="timeline-node flex h-11 w-11 items-center justify-center rounded-full border-2 border-white/25 bg-white/[0.06]">
+              <i data-lucide="cpu" class="h-5 w-5 text-white"></i>
+            </div>
+          </div>
+          <div class="timeline-card ml-6 flex-1 rounded-2xl border border-white/15 bg-white/[0.05] p-4 backdrop-blur md:ml-0 md:mr-10 md:max-w-sm md:text-right">
+            <span class="step-badge text-xs font-bold uppercase tracking-[0.2em] text-ocean-sky">Stage 02 · Build</span>
+            <h3 class="mt-2 font-semibold text-white">MVP Development</h3>
+            <p class="mt-2 text-xs text-white/80">
+              Built the first wristband and app prototype: counting, SOS, and navigation.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="timeline-step relative mb-14 flex md:mb-20 md:items-center" data-index="2">
+          <div class="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center">
+            <div class="timeline-node flex h-11 w-11 items-center justify-center rounded-full border-2 border-white/25 bg-white/[0.06]">
+              <i data-lucide="layout-grid" class="h-5 w-5 text-white"></i>
+            </div>
+          </div>
+          <div class="timeline-card ml-6 flex-1 rounded-2xl border border-white/15 bg-white/[0.05] p-4 backdrop-blur md:ml-10 md:max-w-sm">
+            <span class="step-badge text-xs font-bold uppercase tracking-[0.2em] text-ocean-sky">Stage 03 · Structure</span>
+            <h3 class="mt-2 font-semibold text-white">Business Model</h3>
+            <p class="mt-2 text-xs text-white/80">
+              Defined customer segments, channels, and revenue for a seasonal product.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="timeline-step relative mb-14 flex md:mb-20 md:items-center md:flex-row-reverse" data-index="3">
+          <div class="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center">
+            <div class="timeline-node flex h-11 w-11 items-center justify-center rounded-full border-2 border-white/25 bg-white/[0.06]">
+              <i data-lucide="megaphone" class="h-5 w-5 text-white"></i>
+            </div>
+          </div>
+          <div class="timeline-card ml-6 flex-1 rounded-2xl border border-white/15 bg-white/[0.05] p-4 backdrop-blur md:ml-0 md:mr-10 md:max-w-sm md:text-right">
+            <span class="step-badge text-xs font-bold uppercase tracking-[0.2em] text-ocean-sky">Stage 04 · Reach</span>
+            <h3 class="mt-2 font-semibold text-white">Marketing Strategy</h3>
+            <p class="mt-2 text-xs text-white/80">
+              Built channels to reach pilgrims and organizers with a clear message.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="timeline-step relative flex md:items-center" data-index="4">
+          <div class="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center">
+            <div class="timeline-node flex h-11 w-11 items-center justify-center rounded-full border-2 border-white/25 bg-white/[0.06]">
+              <i data-lucide="calculator" class="h-5 w-5 text-white"></i>
+            </div>
+          </div>
+          <div class="timeline-card ml-6 flex-1 rounded-2xl border border-white/15 bg-white/[0.05] p-4 backdrop-blur md:ml-10 md:max-w-sm">
+            <span class="step-badge text-xs font-bold uppercase tracking-[0.2em] text-ocean-sky">Stage 05 · Validate</span>
+            <h3 class="mt-2 font-semibold text-white">Financial Planning & Feasibility</h3>
+            <p class="mt-2 text-xs text-white/80">
+              Modeled costs and returns to test if Yusr could become a real startup.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product / Prototype Section -->
+  <section id="product" class="relative gradient-band">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+
+      <div class="mb-4 flex items-center gap-4">
+        <span class="h-px w-10 bg-ocean-royal/50"></span>
+        <h2 class="text-3xl font-bold tracking-tight gradient-text sm:text-4xl">
+          The Prototype
+        </h2>
+      </div>
+
+      <p class="text-sm text-muted-foreground">
+A smart wristband & app for pilgrims  </p>
+
+      <div class="mt-10 grid items-center gap-10 lg:grid-cols-[1fr_auto_1fr]">
+
+        <!-- App phone mockup (left) -->
+<div class="order-2 flex flex-col items-center gap-1 lg:order-1">          <div class="flex items-center justify-center gap-3">
+            <button id="iface-prev" aria-label="Previous screen"
+              class="proto-nav-btn hidden shrink-0 text-ocean-royal hover:text-blue-600 sm:block">
+              <i data-lucide="chevron-left" class="h-7 w-7"></i>
+            </button>
+
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <img id="iface-image" src="" alt="">
+                <div class="iface-fallback absolute inset-0 hidden flex-col items-center justify-center gap-2 text-center px-6 bg-white">
+                  <i data-lucide="image" class="h-7 w-7 text-ocean-royal/40"></i>
+                </div>
+              </div>
+            </div>
+
+            <button id="iface-next" aria-label="Next screen"
+              class="proto-nav-btn hidden shrink-0 text-ocean-royal hover:text-blue-600 sm:block">
+              <i data-lucide="chevron-right" class="h-7 w-7"></i>
+            </button>
+          </div>
+<br>
+          <!-- Tabs live directly under the phone mockup -->
+<div id="iface-tabs" class="flex flex-wrap justify-center gap-1"></div>       </div>
+
+        <!-- Divider (desktop only) -->
+        <div class="order-1 hidden h-72 w-px bg-gradient-to-b from-transparent via-ocean-royal/20 to-transparent lg:order-2 lg:block"></div>
+
+        <!-- Hardware photo (right) -->
+        <div class="order-1 lg:order-3">
+          <div class="hardware-frame">
+            <img id="hardware-image" src="wrish.png" alt="Yusr smart wristband"
+                 onerror="this.parentElement.querySelector('.hardware-fallback').style.display='flex'; this.style.display='none';">
+            <div class="hardware-fallback absolute inset-0 hidden flex-col items-center justify-center gap-2 text-center px-6">
+              <i data-lucide="watch" class="h-8 w-8 text-ocean-royal/40"></i>
+            </div>
+          </div>
+          <br>
+<div class="mt-5 flex items-center justify-center gap-2">
+  <span class="h-px w-6 bg-ocean-royal/40"></span>
+  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal/80">
+    The Wristband
+  </p>
+  <span class="h-px w-6 bg-ocean-royal/40"></span>
+</div>      </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+  (function () {
+    const categories = [
+      { key: "splash",  label: "Splash",  images: ["y1.png"] },
+      { key: "home",    label: "Home",    images: ["y2.png"] },
+      { key: "health",  label: "Health",  images: ["y3.png"] },
+      { key: "rituals", label: "Rituals", images: ["y4.png"] },
+      { key: "contact", label: "Contact", images: ["y5.png"] },
+      { key: "map",     label: "Map",     images: ["y6.png"] },
+    ];
+
+    let activeCategory = 0;
+    let activeImage = 0;
+
+    const tabsEl = document.getElementById("iface-tabs");
+    const imgEl = document.getElementById("iface-image");
+    imgEl.style.transition = "opacity .35s ease, transform .35s ease";
+    const prevBtn = document.getElementById("iface-prev");
+    const nextBtn = document.getElementById("iface-next");
+
+    function renderTabs() {
+      tabsEl.innerHTML = "";
+      categories.forEach((cat, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = cat.label;
+btn.className =
+  "rounded-full px-2 py-1 text-[10px] sm:px-3 sm:py-1.5 sm:text-xs font-semibold transition-all duration-300 " +
+  (i === activeCategory
+    ? "bg-ocean-royal text-white shadow-md shadow-ocean-royal/30 scale-105"
+    : "bg-white/70 text-ocean-deep/70 hover:bg-ocean-mist");
+        btn.style.border = i === activeCategory ? "1px solid transparent" : "1px solid rgba(24,131,255,0.25)";
+        btn.addEventListener("click", () => {
+          activeCategory = i;
+          activeImage = 0;
+          render();
+        });
+        tabsEl.appendChild(btn);
+      });
+    }
+
+    function render() {
+      const cat = categories[activeCategory];
+      const file = cat.images[activeImage];
+      const fallback = imgEl.parentElement.querySelector(".iface-fallback");
+      fallback.style.display = "none";
+
+      imgEl.style.opacity = "0";
+      imgEl.style.transform = "translateX(30px)";
+
+      setTimeout(() => {
+        imgEl.src = file;
+        imgEl.alt = cat.label + " screen " + (activeImage + 1);
+        imgEl.style.display = "block";
+        imgEl.style.opacity = "1";
+        imgEl.style.transform = "translateX(0)";
+      }, 180);
+
+      renderTabs();
+    }
+
+function step(delta) {
+  activeCategory = (activeCategory + delta + categories.length) % categories.length;
+  activeImage = 0;
+  render();
+}
+    prevBtn.addEventListener("click", () => step(-1));
+    nextBtn.addEventListener("click", () => step(1));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") step(-1);
+      if (e.key === "ArrowRight") step(1);
+    });
+
+    render();
+  })();
+  </script>
+<!-- Hardware Specs (replacing Market/Finance numbers) -->
+<style>
+  #numbers .spec-card{
+    opacity:0;
+    transform:translateY(24px);
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease, background .35s ease;
+  }
+  #numbers.in-view .spec-card{animation:specFadeUp .7s ease-out forwards;}
+  #numbers.in-view .spec-card:nth-child(1){animation-delay:.05s;}
+  #numbers.in-view .spec-card:nth-child(2){animation-delay:.25s;}
+  #numbers.in-view .spec-card:nth-child(3){animation-delay:.45s;}
+  #numbers.in-view .spec-card:nth-child(4){animation-delay:.65s;}
+
+  #numbers .spec-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(139,197,255,0.5);
+    background:rgba(255,255,255,0.08);
+    box-shadow:0 12px 30px -8px rgba(24,131,255,0.35);
+  }
+  #numbers .spec-card:hover .spec-icon{animation:specIconPulse .6s ease;}
+
+  @keyframes specFadeUp{
+    0%{opacity:0;transform:translateY(24px);}
+    100%{opacity:1;transform:translateY(0);}
+  }
+  @keyframes specIconPulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.15);}
+    100%{transform:scale(1);}
+  }
+</style>
+<section id="numbers" class="relative bg-ocean-deep text-white overflow-hidden">
+  <div class="pointer-events-none absolute top-0 left-1/2 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-ocean-sky/10 blur-3xl"></div>
+  <div class="reveal relative mx-auto max-w-4xl px-5 py-20 sm:py-24">
+
+    <div class="mb-6 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+      <span class="h-px w-8 bg-ocean-sky/60"></span>
+      Built for the Environment
+      <span class="h-px w-8 bg-ocean-sky/60"></span>
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="spec-card rounded-2xl border border-white/15 bg-white/[0.05] p-6 text-center backdrop-blur">
+        <div class="spec-icon mx-auto grid h-12 w-12 place-items-center rounded-xl bg-white/10 text-ocean-sky">
+          <i data-lucide="battery-charging" class="h-5 w-5"></i>
+        </div>
+        <div class="step-badge mt-3 text-lg font-bold text-white">Up to 48 hrs</div>
+        <p class="mt-1 text-xs text-white/55">Full multi-day ritual cycle on one charge</p>
+      </div>
+      <div class="spec-card rounded-2xl border border-white/15 bg-white/[0.05] p-6 text-center backdrop-blur">
+        <div class="spec-icon mx-auto grid h-12 w-12 place-items-center rounded-xl bg-white/10 text-ocean-sky">
+          <i data-lucide="droplets" class="h-5 w-5"></i>
+        </div>
+        <div class="step-badge mt-3 text-lg font-bold text-white">IP67 Rated</div>
+        <p class="mt-1 text-xs text-white/55">Sweat, splash, and dust resistant</p>
+      </div>
+      <div class="spec-card rounded-2xl border border-white/15 bg-white/[0.05] p-6 text-center backdrop-blur">
+        <div class="spec-icon mx-auto grid h-12 w-12 place-items-center rounded-xl bg-white/10 text-ocean-sky">
+          <i data-lucide="thermometer" class="h-5 w-5"></i>
+        </div>
+        <div class="step-badge mt-3 text-lg font-bold text-white">Up to 55°C</div>
+        <p class="mt-1 text-xs text-white/55">Built for extreme Hajj-season heat</p>
+      </div>
+      <div class="spec-card rounded-2xl border border-white/15 bg-white/[0.05] p-6 text-center backdrop-blur">
+        <div class="spec-icon mx-auto grid h-12 w-12 place-items-center rounded-xl bg-white/10 text-ocean-sky">
+          <i data-lucide="locate-fixed" class="h-5 w-5"></i>
+        </div>
+        <div class="step-badge mt-3 text-lg font-bold text-white">~3–5 m</div>
+        <p class="mt-1 text-xs text-white/55">GPS accuracy with site beacon support</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function(){
+    var el = document.getElementById('numbers');
+    if(!el) return;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          el.classList.add('in-view');
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.25 });
+    obs.observe(el);
+  })();
+</script>
+
+  <!-- CTA -->
+<section class="relative gradient-band">
+    <div class="reveal mx-auto max-w-4xl px-5 py-20 text-center sm:py-24">
+      <h2 class="text-3xl font-bold tracking-tight gradient-text sm:text-4xl">See Yusr in Action</h2>
+      <p class="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
+        Explore the live prototype to see the landing page and product concept firsthand
+      </p>
+      <a href="https://yusr.base44.app/" target="_blank" rel="noreferrer" class="shine mt-8 inline-flex items-center gap-2 rounded-full bg-ocean-royal px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-ocean-royal/20 transition-all hover:-translate-y-0.5 hover:shadow-xl">
+        <i data-lucide="external-link" class="h-4 w-4"></i>
+        Yusr.app
+      </a>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="border-t border-border bg-background">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row">
+      <div class="flex items-center gap-2">
+        <i data-lucide="code-2" class="h-3.5 w-3.5 text-ocean-royal"></i>
+        <span>Fajer Mohammed Alamro</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    (function () {
+      const text = "Entrepreneurship Project";
+      const el = document.getElementById('typewriter-text');
+      let i = 0;
+
+      function type() {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, 45);
+        } else {
+          setTimeout(erase, 2200);
+        }
+      }
+
+      function erase() {
+        if (i > 0) {
+          el.textContent = text.substring(0, i - 1);
+          i--;
+          setTimeout(erase, 25);
+        } else {
+          setTimeout(type, 400);
+        }
+      }
+
+      setTimeout(type, 500);
+    })();
+
+    const header = document.getElementById('header');
+    const backLink = document.getElementById('back-link');
+    const navItems = document.querySelectorAll('.nav-item');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const menuBtn = document.getElementById('menu-btn');
+    const sections = document.querySelectorAll('section[id]');
+
+    let isScrolled = false;
+    let activeSection = 'top';
+
+    function applyNavStyles() {
+      if (isScrolled) {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
+        menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-royal/40 px-3.5 py-1.5 text-xs font-medium text-ocean-royal transition-all hover:border-ocean-royal hover:bg-ocean-mist";
+      } else {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
+        menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-sky/50 px-3.5 py-1.5 text-xs font-medium text-white/90 transition-all hover:border-ocean-sky hover:bg-white/10";
+      }
+
+      navItems.forEach(item => {
+        const targetId = item.getAttribute('href').replace('#', '');
+        const isActive = targetId === activeSection;
+        const baseClasses = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors";
+        const inactiveColor = isScrolled
+          ? "text-muted-foreground hover:text-ocean-royal"
+          : "text-white/75 hover:text-white";
+
+        item.className = isActive
+          ? `${baseClasses} active`
+          : `${baseClasses} ${inactiveColor}`;
+      });
+
+      mobileNavLinks.forEach(link => {
+        const targetId = link.getAttribute('href').replace(/^.*#/, '');
+        const isActive = targetId === activeSection;
+        const base = "mobile-nav-link rounded-md px-2 py-2 text-sm hover:bg-secondary";
+        link.className = isActive
+          ? `${base} active`
+          : `${base} text-foreground`;
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      isScrolled = window.scrollY > 12;
+      applyNavStyles();
+    });
+
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeSection = entry.target.id;
+            applyNavStyles();
+          }
+        });
+      }, {
+        threshold: 0,
+        rootMargin: '-45% 0px -50% 0px'
+      });
+      sections.forEach((section) => sectionObserver.observe(section));
+    }
+
+    applyNavStyles();
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (isHidden) {
+        mobileMenu.classList.remove('hidden');
+        menuBtn.innerText = 'Close';
+      } else {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      }
+    });
+
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      });
+    });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach((el) => io.observe(el));
+    } else {
+      revealEls.forEach((e) => e.classList.add('reveal-in'));
+    }
+
+    /* Journey timeline: fill the connecting line and light up nodes as the user scrolls */
+    (function () {
+      const wrap = document.getElementById('timeline');
+      const progress = document.getElementById('timeline-progress');
+      if (!wrap || !progress) return;
+
+      const nodes = Array.from(document.querySelectorAll('.timeline-step'));
+
+      function update() {
+        const rect = wrap.getBoundingClientRect();
+        const viewportH = window.innerHeight;
+        const total = rect.height;
+
+        // How far the viewport center has progressed through the timeline
+        const raw = (viewportH * 0.6 - rect.top) / total;
+        const pct = Math.max(0, Math.min(1, raw));
+        progress.style.height = (pct * 100) + '%';
+
+        nodes.forEach((node) => {
+          const nRect = node.getBoundingClientRect();
+          const nodeCenter = nRect.top + nRect.height / 2;
+          const lit = nodeCenter < viewportH * 0.62;
+          const nodeEl = node.querySelector('.timeline-node');
+          const cardEl = node.querySelector('.timeline-card');
+          if (lit) {
+            nodeEl.classList.add('lit');
+            cardEl.classList.add('lit');
+          } else {
+            nodeEl.classList.remove('lit');
+            cardEl.classList.remove('lit');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+  </script>
+</body>
+</html>

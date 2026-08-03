@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Munir | Fajer Alamro</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <!-- Tailwind Custom Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-deep': '#042E7B',
+            'ocean-royal': '#004EE0',
+            'ocean-bright': '#1883FF',
+            'ocean-sky': '#99CAFF',
+            'ocean-mist': '#E3F2FF',
+            background: '#f8fafc',
+            foreground: '#0f172a',
+            card: '#ffffff',
+            'card-foreground': '#0f172a',
+            border: '#e2e8f0',
+            muted: '#f1f5f9',
+            'muted-foreground': '#64748b',
+            secondary: '#E3F2FF',
+            'secondary-foreground': '#042E7B',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Component Styles -->
+  <style>
+    :root {
+      --ocean-deep: #042E7B;
+      --ocean-royal: #004EE0;
+      --ocean-bright: #1883FF;
+      --ocean-sky: #99CAFF;
+      --ocean-mist: #E3F2FF;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .gradient-hero {
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(24, 131, 255, 0.55), transparent 60%),
+        radial-gradient(800px 400px at 10% 20%, rgba(0, 78, 224, 0.6), transparent 60%),
+        linear-gradient(180deg, #042E7B, #021a47);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #042E7B, #1883FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .gradient-band {
+      background: linear-gradient(135deg, rgba(227, 242, 255, 0.6), #ffffff);
+    }
+
+    .card-hover {
+      transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 400ms, border-color 300ms;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px -22px rgba(0, 78, 224, 0.4);
+      border-color: rgba(24, 131, 255, 0.55);
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-slow {
+      animation: float-slow 6s ease-in-out infinite;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up {
+      animation: fade-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    @keyframes text-shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .text-shimmer {
+      background: linear-gradient(90deg, #E3F2FF, #99CAFF, #1883FF, #99CAFF, #E3F2FF);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: text-shimmer 5s linear infinite;
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 800ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Shine sweep */
+    .shine {
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes shine {
+      0% { transform: translateX(-120%) skewX(-20deg); }
+      100% { transform: translateX(220%) skewX(-20deg); }
+    }
+    .shine::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: translateX(-120%) skewX(-20deg);
+    }
+    .shine:hover::after {
+      animation: shine 1.2s ease-in-out;
+    }
+
+    /* Cyber floating icons in hero background */
+    .cyber-icon {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.03);
+      stroke-width: 1;
+      pointer-events: none;
+    }
+    @keyframes cyber-float-1 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(14px, -22px) rotate(8deg); }
+    }
+    @keyframes cyber-float-2 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-18px, 16px) rotate(-6deg); }
+    }
+    @keyframes cyber-float-3 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(10px, 20px) rotate(10deg); }
+    }
+    @keyframes cyber-drift {
+      0% { transform: translateY(0); opacity: 0.14; }
+      50% { opacity: 0.26; }
+      100% { transform: translateY(-26px); opacity: 0.14; }
+    }
+    .cyber-anim-1 { animation: cyber-float-1 7s ease-in-out infinite; }
+    .cyber-anim-2 { animation: cyber-float-2 9s ease-in-out infinite; }
+    .cyber-anim-3 { animation: cyber-float-3 8s ease-in-out infinite; }
+    .cyber-anim-4 { animation: cyber-drift 10s ease-in-out infinite; }
+
+    .binary-stream {
+      position: absolute;
+      color: rgba(153, 202, 255, 0.035);
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      letter-spacing: 0.15em;
+      white-space: pre;
+      pointer-events: none;
+      animation: cyber-drift 12s ease-in-out infinite;
+    }
+
+    /* Step number badge for the feature/pipeline items */
+    .step-badge {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Active nav item (scrollspy) — underline + blue */
+    .nav-item {
+      position: relative;
+    }
+    .nav-item.active {
+      color: #004EE0 !important;
+      font-weight: 700;
+    }
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 2px;
+      height: 2.5px;
+      border-radius: 2px;
+      background: #004EE0;
+      animation: fade-up 300ms ease both;
+    }
+
+    .mobile-nav-link.active {
+      color: #004EE0 !important;
+      font-weight: 700;
+      background-color: #E3F2FF;
+    }
+
+    /* Typewriter effect */
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      background: currentColor;
+      margin-left: 2px;
+      animation: cursor-blink 0.8s step-end infinite;
+    }
+    @keyframes cursor-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .carousel-slide {
+    opacity: 0;
+    transform: translateX(30px);
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground">
+
+  <!-- Header -->
+  <header id="header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-4">
+<a href="index.html#projects" id="back-link" class="group hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full border-[6px] border-ocean-sky/80 transition-all hover:border-ocean-sky hover:bg-white/10">
+  <i data-lucide="arrow-left" class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"></i>
+</a>
+        <a href="index.html" class="group flex items-center gap-5">
+          <span class="relative flex h-9 items-center font-display text-2xl font-bold tracking-tight">
+            <span class="relative z-10 text-ocean-royal transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">F</span>
+            <span class="relative -ml-1 text-ocean-sky transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5">A</span>
+          </span>
+        </a>
+      </div>
+
+      <nav class="hidden items-center gap-1 md:flex">
+        <a href="#idea" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Idea</a>
+        <a href="#features" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Features</a>
+        <a href="#pipeline" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">AI Models</a>
+        <a href="#product" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">product</a>
+        <a href="#tech" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Technologies</a>
+        <a href="#architecture" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Architecture</a>
+      </nav>
+
+      <button id="menu-btn" class="md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white" aria-label="Menu">
+        Menu
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-background">
+      <div class="mx-auto flex max-w-6xl flex-col px-5 py-3">
+        <a href="index.html#projects" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">← Back to Portfolio</a>
+        <a href="#idea" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Idea</a>
+        <a href="#features" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Features</a>
+        <a href="#pipeline" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">AI Models</a>
+        <a href="#product" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">product</a>
+        <a href="#tech" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Technologies</a>
+        <a href="#architecture" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Architecture</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="top" class="relative overflow-hidden gradient-hero">
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+    <div class="absolute -left-24 top-40 h-72 w-72 rounded-full bg-ocean-bright/30 blur-3xl float-slow"></div>
+    <div class="absolute -right-16 top-24 h-64 w-64 rounded-full bg-ocean-sky/25 blur-3xl float-slow [animation-delay:1.5s]"></div>
+
+    <!-- Floating cyber-security icons (decorative) -->
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <i data-lucide="eye" class="cyber-icon cyber-anim-1" style="top:10%; left:5%; width:120px; height:120px;"></i>
+      <i data-lucide="glasses" class="cyber-icon cyber-anim-2" style="top:14%; right:6%; width:110px; height:110px; animation-delay:0.6s;"></i>
+      <i data-lucide="scan-face" class="cyber-icon cyber-anim-3" style="bottom:18%; left:6%; width:100px; height:100px; animation-delay:1.2s;"></i>
+      <i data-lucide="shield-check" class="cyber-icon cyber-anim-1" style="bottom:12%; right:7%; width:100px; height:100px; animation-delay:1.8s;"></i>
+      <i data-lucide="bluetooth" class="cyber-icon cyber-anim-4" style="top:46%; right:3%; width:85px; height:85px; animation-delay:1.5s;"></i>
+      <i data-lucide="mic" class="cyber-icon cyber-anim-2" style="top:44%; left:3%; width:80px; height:80px; animation-delay:2.4s;"></i>
+
+      <div class="binary-stream" style="top:6%; left:40%; font-size:18px;">01001<br>11010<br>00101</div>
+      <div class="binary-stream" style="bottom:8%; right:34%; animation-delay:1.4s; font-size:18px;">10110<br>01001<br>11100</div>
+    </div>
+
+    <div class="relative mx-auto flex min-h-[86vh] max-w-6xl flex-col items-center justify-center px-5 pt-28 pb-16 text-center">
+
+      <p id="typewriter" class="fade-up mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-ocean-sky [animation-delay:0ms]">
+        <span id="typewriter-text"></span><span class="typewriter-cursor">&nbsp;</span>
+      </p>
+
+      <h1 class="fade-up text-5xl font-bold leading-[1.05] sm:text-6xl md:text-7xl [animation-delay:80ms]">
+        <span class="text-shimmer">Munir</span>
+      </h1>
+
+      <p class="fade-up mt-8 max-w-2xl text-sm text-white/85 sm:text-base [animation-delay:160ms]">
+AI-powered smart glasses & app for the visually impaired      </p>
+    </div>
+  </section>
+
+<!-- Idea / Overview Section -->
+  <section id="idea" class="relative">
+    <div class="reveal mx-auto max-w-6xl px-5 py-14 sm:py-20 md:py-24">
+      <div class="mx-auto mb-10 max-w-3xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          The Idea
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          What is Munir?
+        </h2>
+      </div>
+
+      <div class="grid gap-8">
+        <div class="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-5 sm:p-10 shadow-sm card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+          <p class="text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+          Munir is an AI-powered assistive system that combines smart glasses with a Flutter mobile application to support visually impaired individuals. It uses OCR for text reading, custom AI models for face and Saudi Riyal currency recognition, OpenAI Vision for scene understanding, Firebase for backend services, and BLE with HTTPS/TLS for secure communication.
+          </p>
+          <p class="mt-4 sm:mt-5 text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+          Privacy and security are central to the system. Facial images are protected with AES-256 encryption, biometric data is securely managed, and Firebase Authentication with strict security rules ensures authorized access only. Munir also provides GPS-based emergency location sharing, personalized reminders, and real-time voice feedback.
+          </p>
+          <p class="mt-4 sm:mt-5 text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+            Munir was selected for the five-month <span class="font-semibold text-ocean-deep">IBM Developer Program</span>,
+           where the team received mentorship and technical guidance from IBM experts to refine the system architecture and enhance its AI-powered features.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Features Section -->
+  <section id="features" class="relative gradient-band">
+<div class="reveal mx-auto max-w-6xl px-5 py-14 sm:py-20 md:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Capabilities
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          Features
+        </h2>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="scan-face" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">Face Recognition</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Recognizes multiple people at once and announces their names.
+          </p>
+        </div>
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="scan-text" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">Text Reading (OCR)</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Reads Arabic and English text aloud in real time.
+          </p>
+        </div>
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="banknote" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">Currency Recognition</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Identifies Saudi Riyal notes with 98.16% accuracy.
+          </p>
+        </div>
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="scan-eye" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">Scene Description & Object Detection</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Describes surroundings and nearby objects out loud.
+          </p>
+        </div>
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="siren" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">SOS & GPS Location Sharing</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            One press alerts trusted contacts with live location.
+          </p>
+        </div>
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="bell-ring" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">Personalized Reminders</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            Voice or manual reminders for daily routines.
+          </p>
+        </div>
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="bluetooth-connected" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">Glasses ↔ App Connectivity</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            BLE 5.3 with button or voice command control.
+          </p>
+        </div>
+
+        <div class="group rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-3 flex items-center gap-3">
+            <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="lock-keyhole" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-bold text-ocean-deep">Privacy by Design</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600">
+            AES-256 encryption and HTTPS/TLS on every request.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Pipeline — Redesign</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+'ocean-deep': '#042E7B',
+'ocean-royal': '#004EE0',
+'ocean-bright': '#1883FF',
+'ocean-sky': '#99CAFF',
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body{ font-family:'Inter',sans-serif; background:#0A2E5C; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  .reveal{ animation: rise .7s ease both; }
+  @keyframes rise{ from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:translateY(0)} }
+
+  .step-line{
+    background: linear-gradient(180deg, rgba(79,195,247,0.5), rgba(79,195,247,0.05));
+    width:2px;
+  }
+  .step-node{
+    background: rgba(255,255,255,0.06);
+    border:1px solid rgba(79,195,247,0.4);
+  }
+  .step-node.out{
+    background: linear-gradient(135deg, #1883FF, #4FC3F7);
+    border-color: transparent;
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- AI Pipeline Section -->
+<section id="pipeline" class="relative bg-ocean-deep text-white">
+  <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+    <div class="mb-10 max-w-2xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+        <span class="h-px w-8 bg-ocean-sky/60"></span>
+        How It Works
+      </div>
+
+      <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        AI Models &amp; Pipeline
+      </h2>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+
+      <!-- Face Recognition -->
+      <div class="rounded-2xl border border-white/20 bg-white/[0.05] p-8 backdrop-blur transition-all hover:-translate-y-1 hover:border-white/40">
+        <div class="mb-6 flex items-center gap-3">
+          <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+            <i data-lucide="scan-face" class="h-5 w-5 text-white"></i>
+          </div>
+          <h3 class="font-semibold text-white">Face Recognition</h3>
+        </div>
+
+        <div class="pl-1">
+          <div class="flex gap-4">
+            <div class="flex flex-col items-center">
+              <div class="step-node grid h-9 w-9 shrink-0 place-items-center rounded-full">
+                <i data-lucide="camera" class="h-4 w-4 text-ocean-sky"></i>
+              </div>
+              <div class="step-line flex-1"></div>
+            </div>
+            <div class="pb-6 pt-1.5">
+              <span class="mono text-[10px] font-bold tracking-widest text-ocean-sky/70">CAPTURE</span>
+              <p class="mt-1 text-sm text-white/90">Capture or upload 3-angle facial images for registration.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="flex flex-col items-center">
+              <div class="step-node grid h-9 w-9 shrink-0 place-items-center rounded-full">
+                <i data-lucide="brain-circuit" class="h-4 w-4 text-ocean-sky"></i>
+              </div>
+              <div class="step-line flex-1"></div>
+            </div>
+            <div class="pb-6 pt-1.5">
+              <span class="mono text-[10px] font-bold tracking-widest text-ocean-sky/70">EMBED</span>
+              <p class="mt-1 text-sm text-white/90">Generate 512-dimensional embeddings with InsightFace.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="flex flex-col items-center">
+              <div class="step-node grid h-9 w-9 shrink-0 place-items-center rounded-full">
+                <i data-lucide="lock-keyhole" class="h-4 w-4 text-ocean-sky"></i>
+              </div>
+              <div class="step-line flex-1"></div>
+            </div>
+            <div class="pb-6 pt-1.5">
+              <span class="mono text-[10px] font-bold tracking-widest text-ocean-sky/70">SECURE</span>
+              <p class="mt-1 text-sm text-white/90">Encrypt thumbnails using AES-256-GCM and store them securely.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="flex flex-col items-center">
+              <div class="step-node out grid h-9 w-9 shrink-0 place-items-center rounded-full">
+                <i data-lucide="volume-2" class="h-4 w-4 text-white"></i>
+              </div>
+            </div>
+            <div class="pt-1.5">
+              <span class="mono text-[10px] font-bold tracking-widest text-ocean-bright">OUTPUT</span>
+              <p class="mt-1 text-sm text-white/90">Match the captured face with registered embeddings and announce the person's name.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Currency Identification -->
+      <div class="rounded-2xl border border-white/20 bg-white/[0.05] p-8 backdrop-blur transition-all hover:-translate-y-1 hover:border-white/40">
+        <div class="mb-6 flex items-center gap-3">
+          <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+            <i data-lucide="banknote" class="h-5 w-5 text-white"></i>
+          </div>
+          <h3 class="font-semibold text-white">Currency Identification</h3>
+        </div>
+
+        <div class="pl-1">
+          <div class="flex gap-4">
+            <div class="flex flex-col items-center">
+              <div class="step-node grid h-9 w-9 shrink-0 place-items-center rounded-full">
+                <i data-lucide="camera" class="h-4 w-4 text-ocean-sky"></i>
+              </div>
+              <div class="step-line flex-1"></div>
+            </div>
+            <div class="pb-6 pt-1.5">
+              <span class="mono text-[10px] font-bold tracking-widest text-ocean-sky/70">CAPTURE</span>
+              <p class="mt-1 text-sm text-white/90">Capture or upload a photo of a Saudi Riyal banknote.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="flex flex-col items-center">
+              <div class="step-node grid h-9 w-9 shrink-0 place-items-center rounded-full">
+                <i data-lucide="crop" class="h-4 w-4 text-ocean-sky"></i>
+              </div>
+              <div class="step-line flex-1"></div>
+            </div>
+            <div class="pb-6 pt-1.5">
+              <span class="mono text-[10px] font-bold tracking-widest text-ocean-sky/70">PREPROCESS</span>
+              <p class="mt-1 text-sm text-white/90">Detect and crop the banknote, then preprocess the image for classification.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="flex flex-col items-center">
+              <div class="step-node grid h-9 w-9 shrink-0 place-items-center rounded-full">
+                <i data-lucide="layers" class="h-4 w-4 text-ocean-sky"></i>
+              </div>
+              <div class="step-line flex-1"></div>
+            </div>
+            <div class="pb-6 pt-1.5">
+              <span class="mono text-[10px] font-bold tracking-widest text-ocean-sky/70">CLASSIFY</span>
+              <p class="mt-1 text-sm text-white/90">Classify the banknote using MobileNetV2 features and SVM (98.16% accuracy).</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="flex flex-col items-center">
+              <div class="step-node out grid h-9 w-9 shrink-0 place-items-center rounded-full">
+                <i data-lucide="volume-2" class="h-4 w-4 text-white"></i>
+              </div>
+            </div>
+            <div class="pt-1.5">
+              <span class="mono text-[10px] font-bold tracking-widest text-ocean-bright">OUTPUT</span>
+              <p class="mt-1 text-sm text-white/90">Announce the identified currency value aloud.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
+
+
+<section id="product" class="relative gradient-band">
+  <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+
+    <!-- Shared eyebrow, shown once for the whole Product section -->
+<div class="mb-14 flex items-center gap-4">
+  <span class="h-px w-10 bg-ocean-royal/50"></span>
+
+  <h2 class="text-3xl font-bold tracking-tight gradient-text sm:text-4xl">
+    Hardware & Interfaces
+  </h2>
+</div>
+
+    <!-- 01 — Hardware -->
+<div id="hardware" class="mb-2 flex items-baseline gap-3">
+  <span class="text-xs font-semibold text-ocean-royal">01</span>
+  <h3 class="text-xl font-bold text-ocean-deep">Hardware</h3>
+</div>
+
+<p class="text-[11px] sm:text-sm text-muted-foreground">  Omi Glass Dev Kit is an ESP32-S3-based smart glasses platform with an integrated camera, microphone, and Bluetooth
+</p>
+<br>
+<div class="mx-auto max-w-2xl overflow-hidden rounded-3xl border shadow-sm card-hover"
+     style="
+       border:0.5px solid rgba(24,131,255,.3);
+       background: radial-gradient(
+         circle,
+         rgba(255,255,255,.85) 0%,
+         rgba(255,255,255,.65) 40%,
+         rgba(255,255,255,.30) 70%,
+         rgba(255,255,255,.08) 90%,
+         rgba(255,255,255,0) 100%
+       );
+     ">
+  <div class="flex h-80 items-center justify-center overflow-hidden rounded-2xl">
+    <img src="fff.png"
+         alt="Omi Glass Dev Kit smart glasses"
+         class="h-full w-full object-contain p-3">
+  </div>
+</div>
+
+    <!-- Flow connector: hardware feeds into the app interfaces below -->
+<style>
+@keyframes draw-arrow {
+  to { stroke-dashoffset: 0; }
+}
+.draw-svg path {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+}
+.draw-svg path.animate {
+  animation: draw-arrow 900ms ease forwards;
+}
+</style>
+
+<div class="my-10 flex flex-col items-center gap-2">
+  <span id="sends-to-app-text" class="text-sm font-semibold tracking-wide text-ocean-royal">
+    <span id="sends-to-app-typed"></span><span class="typewriter-cursor">&nbsp;</span>
+  </span>
+
+  <svg
+    class="draw-svg h-8 w-8 text-ocean-royal"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    viewBox="0 0 24 24">
+    <path
+      id="sends-to-app-arrow"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M12 3v18m0 0-5-5m5 5 5-5"/>
+  </svg>
+</div>
+
+<script>
+(function () {
+  const text = "Sends to the App";
+  const textEl = document.getElementById('sends-to-app-typed');
+  const arrowEl = document.getElementById('sends-to-app-arrow');
+  let i = 0;
+
+  function type() {
+    if (i < text.length) {
+      textEl.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, 45);
+    } else {
+      setTimeout(drawArrow, 300);
+    }
+  }
+
+  function drawArrow() {
+    arrowEl.classList.add('animate');
+    setTimeout(resetAndRestart, 900 + 2000);
+  }
+
+  function resetAndRestart() {
+    textEl.textContent = "";
+    arrowEl.classList.remove('animate');
+    i = 0;
+    void arrowEl.offsetWidth;
+    setTimeout(type, 300);
+  }
+
+  type();
+})();
+</script>
+
+    <!-- 02 — Interfaces -->
+    <div class="mb-2 flex items-baseline gap-3">
+      <span class="text-xs font-semibold text-ocean-royal">02</span>
+      <h3 class="text-xl font-bold text-ocean-deep">Interfaces</h3>
+    </div>
+<p class="text-[11px] sm:text-sm text-muted-foreground">      The mobile app screens for every feature, switch between tabs and use the arrows to browse each screen
+    </p>
+ <br>
+    <!-- Tabs -->
+<div id="iface-tabs" class="mb-6 grid grid-cols-2 gap-2 sm:grid-cols-3 md:flex md:flex-wrap md:justify-start"></div>    <!-- Carousel -->
+    <div class="relative flex h-80 items-center justify-center overflow-hidden">
+<button id="iface-prev" aria-label="Previous screen"
+  class="absolute left-2 top-1/2 z-10 -translate-y-1/2 text-ocean-royal transition duration-200 hover:scale-110 hover:text-blue-600 md:left-80">
+  <i data-lucide="chevron-left" class="h-8 w-8"></i>
+</button>
+      <img id="iface-image" src="" alt=""
+           class="h-full w-full object-contain"
+           onerror="this.parentElement.querySelector('.iface-fallback').style.display='flex'; this.style.display='none';">
+      <div class="iface-fallback absolute inset-0 hidden items-center justify-center">
+        <span class="text-xs text-muted-foreground"></span>
+      </div>
+ 
+
+<button id="iface-next" aria-label="Next screen"
+  class="absolute right-2 top-1/2 z-10 -translate-y-1/2 text-ocean-royal transition duration-200 hover:scale-110 hover:text-blue-600 md:right-80">
+  <i data-lucide="chevron-right" class="h-8 w-8"></i>
+</button>
+    </div>
+    <div id="iface-dots" class="mt-4 flex justify-center gap-2"></div>
+  </div>
+</section>
+ 
+<script>
+(function () {
+  // Each category: label shown on the tab, desc shown under the image,
+  // and a list of image filenames to page through with the arrows.
+  const categories = [
+    { key: "auth",      label: "Auth",                 desc: "Account creation, login, and glasses pairing flow.",
+      images: ["1.png", "2.png", "3.png", "4.png","5.png"] },
+    { key: "face",      label: "Face Recognition",      desc: "Recognizing familiar faces and announcing who's nearby.",
+      images: ["8.png", "9.png","10.png", "11.png","12.png","13.png"] },
+    { key: "text",      label: "Text Reading",          desc: "Reading printed or handwritten text out loud.",
+      images: ["6.png", "7.png"] },
+    { key: "currency",  label: "Currency Recognition",  desc: "Identifying banknotes and denominations.",
+      images: ["14.png", "15.png"] },
+    { key: "scene",     label: "Object / Scene",        desc: "Describing objects and surrounding scenes.",
+      images: ["16.png", "17.png"] },
+    { key: "reminders", label: "Reminders",             desc: "Setting and receiving voice reminders.",
+      images: ["18.png", "19.png","20.png", "21.png","22.png"] },
+    { key: "sos",       label: "Emergency SOS",         desc: "Sending an emergency alert with one action.",
+      images: ["23.png", "24.png","25.png"] },
+       { key: "glass",  label: "Smart Glasses",desc: "Paired glasses",
+      images: ["26.png", "27.png","34.png", "35.png"] },
+    { key: "settings",  label: "Settings",desc: "Managing the paired glasses and app preferences.",
+      images: ["29.png", "28.png","33.png", "31.png","32.png","30.png"] },
+  ];
+ 
+  let activeCategory = 0;
+  let activeImage = 0;
+ 
+  const tabsEl   = document.getElementById("iface-tabs");
+  const imgEl    = document.getElementById("iface-image");
+  imgEl.style.transition = "opacity .35s ease, transform .35s ease";
+  const prevBtn  = document.getElementById("iface-prev");
+  const nextBtn  = document.getElementById("iface-next");
+ const dotsEl = document.getElementById("iface-dots");
+  function renderTabs() {
+    tabsEl.innerHTML = "";
+categories.forEach((cat, i) => {
+  const btn = document.createElement("button");
+  btn.textContent = cat.label;
+
+  const isLastOdd = (i === categories.length - 1) && (categories.length % 2 !== 0);
+
+  btn.className =
+    "rounded-full border px-4 py-2 text-xs font-semibold transition text-center " +
+    (isLastOdd ? "col-span-2 w-1/2 mx-auto " : "w-full ") +
+    "md:w-auto md:col-span-1 md:mx-0 " +
+    (i === activeCategory
+      ? "bg-ocean-royal text-white border-ocean-royal"
+      : "bg-card text-ocean-deep hover:bg-ocean-mist/60");
+  btn.style.border = i === activeCategory ? "1px solid transparent" : "1px solid rgba(24,131,255,0.4)";
+  btn.addEventListener("click", () => {
+    activeCategory = i;
+    activeImage = 0;
+    render();
+  });
+  tabsEl.appendChild(btn);
+});
+  }
+ 
+function render() {
+  const cat = categories[activeCategory];
+  const file = cat.images[activeImage];
+
+  const fallback = imgEl.parentElement.querySelector(".iface-fallback");
+  fallback.style.display = "none";
+
+  // بداية الأنيميشن
+  imgEl.style.opacity = "0";
+  imgEl.style.transform = "translateX(30px)";
+
+  setTimeout(() => {
+    imgEl.src = file;
+    imgEl.alt = cat.label + " screen " + (activeImage + 1);
+    imgEl.style.display = "block";
+
+    // نهاية الأنيميشن
+    imgEl.style.opacity = "1";
+    imgEl.style.transform = "translateX(0)";
+  }, 180);
+
+  renderTabs();
+
+  // ===== Dots =====
+dotsEl.innerHTML = "";
+
+cat.images.forEach((_, index) => {
+  const dot = document.createElement("button");
+
+  dot.className =
+    "h-1.5 rounded-full transition-all duration-300 " +
+    (index === activeImage
+      ? "w-5 bg-ocean-royal"
+      : "w-2.5 bg-slate-300 hover:bg-slate-400");
+
+  dot.onclick = () => {
+    activeImage = index;
+    render();
+  };
+
+  dotsEl.appendChild(dot);
+});
+}
+ 
+  function step(delta) {
+    const cat = categories[activeCategory];
+    activeImage = (activeImage + delta + cat.images.length) % cat.images.length;
+    render();
+  }
+ 
+  prevBtn.addEventListener("click", () => step(-1));
+  nextBtn.addEventListener("click", () => step(1));
+ 
+  // Optional: left / right keyboard arrows navigate the active gallery too.
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") step(-1);
+    if (e.key === "ArrowRight") step(1);
+  });
+ 
+  render();
+})();
+</script>
+<!-- Technologies Section -->
+<style>
+  #tech .tech-card{
+    opacity:0;
+    transform:translateY(20px);
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  #tech.in-view .tech-card{animation:techFadeUp .6s ease-out forwards;}
+  #tech.in-view .tech-card:nth-child(1){animation-delay:.05s;}
+  #tech.in-view .tech-card:nth-child(2){animation-delay:.2s;}
+  #tech.in-view .tech-card:nth-child(3){animation-delay:.35s;}
+  #tech.in-view .tech-card:nth-child(4){animation-delay:.5s;}
+  @keyframes techFadeUp{
+    0%{opacity:0;transform:translateY(20px);}
+    100%{opacity:1;transform:translateY(0);}
+  }
+
+  #tech .tech-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 14px 28px -10px rgba(24,131,255,0.25);
+  }
+
+  #tech .tech-tag{
+    transition:transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  #tech .tech-tag:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 14px -4px rgba(24,131,255,0.25);
+  }
+</style>
+
+<section id="tech" class="relative">
+  <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+    <div class="mb-10 max-w-2xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        Built With
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+        Technologies Used
+      </h2>
+    </div>
+
+    <div class="grid gap-5 md:grid-cols-2">
+
+      <!-- AI & Computer Vision -->
+      <div class="tech-card rounded-2xl bg-card p-6" style="border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-1 flex items-center gap-3">
+          <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+            <i data-lucide="brain-circuit" class="h-5 w-5"></i>
+          </div>
+          <h3 class="font-semibold text-foreground">AI & Computer Vision</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Python</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">InsightFace</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">OpenAI Vision</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">OCR</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">SVM Classifier</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">MobileNetV2</span>
+        </div>
+      </div>
+
+      <!-- App & Backend -->
+      <div class="tech-card rounded-2xl bg-card p-6" style="border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-1 flex items-center gap-3">
+          <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+            <i data-lucide="smartphone" class="h-5 w-5"></i>
+          </div>
+          <h3 class="font-semibold text-foreground">App & Backend</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Flutter</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">VS Code</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Firebase Auth</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Cloud Functions</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">GitHub</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Google Sign-In</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Jira</span>
+        </div>
+      </div>
+
+      <!-- Security & Privacy -->
+      <div class="tech-card rounded-2xl bg-card p-6" style="border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-1 flex items-center gap-3">
+          <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+            <i data-lucide="shield" class="h-5 w-5"></i>
+          </div>
+          <h3 class="font-semibold text-foreground">Security & Privacy</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">AES-256 Encryption</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">HTTPS / TLS</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Firebase Security Rules</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Biometric Data Handling</span>
+        </div>
+      </div>
+
+      <!-- Hardware & Connectivity -->
+      <div class="tech-card rounded-2xl bg-card p-6" style="border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-1 flex items-center gap-3">
+          <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+            <i data-lucide="cpu" class="h-5 w-5"></i>
+          </div>
+          <h3 class="font-semibold text-foreground">Hardware & Connectivity</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">XIAO ESP32-S3 Sense</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Bluetooth LE v5.3</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Wi-Fi</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Camera</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Built-in I2S Mic</span>
+          <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">GPS Module</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  (function(){
+    var el = document.getElementById('tech');
+    if(!el) return;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          el.classList.add('in-view');
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+    obs.observe(el);
+  })();
+</script>
+<!-- System Design Section — Clean & Simple -->
+<section id="architecture" class="bg-ocean-deep text-white">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:py-24">
+
+    <!-- Header -->
+    <div class="mb-14 text-center">
+      <span class="text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">System Design</span>
+      <h2 class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        Client-Server Architecture
+      </h2>
+    </div>
+
+    <div class="grid gap-10 md:grid-cols-2 md:gap-16">
+
+      <!-- CLIENT SIDE -->
+      <div>
+        <div class="mb-5 flex items-center gap-2">
+          <i data-lucide="smartphone" class="h-4 w-4 text-ocean-sky"></i>
+          <span class="text-xs font-bold uppercase tracking-[0.15em] text-white/70">Client Side</span>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3.5 transition-colors duration-200 hover:border-ocean-sky/40 hover:bg-white/[0.07]">
+            <i data-lucide="user" class="h-4 w-4 shrink-0 text-ocean-sky"></i>
+            <div>
+              <p class="text-sm font-medium text-white">User</p>
+              <p class="text-xs text-white/50">Initiates interaction</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3.5 transition-colors duration-200 hover:border-ocean-sky/40 hover:bg-white/[0.07]">
+            <i data-lucide="glasses" class="h-4 w-4 shrink-0 text-ocean-sky"></i>
+            <div>
+              <p class="text-sm font-medium text-white">Smart Glasses</p>
+              <p class="text-xs text-white/50">Omi Dev Kit (BLE)</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3.5 transition-colors duration-200 hover:border-ocean-sky/40 hover:bg-white/[0.07]">
+            <i data-lucide="camera" class="h-4 w-4 shrink-0 text-ocean-sky"></i>
+            <div>
+              <p class="text-sm font-medium text-white">Camera Input</p>
+              <p class="text-xs text-white/50">Real-time capture stream</p>
+            </div>
+          </div>
+
+          <!-- Mobile App -->
+          <div class="rounded-xl border border-white/10 bg-white/5 p-3.5 transition-colors duration-200 hover:border-ocean-sky/40 hover:bg-white/[0.07]">
+            <div class="mb-2.5 flex items-center gap-2">
+              <i data-lucide="app-window" class="h-4 w-4 text-ocean-sky"></i>
+              <p class="text-sm font-medium text-white">Mobile App</p>
+            </div>
+            <ul class="space-y-1.5 text-xs text-white/50">
+              <li>Bilingual voice UI (Arabic / English)</li>
+              <li>Controllers &amp; enrollment</li>
+              <li>On-device ML — InsightFace buffalo_l</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVER SIDE -->
+      <div>
+        <div class="mb-5 flex items-center gap-2">
+          <i data-lucide="server" class="h-4 w-4 text-ocean-sky"></i>
+          <span class="text-xs font-bold uppercase tracking-[0.15em] text-white/70">Server Side</span>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Firebase -->
+          <div class="rounded-xl border border-white/10 bg-white/5 p-3.5 transition-colors duration-200 hover:border-ocean-sky/40 hover:bg-white/[0.07]">
+            <div class="mb-2.5 flex items-center gap-2">
+              <i data-lucide="flame" class="h-4 w-4 text-ocean-sky"></i>
+              <p class="text-sm font-medium text-white">Firebase</p>
+            </div>
+            <ul class="space-y-1.5 text-xs text-white/50">
+              <li>Authentication</li>
+              <li>Firestore DB</li>
+              <li>Cloud Storage</li>
+            </ul>
+          </div>
+
+          <!-- External APIs -->
+          <div class="rounded-xl border border-white/10 bg-white/5 p-3.5 transition-colors duration-200 hover:border-ocean-sky/40 hover:bg-white/[0.07]">
+            <div class="mb-2.5 flex items-center gap-2">
+              <i data-lucide="globe" class="h-4 w-4 text-ocean-sky"></i>
+              <p class="text-sm font-medium text-white">External APIs</p>
+            </div>
+            <ul class="space-y-1.5 text-xs text-white/50">
+              <li>Google Cloud Vision API</li>
+              <li>OpenAI Vision API</li>
+              <li>Google Maps</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connection note -->
+    <div class="mt-12 flex items-center justify-center gap-2">
+      <i data-lucide="shield-check" class="h-4 w-4 text-ocean-sky"></i>
+      <span class="text-xs font-medium uppercase tracking-[0.15em] text-white/40">Connected via HTTPS · REST</span>
+    </div>
+  </div>
+</section>
+  <!-- Footer -->
+  <footer class="border-t border-border bg-background">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row">
+      <div class="flex items-center gap-2">
+        <i data-lucide="code-2" class="h-3.5 w-3.5 text-ocean-royal"></i>
+        <span>Fajer Mohammed Alamro</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    // Typewriter effect for eyebrow text (loops: type, pause, erase, repeat)
+    (function () {
+      const text = "GP · IBM Collaboration";
+      const el = document.getElementById('typewriter-text');
+      let i = 0;
+
+      function type() {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, 45);
+        } else {
+          setTimeout(erase, 2200);
+        }
+      }
+
+      function erase() {
+        if (i > 0) {
+          el.textContent = text.substring(0, i - 1);
+          i--;
+          setTimeout(erase, 25);
+        } else {
+          setTimeout(type, 400);
+        }
+      }
+
+      setTimeout(type, 500);
+    })();
+
+    const header = document.getElementById('header');
+    const backLink = document.getElementById('back-link');
+    const navItems = document.querySelectorAll('.nav-item');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const menuBtn = document.getElementById('menu-btn');
+    const sections = document.querySelectorAll('section[id]');
+
+    let isScrolled = false;
+    let activeSection = 'top';
+
+    function applyNavStyles() {
+      if (isScrolled) {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
+        menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px]  border-ocean-royal/40 px-3.5 py-1.5 text-xs font-medium text-ocean-royal transition-all hover:border-ocean-royal hover:bg-ocean-mist";
+      } else {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
+        menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px]  border-ocean-sky/50 px-3.5 py-1.5 text-xs font-medium text-white/90 transition-all hover:border-ocean-sky hover:bg-white/10";
+      }
+
+      navItems.forEach(item => {
+        const targetId = item.getAttribute('href').replace('#', '');
+        const isActive = targetId === activeSection;
+        const baseClasses = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors";
+        const inactiveColor = isScrolled
+          ? "text-muted-foreground hover:text-ocean-royal"
+          : "text-white/75 hover:text-white";
+
+        item.className = isActive
+          ? `${baseClasses} active`
+          : `${baseClasses} ${inactiveColor}`;
+      });
+
+      mobileNavLinks.forEach(link => {
+        const targetId = link.getAttribute('href').replace(/^.*#/, '');
+        const isActive = targetId === activeSection;
+        const base = "mobile-nav-link rounded-md px-2 py-2 text-sm hover:bg-secondary";
+        link.className = isActive
+          ? `${base} active`
+          : `${base} text-foreground`;
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      isScrolled = window.scrollY > 12;
+      applyNavStyles();
+    });
+
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeSection = entry.target.id;
+            applyNavStyles();
+          }
+        });
+      }, {
+        threshold: 0,
+        rootMargin: '-45% 0px -50% 0px'
+      });
+      sections.forEach((section) => sectionObserver.observe(section));
+    }
+
+    applyNavStyles();
+
+    // Mobile Menu Toggle
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (isHidden) {
+        mobileMenu.classList.remove('hidden');
+        menuBtn.innerText = 'Close';
+      } else {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      }
+    });
+
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      });
+    });
+
+    // Reveal animation
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach((el) => io.observe(el));
+    } else {
+      revealEls.forEach((e) => e.classList.add('reveal-in'));
+    }
+  </script>
+</body>
+</html>

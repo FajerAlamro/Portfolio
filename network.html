@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Injection | Fajer Alamro</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <!-- Tailwind Custom Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-deep': '#042E7B',
+            'ocean-royal': '#004EE0',
+            'ocean-bright': '#1883FF',
+            'ocean-sky': '#99CAFF',
+            'ocean-mist': '#E3F2FF',
+            background: '#f8fafc',
+            foreground: '#0f172a',
+            card: '#ffffff',
+            'card-foreground': '#0f172a',
+            border: '#e2e8f0',
+            muted: '#f1f5f9',
+            'muted-foreground': '#64748b',
+            secondary: '#E3F2FF',
+            'secondary-foreground': '#042E7B',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Component Styles -->
+  <style>
+    :root {
+      --ocean-deep: #042E7B;
+      --ocean-royal: #004EE0;
+      --ocean-bright: #1883FF;
+      --ocean-sky: #99CAFF;
+      --ocean-mist: #E3F2FF;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .gradient-hero {
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(24, 131, 255, 0.55), transparent 60%),
+        radial-gradient(800px 400px at 10% 20%, rgba(0, 78, 224, 0.6), transparent 60%),
+        linear-gradient(180deg, #042E7B, #021a47);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #042E7B, #1883FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .gradient-band {
+      background: linear-gradient(135deg, rgba(227, 242, 255, 0.6), #ffffff);
+    }
+
+    .card-hover {
+      transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 400ms, border-color 300ms;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px -22px rgba(0, 78, 224, 0.4);
+      border-color: rgba(24, 131, 255, 0.55);
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-slow { animation: float-slow 6s ease-in-out infinite; }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fade-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+    @keyframes text-shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .text-shimmer {
+      background: linear-gradient(90deg, #E3F2FF, #99CAFF, #1883FF, #99CAFF, #E3F2FF);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: text-shimmer 5s linear infinite;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 800ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-in { opacity: 1; transform: translateY(0); }
+
+    .shine { position: relative; overflow: hidden; }
+    @keyframes shine {
+      0% { transform: translateX(-120%) skewX(-20deg); }
+      100% { transform: translateX(220%) skewX(-20deg); }
+    }
+    .shine::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: translateX(-120%) skewX(-20deg);
+    }
+    .shine:hover::after { animation: shine 1.2s ease-in-out; }
+
+    .cyber-icon {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.03);
+      stroke-width: 1;
+      pointer-events: none;
+    }
+    @keyframes cyber-float-1 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(14px, -22px) rotate(8deg); }
+    }
+    @keyframes cyber-float-2 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-18px, 16px) rotate(-6deg); }
+    }
+    @keyframes cyber-float-3 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(10px, 20px) rotate(10deg); }
+    }
+    @keyframes cyber-drift {
+      0% { transform: translateY(0); opacity: 0.14; }
+      50% { opacity: 0.26; }
+      100% { transform: translateY(-26px); opacity: 0.14; }
+    }
+    .cyber-anim-1 { animation: cyber-float-1 7s ease-in-out infinite; }
+    .cyber-anim-2 { animation: cyber-float-2 9s ease-in-out infinite; }
+    .cyber-anim-3 { animation: cyber-float-3 8s ease-in-out infinite; }
+    .cyber-anim-4 { animation: cyber-drift 10s ease-in-out infinite; }
+
+    .binary-stream {
+      position: absolute;
+      color: rgba(153, 202, 255, 0.035);
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      letter-spacing: 0.15em;
+      white-space: pre;
+      pointer-events: none;
+      animation: cyber-drift 12s ease-in-out infinite;
+    }
+
+    .step-badge { font-family: 'Space Grotesk', sans-serif; }
+
+    .nav-item { position: relative; }
+    .nav-item.active { color: #004EE0 !important; font-weight: 700; }
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      left: 14px; right: 14px; bottom: 2px;
+      height: 2.5px; border-radius: 2px;
+      background: #004EE0;
+      animation: fade-up 300ms ease both;
+    }
+    .mobile-nav-link.active {
+      color: #004EE0 !important;
+      font-weight: 700;
+      background-color: #E3F2FF;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      background: currentColor;
+      margin-left: 2px;
+      animation: cursor-blink 0.8s step-end infinite;
+    }
+    @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* Severity badge */
+    .severity-pulse {
+      box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.55);
+      animation: severityPulse 2.2s ease-out infinite;
+    }
+    @keyframes severityPulse {
+      0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.45); }
+      70% { box-shadow: 0 0 0 14px rgba(220, 38, 38, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+    }
+
+    /* Terminal window (Environment / How to use) */
+    .term-window {
+      background: #0b1220;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 24px 50px -20px rgba(4, 46, 123, 0.55);
+    }
+    .term-bar {
+      background: #131c2f;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .term-dot { width: 10px; height: 10px; border-radius: 999px; }
+    .term-body {
+      padding: 18px 20px 22px;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 12.5px;
+      line-height: 1.85;
+      color: #cfe6ff;
+    }
+    .term-prompt { color: #4fd1a5; }
+    .term-cmd { color: #ffffff; }
+    .term-comment { color: #6b87ad; }
+    .term-out { color: #99CAFF; }
+
+    /* Tab pills for tool switcher */
+    .tool-tab {
+      transition: all 250ms ease;
+    }
+    .tool-tab.active {
+      background: #004EE0;
+      color: #fff;
+      box-shadow: 0 10px 20px -8px rgba(0,78,224,0.55);
+    }
+
+    /* Demo browser mock */
+    .browser-chrome {
+      background: linear-gradient(180deg, #1e2a44, #0f1a30);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px -20px rgba(4,46,123,0.55);
+    }
+    .browser-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.04);
+    }
+    .url-pill {
+      flex: 1;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 11px;
+      color: #c9d9f5;
+      font-family: 'Space Grotesk', monospace;
+    }
+
+    /* Query card highlight */
+    .query-highlight {
+      color: #ffd166;
+      font-weight: 600;
+    }
+
+    /* Pros/Cons chips */
+    .pc-pro { color: #059669; }
+    .pc-con { color: #dc2626; }
+
+    /* Lightbox reuse */
+    #lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(4, 46, 123, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: fade-up 250ms ease both;
+    }
+    #lightbox-overlay.open { display: flex; }
+    #lightbox-overlay img {
+      max-width: min(90vw, 900px);
+      max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 30px 60px -15px rgba(0,0,0,0.6);
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      color: #fff;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 9999px;
+      width: 40px; height: 40px;
+      display: grid; place-items: center;
+      cursor: pointer;
+      transition: background 200ms ease;
+    }
+    #lightbox-close:hover { background: rgba(255,255,255,0.25); }
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground">
+
+  <!-- Header -->
+  <header id="header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-4">
+        <a href="index.html#projects" id="back-link" class="group hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full border-[6px] border-ocean-sky/80 transition-all hover:border-ocean-sky hover:bg-white/10">
+          <i data-lucide="arrow-left" class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"></i>
+        </a>
+        <a href="index.html" class="group flex items-center gap-5">
+          <span class="relative flex h-9 items-center font-display text-2xl font-bold tracking-tight">
+            <span class="relative z-10 text-ocean-royal transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">F</span>
+            <span class="relative -ml-1 text-ocean-sky transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5">A</span>
+          </span>
+        </a>
+      </div>
+
+      <nav class="hidden items-center gap-1 md:flex">
+        <a href="#idea" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Idea</a>
+        <a href="#objectives" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Objectives</a>
+        <a href="#environment" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Environment</a>
+        <a href="#tools" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Tools</a>
+        <a href="#prevent" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Prevention</a>
+        <a href="#demo" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Demo</a>
+      </nav>
+
+      <button id="menu-btn" class="md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white" aria-label="Menu">
+        Menu
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-background">
+      <div class="mx-auto flex max-w-6xl flex-col px-5 py-3">
+        <a href="index.html#projects" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">← Back to Portfolio</a>
+        <a href="#idea" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Idea</a>
+        <a href="#objectives" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Objectives</a>
+        <a href="#environment" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Environment</a>
+        <a href="#tools" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Tools</a>
+        <a href="#prevent" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Prevention</a>
+        <a href="#demo" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="top" class="relative overflow-hidden gradient-hero">
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+    <div class="absolute -left-24 top-40 h-72 w-72 rounded-full bg-ocean-bright/30 blur-3xl float-slow"></div>
+    <div class="absolute -right-16 top-24 h-64 w-64 rounded-full bg-ocean-sky/25 blur-3xl float-slow [animation-delay:1.5s]"></div>
+
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <i data-lucide="database" class="cyber-icon cyber-anim-1" style="top:10%; left:5%; width:120px; height:120px;"></i>
+      <i data-lucide="syringe" class="cyber-icon cyber-anim-2" style="top:14%; right:6%; width:110px; height:110px; animation-delay:0.6s;"></i>
+      <i data-lucide="terminal" class="cyber-icon cyber-anim-3" style="bottom:18%; left:6%; width:100px; height:100px; animation-delay:1.2s;"></i>
+      <i data-lucide="shield-alert" class="cyber-icon cyber-anim-1" style="bottom:12%; right:7%; width:100px; height:100px; animation-delay:1.8s;"></i>
+      <i data-lucide="bug" class="cyber-icon cyber-anim-4" style="top:46%; right:3%; width:85px; height:85px; animation-delay:1.5s;"></i>
+      <i data-lucide="key-round" class="cyber-icon cyber-anim-2" style="top:44%; left:3%; width:80px; height:80px; animation-delay:2.4s;"></i>
+
+      <div class="binary-stream" style="top:6%; left:40%; font-size:18px;">01001<br>11010<br>00101</div>
+      <div class="binary-stream" style="bottom:8%; right:34%; animation-delay:1.4s; font-size:18px;">10110<br>01001<br>11100</div>
+    </div>
+
+    <div class="relative mx-auto flex min-h-[86vh] max-w-6xl flex-col items-center justify-center px-5 pt-28 pb-16 text-center">
+
+      <p id="typewriter" class="fade-up mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-ocean-sky [animation-delay:0ms]">
+        <span id="typewriter-text"></span><span class="typewriter-cursor">&nbsp;</span>
+      </p>
+
+<h1 class="fade-up text-3xl font-bold leading-[1.05] sm:text-5xl md:text-6xl [animation-delay:80ms]">
+  <span class="text-shimmer">SQL Injection</span>
+</h1>
+
+      <p class="fade-up mt-8 max-w-2xl text-sm text-white/85 sm:text-base [animation-delay:160ms]">
+        A live SQL Injection attack simulation covering exploitation and prevention
+      </p>
+      <div class="fade-up mt-8 flex flex-wrap items-center justify-center gap-2 [animation-delay:260ms]">
+        <span class="severity-pulse inline-flex items-center gap-1.5 rounded-full bg-crit-red/90 px-4 py-1.5 text-xs font-semibold text-white">
+          <i data-lucide="alert-triangle" class="h-3.5 w-3.5"></i> High Severity Attack
+        </span>
+      </div>
+    </div>
+  </section>
+<!-- Idea / Overview Section -->
+<section id="idea" class="relative">
+  <div class="reveal mx-auto max-w-6xl px-5 py-14 sm:py-20 md:py-24">
+    <div class="mx-auto mb-10 max-w-3xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        The Idea
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+        What is SQL Injection?
+      </h2>
+    </div>
+
+    <div class="grid gap-8">
+      <div class="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-5 sm:p-10 shadow-sm card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <p class="text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+SQL Injection (SQLi) is a web vulnerability that lets attackers manipulate database queries. This project demonstrates the attack in a controlled lab using an intentionally vulnerable banking application.
+        </p>
+        <p class="mt-4 sm:mt-5 text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+          The project demonstrates both the <span class="font-semibold text-ocean-deep">offensive</span> and <span class="font-semibold text-ocean-deep">defensive</span> aspects of SQL Injection, from exploiting vulnerable inputs to understanding how the attack can be detected and prevented.
+        </p>
+
+        <div class="mt-6 sm:mt-8 flex items-center justify-center gap-3 rounded-2xl bg-ocean-mist/60 px-4 py-3 sm:px-6 sm:py-4">
+          <i data-lucide="octagon-alert" class="h-5 w-5 shrink-0 text-crit-red"></i>
+          <p class="text-xs sm:text-sm font-medium text-ocean-deep">
+A high-severity attack that can expose data or compromise a database
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Offensive &amp; Defensive Objectives — Redesign</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ocean-royal:#1883FF;
+    --ocean-deep:#0A2E5C;
+    --ocean-bright:#4FC3F7;
+    --high-red:#FF5B5B;
+    --crit-red:#C81E3A;
+    --ink:#0B1220;
+  }
+  body{
+    font-family:'Inter',sans-serif;
+    background:#F7FAFF;
+  }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  .gradient-band{
+    background:
+      radial-gradient(1200px 500px at 10% -10%, rgba(24,131,255,0.05), transparent 60%),
+      radial-gradient(900px 500px at 100% 110%, rgba(79,195,247,0.05), transparent 55%),
+      #FFFFFF;
+  }
+  .gradient-text{
+    background:linear-gradient(90deg, var(--ocean-deep), var(--ocean-royal));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .reveal{ animation: rise .7s ease both; }
+  @keyframes rise{ from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:translateY(0)} }
+
+  /* ---- Terminal (offensive) ---- */
+  .term{
+    background: linear-gradient(180deg, #0D1424, var(--ink) 70%);
+    border:1px solid rgba(255,91,91,0.35);
+    box-shadow: 0 25px 60px -20px rgba(200,30,58,0.45), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .term-bar{
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0));
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .dot{ width:10px; height:10px; border-radius:9999px; }
+  .caret{
+    display:inline-block; width:8px; height:1.1em; background:var(--high-red);
+    margin-inline-start:2px; vertical-align:-2px;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0 } }
+  .scan-glow{
+    position:absolute; inset:0; pointer-events:none;
+    background: repeating-linear-gradient(0deg, rgba(255,91,91,0.035) 0 2px, transparent 2px 4px);
+    mix-blend-mode:screen;
+  }
+
+  /* ---- Code-review (defensive) ---- */
+  .review{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.9), rgba(240,247,255,0.9));
+    border:1px solid rgba(24,131,255,0.28);
+    box-shadow: 0 25px 60px -25px rgba(10,46,92,0.28), inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .diff-del{
+    background: rgba(255,91,91,0.10);
+    border-inline-start: 3px solid var(--high-red);
+  }
+  .diff-add{
+    background: rgba(24,131,255,0.10);
+    border-inline-start: 3px solid var(--ocean-royal);
+  }
+  .stamp{
+    transform: rotate(-6deg);
+  }
+
+  .connector-line{
+    background: linear-gradient(180deg, transparent, rgba(10,46,92,0.25), transparent);
+  }
+</style>
+</head>
+<body class="antialiased">
+
+  <section id="objectives" class="relative gradient-band">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+
+      <div class="mb-14 max-w-2xl">
+<div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+  <span class="h-px w-8 bg-ocean-royal/50"></span>
+  Two Sides, One Goal
+</div>
+<h2 class="text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl gradient-text">
+  Offensive &amp; Defensive Objectives
+</h2>
+      </div>
+
+      <div class="relative grid gap-10 md:grid-cols-2 md:gap-6 items-stretch">
+
+        <!-- connector, desktop only -->
+        <div class="pointer-events-none absolute inset-y-6 left-1/2 hidden w-px -translate-x-1/2 connector-line md:block"></div>
+
+        <!-- OFFENSIVE : terminal card -->
+        <div class="flex flex-col">
+          <div class="mb-3 flex items-center gap-2">
+            <span class="grid h-8 w-8 place-items-center rounded-lg bg-[var(--high-red)] text-white shadow-lg shadow-[var(--high-red)]/30">
+              <i data-lucide="crosshair" class="h-4 w-4"></i>
+            </span>
+            <span class="mono text-sm font-bold tracking-widest text-[var(--crit-red)]">OFFENSIVE</span>
+          </div>
+
+          <div class="group relative flex-1 overflow-hidden rounded-2xl term transition-all duration-500 hover:-translate-y-1.5">
+            <div class="scan-glow"></div>
+            <div class="term-bar flex items-center gap-2 px-4 py-3">
+              <span class="dot bg-[#FF5F57]"></span>
+              <span class="dot bg-[#FEBC2E]"></span>
+              <span class="dot bg-[#28C840]"></span>
+              <span class="ms-3 mono text-[11px] text-white/40">attacker@target — bash</span>
+              <span class="ms-auto flex items-center gap-1.5 rounded-full bg-[var(--high-red)]/15 px-2.5 py-1 text-[10px] font-bold tracking-widest text-[var(--high-red)] mono">
+                <i data-lucide="crosshair" class="h-3 w-3"></i> ATTACK VECTOR
+              </span>
+            </div>
+
+            <div class="px-6 pt-6">
+              <p class="mono text-[13px] leading-relaxed text-white/70">
+                <span class="text-[var(--high-red)]">$</span> SELECT * FROM users WHERE user='admin' AND pass='<span class="text-[var(--high-red)]">' OR '1'='1' --</span>'<span class="caret"></span>
+              </p>
+            </div>
+
+            <ul class="space-y-4 px-6 py-7 text-sm leading-relaxed text-white/80">
+              <li class="flex gap-3">
+                <i data-lucide="terminal-square" class="mt-0.5 h-4 w-4 shrink-0 text-[var(--high-red)]"></i>
+                Demonstrate how SQL Injection vulnerabilities can be exploited.
+              </li>
+              <li class="flex gap-3">
+                <i data-lucide="database" class="mt-0.5 h-4 w-4 shrink-0 text-[var(--high-red)]"></i>
+                Access and modify database data using automated tools.
+              </li>
+              <li class="flex gap-3">
+                <i data-lucide="alert-triangle" class="mt-0.5 h-4 w-4 shrink-0 text-[var(--high-red)]"></i>
+                Show the real-world impact of the attack on a live target.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- DEFENSIVE : code-review / diff card -->
+        <div class="flex flex-col">
+          <div class="mb-3 flex items-center gap-2">
+            <span class="grid h-8 w-8 place-items-center rounded-lg bg-[var(--ocean-royal)] text-white shadow-lg shadow-[var(--ocean-royal)]/30">
+              <i data-lucide="shield-check" class="h-4 w-4"></i>
+            </span>
+            <span class="mono text-sm font-bold tracking-widest text-[var(--ocean-royal)]">DEFENSIVE</span>
+          </div>
+
+          <div class="group relative flex-1 overflow-hidden rounded-2xl review transition-all duration-500 hover:-translate-y-1.5">
+            <div class="flex items-center gap-2 border-b border-[var(--ocean-royal)]/15 px-4 py-3">
+              <div class="grid h-6 w-6 place-items-center rounded-md bg-[var(--ocean-royal)]/10">
+                <i data-lucide="file-diff" class="h-3.5 w-3.5 text-[var(--ocean-royal)]"></i>
+              </div>
+              <span class="mono text-[11px] text-[var(--ocean-deep)]/50">query.py — reviewed</span>
+              <span class="ms-auto flex items-center gap-1.5 rounded-full bg-[var(--ocean-royal)]/10 px-2.5 py-1 text-[10px] font-bold tracking-widest text-[var(--ocean-royal)] mono">
+                <i data-lucide="shield-check" class="h-3 w-3"></i> MITIGATION
+              </span>
+            </div>
+
+            <div class="space-y-1 px-6 pt-6">
+              <p class="diff-del mono px-3 py-1.5 text-[12px] text-[var(--crit-red)] line-through decoration-1">
+                query = "...WHERE pass='" + input + "'"
+              </p>
+              <p class="diff-add mono px-3 py-1.5 text-[12px] text-[var(--ocean-deep)]">
+                query = "...WHERE pass=%s", (input,)
+              </p>
+            </div>
+
+            <ul class="space-y-4 px-6 py-7 text-sm leading-relaxed text-slate-600">
+              <li class="flex gap-3">
+                <i data-lucide="search-code" class="mt-0.5 h-4 w-4 shrink-0 text-[var(--ocean-royal)]"></i>
+                Understand how SQL Injection occurs at the code level.
+              </li>
+              <li class="flex gap-3">
+                <i data-lucide="shield-alert" class="mt-0.5 h-4 w-4 shrink-0 text-[var(--ocean-royal)]"></i>
+                Learn how to detect and prevent it before it is exploited.
+              </li>
+              <li class="flex gap-3">
+                <i data-lucide="lock" class="mt-0.5 h-4 w-4 shrink-0 text-[var(--ocean-royal)]"></i>
+                Protect web applications and the databases behind them.
+              </li>
+            </ul>
+
+            <div class="stamp absolute bottom-5 right-6 rounded-md border-2 border-[var(--ocean-royal)]/40 px-2 py-1 text-[10px] font-extrabold tracking-widest text-[var(--ocean-royal)]/60 mono">
+              PATCHED
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
+
+  <!-- Environment Section -->
+  <section id="environment" class="relative bg-ocean-deep text-white">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-12 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+          <span class="h-px w-8 bg-ocean-sky/60"></span>
+          The Lab Setup
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          Environment
+        </h2>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        <div class="rounded-2xl border border-white/20 bg-white/[0.05] p-7 backdrop-blur transition-all hover:-translate-y-1 hover:border-white/40">
+          <div class="mb-4 flex items-center gap-3">
+            <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+              <i data-lucide="terminal-square" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-semibold text-white">Attacker Machine</h3>
+          </div>
+          <p class="text-sm text-white/80">Kali Linux was used to perform SQL Injection testing</p>
+        </div>
+
+        <div class="rounded-2xl border border-white/20 bg-white/[0.05] p-7 backdrop-blur transition-all hover:-translate-y-1 hover:border-white/40">
+          <div class="mb-4 flex items-center gap-3">
+            <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+              <i data-lucide="server" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-semibold text-white">Backend</h3>
+          </div>
+          <p class="text-sm text-white/80">Stores the records targeted by the attack</p>
+        </div>
+
+        <div class="rounded-2xl border border-white/20 bg-white/[0.05] p-7 backdrop-blur transition-all hover:-translate-y-1 hover:border-white/40">
+          <div class="mb-4 flex items-center gap-3">
+            <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+              <i data-lucide="wrench" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-semibold text-white">Tools Used</h3>
+          </div>
+          <p class="text-sm text-white/80">jSQL for automated SQL Injection and ij for database interaction</p>
+        </div>
+
+        <div class="rounded-2xl border border-white/20 bg-white/[0.05] p-7 backdrop-blur transition-all hover:-translate-y-1 hover:border-white/40">
+          <div class="mb-4 flex items-center gap-3">
+            <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+              <i data-lucide="target" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-semibold text-white">Target</h3>
+          </div>
+          <p class="text-sm text-white/80">Altoro Mutual, a vulnerable banking web application</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools / How To Use Section -->
+  <section id="tools" class="relative gradient-band">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Manual vs. Automated
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          The Tools: ij &amp; jSQL
+        </h2>
+        <p class="mt-3 text-sm text-muted-foreground">Switch between the two tools</p>
+      </div>
+
+      <!-- Tab switcher -->
+      <div class="mb-8 flex flex-wrap gap-2">
+        <button data-tool="ij" class="tool-tab active rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep">ij (manual)</button>
+        <button data-tool="jsql" class="tool-tab rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep">jSQL (automated)</button>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-2 lg:items-start">
+
+        <!-- Terminal demo -->
+        <div>
+          <div id="tool-panel-ij" class="tool-panel">
+            <div class="term-window">
+              <div class="term-bar">
+                <span class="term-dot" style="background:#ff5f57;"></span>
+                <span class="term-dot" style="background:#febc2e;"></span>
+                <span class="term-dot" style="background:#28c840;"></span>
+                <span class="ml-2 text-[11px] text-white/40">kali@kali: ~</span>
+              </div>
+              <div class="term-body">
+                <div><span class="term-prompt">$</span> <span class="term-cmd">sudo apt install ij</span></div>
+                <div class="term-comment"># installs the Apache Derby command-line tool</div>
+                <div class="mt-2"><span class="term-prompt">$</span> <span class="term-cmd">ij</span></div>
+                <div class="mt-2"><span class="term-prompt">ij&gt;</span> <span class="term-cmd">connect 'jdbc:mysql://target/db';</span></div>
+                <div class="mt-2"><span class="term-prompt">ij&gt;</span> <span class="term-cmd">SELECT * FROM users;</span></div>
+                <div class="term-out mt-1">USERNAME&nbsp;&nbsp;PASSWORD&nbsp;&nbsp;&nbsp;ROLE</div>
+                <div class="term-out">admin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•••••••&nbsp;&nbsp;&nbsp;&nbsp;admin</div>
+                <div class="term-out">jsmith&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•••••••&nbsp;&nbsp;&nbsp;&nbsp;user</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="tool-panel-jsql" class="tool-panel hidden">
+            <div class="term-window">
+              <div class="term-bar">
+                <span class="term-dot" style="background:#ff5f57;"></span>
+                <span class="term-dot" style="background:#febc2e;"></span>
+                <span class="term-dot" style="background:#28c840;"></span>
+                <span class="ml-2 text-[11px] text-white/40">jSQL Injection</span>
+              </div>
+              <div class="term-body">
+                <div><span class="term-comment">Target URL:</span></div>
+                <div class="term-cmd">http://localhost:9090/altoromutual/bank/<span class="query-highlight">login.jsp?uid=1</span></div>
+                <div class="mt-3 term-comment"># jSQL scans the parameter automatically</div>
+                <div class="mt-2 term-out">[+] Injectable parameter found: uid</div>
+                <div class="term-out">[+] DBMS fingerprinted: MySQL</div>
+                <div class="term-out">[+] Databases: altoro_bank, information_schema</div>
+                <div class="term-out">[+] Tables: users, accounts, transactions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Steps + pros/cons -->
+        <div>
+          <div id="steps-ij" class="tool-steps">
+            <ol class="space-y-3 text-sm text-slate-700">
+              <li class="flex gap-3"><span class="step-badge font-semibold text-ocean-royal">1.</span>Open a terminal in Kali Linux</li>
+              <li class="flex gap-3"><span class="step-badge font-semibold text-ocean-royal">2.</span>Install the tool with <code class="rounded bg-ocean-mist px-1.5 py-0.5 text-xs">sudo apt install ij</code></li>
+              <li class="flex gap-3"><span class="step-badge font-semibold text-ocean-royal">3.</span>Type <code class="rounded bg-ocean-mist px-1.5 py-0.5 text-xs">ij</code> to launch the tool</li>
+              <li class="flex gap-3"><span class="step-badge font-semibold text-ocean-royal">4.</span>Connect to the database using a JDBC connection string</li>
+              <li class="flex gap-3"><span class="step-badge font-semibold text-ocean-royal">5.</span>Run SQL queries manually to explore the data</li>
+            </ol>
+            <div class="mt-6 grid gap-4 sm:grid-cols-2">
+              <div class="rounded-xl bg-card p-4" style="border:1px solid rgba(24,131,255,0.3);">
+                <div class="mb-2 text-xs font-bold uppercase tracking-wider pc-pro">Pros</div>
+                <ul class="space-y-1 text-xs text-slate-600">
+                  <li>Full control over the database</li>
+                  <li>Direct execution of SQL commands</li>
+                  <li>Useful for deep analysis</li>
+                </ul>
+              </div>
+              <div class="rounded-xl bg-card p-4" style="border:1px solid rgba(24,131,255,0.3);">
+                <div class="mb-2 text-xs font-bold uppercase tracking-wider pc-con">Cons</div>
+                <ul class="space-y-1 text-xs text-slate-600">
+                  <li>Requires manual work</li>
+                  <li>Needs SQL knowledge</li>
+                  <li>Not user-friendly</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div id="steps-jsql" class="tool-steps hidden">
+            <ol class="space-y-3 text-sm text-slate-700">
+              <li class="flex gap-3"><span class="step-badge font-semibold text-ocean-royal">1.</span>Launch jSQL from Kali Linux</li>
+              <li class="flex gap-3"><span class="step-badge font-semibold text-ocean-royal">2.</span>Enter the target vulnerable URL with a parameter</li>
+              <li class="flex gap-3"><span class="step-badge font-semibold text-ocean-royal">3.</span>Let jSQL scan the parameter automatically</li>
+              <li class="flex gap-3"><span class="step-badge font-semibold text-ocean-royal">4.</span>Explore the resulting database structure, tables and schema</li>
+            </ol>
+            <div class="mt-6 grid gap-4 sm:grid-cols-2">
+              <div class="rounded-xl bg-card p-4" style="border:1px solid rgba(24,131,255,0.3);">
+                <div class="mb-2 text-xs font-bold uppercase tracking-wider pc-pro">Pros</div>
+                <ul class="space-y-1 text-xs text-slate-600">
+                  <li>Easy to use</li>
+                  <li>Automates SQL injection</li>
+                  <li>Fast data extraction</li>
+                </ul>
+              </div>
+              <div class="rounded-xl bg-card p-4" style="border:1px solid rgba(24,131,255,0.3);">
+                <div class="mb-2 text-xs font-bold uppercase tracking-wider pc-con">Cons</div>
+                <ul class="space-y-1 text-xs text-slate-600">
+                  <li>Generates noticeable traffic</li>
+                  <li>Detectable by security systems</li>
+                  <li>Limited in advanced attacks</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      const tabs = document.querySelectorAll('.tool-tab');
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const tool = tab.dataset.tool;
+          tabs.forEach((t) => t.classList.toggle('active', t === tab));
+          document.querySelectorAll('.tool-panel').forEach((p) => p.classList.add('hidden'));
+          document.querySelectorAll('.tool-steps').forEach((p) => p.classList.add('hidden'));
+          document.getElementById('tool-panel-' + tool).classList.remove('hidden');
+          document.getElementById('steps-' + tool).classList.remove('hidden');
+        });
+      });
+    })();
+  </script>
+
+  <!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prevention — Redesign</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ocean-royal:#1883FF;
+    --ocean-deep:#0A2E5C;
+    --ocean-bright:#4FC3F7;
+    --high-red:#FF5B5B;
+    --crit-red:#C81E3A;
+  }
+  body{ font-family:'Inter',sans-serif; background:#F7FAFF; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  .gradient-text{
+    background:linear-gradient(90deg, var(--ocean-deep), var(--ocean-royal));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .reveal{ animation: rise .7s ease both; }
+  @keyframes rise{ from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:translateY(0)} }
+
+  .node{
+    background:#fff;
+    border:1px solid rgba(24,131,255,0.25);
+    box-shadow: 0 10px 30px -14px rgba(10,46,92,0.18);
+    transition: all .35s ease;
+  }
+  .node:hover{
+    transform: translateY(-4px);
+    border-color: rgba(24,131,255,0.55);
+    box-shadow: 0 16px 34px -14px rgba(24,131,255,0.32);
+  }
+  .badge{
+    width:34px; height:34px;
+    display:grid; place-items:center;
+    border-radius:9999px;
+    background: var(--ocean-royal);
+    color:#fff;
+    font-weight:700;
+    font-size:12px;
+  }
+  .track{
+    background: repeating-linear-gradient(90deg, rgba(24,131,255,0.35) 0 8px, transparent 8px 14px);
+    height:2px;
+  }
+  .track-v{
+    background: repeating-linear-gradient(180deg, rgba(24,131,255,0.35) 0 8px, transparent 8px 14px);
+    width:2px;
+  }
+  .endpoint{
+    background: linear-gradient(135deg, var(--ocean-royal), var(--ocean-bright));
+  }
+  .pulse{
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:.55 }
+    50%{ opacity:1 }
+  }
+</style>
+</head>
+<body class="antialiased">
+
+  <section id="prevent" class="relative">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+
+      <div class="mb-14 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--ocean-royal)]">
+          <span class="h-px w-8 bg-[var(--ocean-royal)]/50"></span>
+          Closing the Gap
+        </div>
+ <h2 class="text-2xl font-bold tracking-tight sm:text-4xl gradient-text">
+  How to Prevent the Attack
+</h2>
+        <p class="mt-3 text-sm text-slate-500">
+          Every request crosses five checkpoints before it ever touches your data
+        </p>
+      </div>
+
+      <!-- Desktop / tablet: horizontal pipeline -->
+      <div class="hidden md:block">
+        <div class="relative flex items-stretch justify-between">
+
+          <!-- connecting track -->
+          <div class="track absolute left-[7%] right-[7%] top-[26px]"></div>
+
+          <!-- REQUEST endpoint -->
+          <div class="relative z-10 flex w-[12%] flex-col items-center text-center">
+            <div class="endpoint pulse grid h-14 w-14 place-items-center rounded-2xl text-white shadow-lg shadow-[var(--ocean-royal)]/30">
+              <i data-lucide="user" class="h-6 w-6"></i>
+            </div>
+            <span class="mono mt-3 text-[10px] font-bold tracking-widest text-[var(--ocean-deep)]/60">REQUEST</span>
+          </div>
+
+          <!-- Node 1 -->
+          <div class="relative z-10 flex w-[15%] flex-col items-center text-center">
+            <div class="node grid h-14 w-14 place-items-center rounded-2xl">
+              <i data-lucide="shield" class="h-6 w-6 text-[var(--ocean-royal)]"></i>
+            </div>
+            <span class="badge -mt-4 mb-2 border-2 border-white">1</span>
+            <h3 class="text-[13px] font-semibold text-[var(--ocean-deep)]">Web App Firewall</h3>
+            <p class="mt-1 text-[11px] leading-relaxed text-slate-500">Filters malicious requests at the network edge.</p>
+          </div>
+
+          <!-- Node 2 -->
+          <div class="relative z-10 flex w-[15%] flex-col items-center text-center">
+            <div class="node grid h-14 w-14 place-items-center rounded-2xl">
+              <i data-lucide="filter" class="h-6 w-6 text-[var(--ocean-royal)]"></i>
+            </div>
+            <span class="badge -mt-4 mb-2 border-2 border-white">2</span>
+            <h3 class="text-[13px] font-semibold text-[var(--ocean-deep)]">Input Validation</h3>
+            <p class="mt-1 text-[11px] leading-relaxed text-slate-500">Validates and sanitizes every input field.</p>
+          </div>
+
+          <!-- Node 3 -->
+          <div class="relative z-10 flex w-[15%] flex-col items-center text-center">
+            <div class="node grid h-14 w-14 place-items-center rounded-2xl">
+              <i data-lucide="file-code-2" class="h-6 w-6 text-[var(--ocean-royal)]"></i>
+            </div>
+            <span class="badge -mt-4 mb-2 border-2 border-white">3</span>
+            <h3 class="text-[13px] font-semibold text-[var(--ocean-deep)]">Prepared Statements</h3>
+            <p class="mt-1 text-[11px] leading-relaxed text-slate-500">Separates SQL logic from user input.</p>
+          </div>
+
+          <!-- Node 4 -->
+          <div class="relative z-10 flex w-[15%] flex-col items-center text-center">
+            <div class="node grid h-14 w-14 place-items-center rounded-2xl">
+              <i data-lucide="lock-keyhole" class="h-6 w-6 text-[var(--ocean-royal)]"></i>
+            </div>
+            <span class="badge -mt-4 mb-2 border-2 border-white">4</span>
+            <h3 class="text-[13px] font-semibold text-[var(--ocean-deep)]">Least Privilege</h3>
+            <p class="mt-1 text-[11px] leading-relaxed text-slate-500">Grants database accounts minimal access.</p>
+          </div>
+
+          <!-- Node 5 -->
+          <div class="relative z-10 flex w-[15%] flex-col items-center text-center">
+            <div class="node grid h-14 w-14 place-items-center rounded-2xl">
+              <i data-lucide="eye-off" class="h-6 w-6 text-[var(--ocean-royal)]"></i>
+            </div>
+            <span class="badge -mt-4 mb-2 border-2 border-white">5</span>
+            <h3 class="text-[13px] font-semibold text-[var(--ocean-deep)]">Hide Error Details</h3>
+            <p class="mt-1 text-[11px] leading-relaxed text-slate-500">Disables detailed database error messages.</p>
+          </div>
+
+          <!-- DATABASE endpoint -->
+          <div class="relative z-10 flex w-[12%] flex-col items-center text-center">
+            <div class="grid h-14 w-14 place-items-center rounded-2xl border-2 border-[var(--ocean-royal)] bg-white text-[var(--ocean-royal)] shadow-lg">
+              <i data-lucide="database" class="h-6 w-6"></i>
+            </div>
+            <span class="mono mt-3 text-[10px] font-bold tracking-widest text-[var(--ocean-royal)]">SECURED</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Mobile: vertical pipeline -->
+      <div class="md:hidden">
+        <div class="relative flex flex-col items-center">
+
+          <div class="endpoint pulse grid h-12 w-12 place-items-center rounded-2xl text-white shadow-lg">
+            <i data-lucide="user" class="h-5 w-5"></i>
+          </div>
+          <span class="mono mt-2 text-[10px] font-bold tracking-widest text-[var(--ocean-deep)]/60">REQUEST</span>
+          <div class="track-v my-3 h-8"></div>
+
+          <!-- repeat nodes vertically -->
+          <div class="node flex w-full max-w-sm items-center gap-4 rounded-2xl p-4">
+            <span class="badge shrink-0">1</span>
+            <i data-lucide="shield" class="h-5 w-5 shrink-0 text-[var(--ocean-royal)]"></i>
+            <div>
+              <h3 class="text-sm font-semibold text-[var(--ocean-deep)]">Web App Firewall</h3>
+              <p class="mt-0.5 text-xs text-slate-500">Filters malicious requests at the network edge.</p>
+            </div>
+          </div>
+          <div class="track-v my-2 h-6"></div>
+
+          <div class="node flex w-full max-w-sm items-center gap-4 rounded-2xl p-4">
+            <span class="badge shrink-0">2</span>
+            <i data-lucide="filter" class="h-5 w-5 shrink-0 text-[var(--ocean-royal)]"></i>
+            <div>
+              <h3 class="text-sm font-semibold text-[var(--ocean-deep)]">Input Validation</h3>
+              <p class="mt-0.5 text-xs text-slate-500">Validates and sanitizes every input field.</p>
+            </div>
+          </div>
+          <div class="track-v my-2 h-6"></div>
+
+          <div class="node flex w-full max-w-sm items-center gap-4 rounded-2xl p-4">
+            <span class="badge shrink-0">3</span>
+            <i data-lucide="file-code-2" class="h-5 w-5 shrink-0 text-[var(--ocean-royal)]"></i>
+            <div>
+              <h3 class="text-sm font-semibold text-[var(--ocean-deep)]">Prepared Statements</h3>
+              <p class="mt-0.5 text-xs text-slate-500">Separates SQL logic from user input.</p>
+            </div>
+          </div>
+          <div class="track-v my-2 h-6"></div>
+
+          <div class="node flex w-full max-w-sm items-center gap-4 rounded-2xl p-4">
+            <span class="badge shrink-0">4</span>
+            <i data-lucide="lock-keyhole" class="h-5 w-5 shrink-0 text-[var(--ocean-royal)]"></i>
+            <div>
+              <h3 class="text-sm font-semibold text-[var(--ocean-deep)]">Least Privilege</h3>
+              <p class="mt-0.5 text-xs text-slate-500">Grants database accounts minimal access.</p>
+            </div>
+          </div>
+          <div class="track-v my-2 h-6"></div>
+
+          <div class="node flex w-full max-w-sm items-center gap-4 rounded-2xl p-4">
+            <span class="badge shrink-0">5</span>
+            <i data-lucide="eye-off" class="h-5 w-5 shrink-0 text-[var(--ocean-royal)]"></i>
+            <div>
+              <h3 class="text-sm font-semibold text-[var(--ocean-deep)]">Hide Error Details</h3>
+              <p class="mt-0.5 text-xs text-slate-500">Disables detailed database error messages.</p>
+            </div>
+          </div>
+          <div class="track-v my-3 h-8"></div>
+
+          <div class="grid h-12 w-12 place-items-center rounded-2xl border-2 border-[var(--ocean-royal)] bg-white text-[var(--ocean-royal)] shadow-lg">
+            <i data-lucide="database" class="h-5 w-5"></i>
+          </div>
+          <span class="mono mt-2 text-[10px] font-bold tracking-widest text-[var(--ocean-royal)]">SECURED</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
+
+ <!-- Demo Section -->
+  <section id="demo" class="relative bg-ocean-deep text-white overflow-hidden">
+    <div class="pointer-events-none absolute top-1/3 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-ocean-sky/10 blur-3xl"></div>
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+          <span class="h-px w-8 bg-ocean-sky/60"></span>
+          Live Walkthrough
+        </div>
+<h2 class="text-2xl font-bold tracking-tight text-white sm:text-4xl">
+  Demo: Attacking Altoro Mutual
+</h2>
+      </div>
+<div class="mx-auto w-[90%] max-w-3xl overflow-hidden rounded-2xl border border-white/15 shadow-2xl">
+  <video class="w-full aspect-video bg-black" controls preload="metadata">
+    <source src="net.MP4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-border bg-background">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row">
+      <div class="flex items-center gap-2">
+        <i data-lucide="code-2" class="h-3.5 w-3.5 text-ocean-royal"></i>
+        <span>Fajer Mohammed Alamro</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox modal (unused placeholder, kept for consistency) -->
+  <div id="lightbox-overlay" onclick="if(event.target===this) closeLightbox()">
+    <button id="lightbox-close" onclick="closeLightbox()" aria-label="Close">
+      <i data-lucide="x" class="h-4 w-4"></i>
+    </button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    function closeLightbox() {
+      document.getElementById('lightbox-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // Typewriter effect for eyebrow text (loops: type, pause, erase, repeat)
+    (function () {
+      const text = "Network Security";
+      const el = document.getElementById('typewriter-text');
+      let i = 0;
+
+      function type() {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, 45);
+        } else {
+          setTimeout(erase, 2200);
+        }
+      }
+
+      function erase() {
+        if (i > 0) {
+          el.textContent = text.substring(0, i - 1);
+          i--;
+          setTimeout(erase, 25);
+        } else {
+          setTimeout(type, 400);
+        }
+      }
+
+      setTimeout(type, 500);
+    })();
+
+    const header = document.getElementById('header');
+    const backLink = document.getElementById('back-link');
+    const navItems = document.querySelectorAll('.nav-item');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const menuBtn = document.getElementById('menu-btn');
+    const sections = document.querySelectorAll('section[id]');
+
+    let isScrolled = false;
+    let activeSection = 'top';
+
+    function applyNavStyles() {
+      if (isScrolled) {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
+        menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-royal/40 px-3.5 py-1.5 text-xs font-medium text-ocean-royal transition-all hover:border-ocean-royal hover:bg-ocean-mist";
+      } else {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
+        menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-sky/50 px-3.5 py-1.5 text-xs font-medium text-white/90 transition-all hover:border-ocean-sky hover:bg-white/10";
+      }
+
+      navItems.forEach(item => {
+        const targetId = item.getAttribute('href').replace('#', '');
+        const isActive = targetId === activeSection;
+        const baseClasses = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors";
+        const inactiveColor = isScrolled
+          ? "text-muted-foreground hover:text-ocean-royal"
+          : "text-white/75 hover:text-white";
+
+        item.className = isActive
+          ? `${baseClasses} active`
+          : `${baseClasses} ${inactiveColor}`;
+      });
+
+      mobileNavLinks.forEach(link => {
+        const targetId = link.getAttribute('href').replace(/^.*#/, '');
+        const isActive = targetId === activeSection;
+        const base = "mobile-nav-link rounded-md px-2 py-2 text-sm hover:bg-secondary";
+        link.className = isActive
+          ? `${base} active`
+          : `${base} text-foreground`;
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      isScrolled = window.scrollY > 12;
+      applyNavStyles();
+    });
+
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeSection = entry.target.id;
+            applyNavStyles();
+          }
+        });
+      }, {
+        threshold: 0,
+        rootMargin: '-45% 0px -50% 0px'
+      });
+      sections.forEach((section) => sectionObserver.observe(section));
+    }
+
+    applyNavStyles();
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (isHidden) {
+        mobileMenu.classList.remove('hidden');
+        menuBtn.innerText = 'Close';
+      } else {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      }
+    });
+
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      });
+    });
+
+    // Reveal animation
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach((el) => io.observe(el));
+    } else {
+      revealEls.forEach((e) => e.classList.add('reveal-in'));
+    }
+  </script>
+</body>
+</html>

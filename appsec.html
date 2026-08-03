@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Sec | Fajer Alamro</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <!-- Tailwind Custom Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-deep': '#042E7B',
+            'ocean-royal': '#004EE0',
+            'ocean-bright': '#1883FF',
+            'ocean-sky': '#99CAFF',
+            'ocean-mist': '#E3F2FF',
+            background: '#f8fafc',
+            foreground: '#0f172a',
+            card: '#ffffff',
+            'card-foreground': '#0f172a',
+            border: '#e2e8f0',
+            muted: '#f1f5f9',
+            'muted-foreground': '#64748b',
+            secondary: '#E3F2FF',
+            'secondary-foreground': '#042E7B',
+            'crit-red': '#dc2626',
+            'high-red': '#ef4444',
+            'med-amber': '#f59e0b',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Component Styles -->
+  <style>
+    :root {
+      --ocean-deep: #042E7B;
+      --ocean-royal: #004EE0;
+      --ocean-bright: #1883FF;
+      --ocean-sky: #99CAFF;
+      --ocean-mist: #E3F2FF;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .gradient-hero {
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(24, 131, 255, 0.55), transparent 60%),
+        radial-gradient(800px 400px at 10% 20%, rgba(0, 78, 224, 0.6), transparent 60%),
+        linear-gradient(180deg, #042E7B, #021a47);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #042E7B, #1883FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .gradient-band {
+      background: linear-gradient(135deg, rgba(227, 242, 255, 0.6), #ffffff);
+    }
+
+    .card-hover {
+      transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 400ms, border-color 300ms;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px -22px rgba(0, 78, 224, 0.4);
+      border-color: rgba(24, 131, 255, 0.55);
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-slow { animation: float-slow 6s ease-in-out infinite; }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fade-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+    @keyframes text-shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .text-shimmer {
+      background: linear-gradient(90deg, #E3F2FF, #99CAFF, #1883FF, #99CAFF, #E3F2FF);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: text-shimmer 5s linear infinite;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 800ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-in { opacity: 1; transform: translateY(0); }
+
+    .shine { position: relative; overflow: hidden; }
+    @keyframes shine {
+      0% { transform: translateX(-120%) skewX(-20deg); }
+      100% { transform: translateX(220%) skewX(-20deg); }
+    }
+    .shine::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: translateX(-120%) skewX(-20deg);
+    }
+    .shine:hover::after { animation: shine 1.2s ease-in-out; }
+
+    .cyber-icon {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.03);
+      stroke-width: 1;
+      pointer-events: none;
+    }
+    @keyframes cyber-float-1 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(14px, -22px) rotate(8deg); }
+    }
+    @keyframes cyber-float-2 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-18px, 16px) rotate(-6deg); }
+    }
+    @keyframes cyber-float-3 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(10px, 20px) rotate(10deg); }
+    }
+    @keyframes cyber-drift {
+      0% { transform: translateY(0); opacity: 0.14; }
+      50% { opacity: 0.26; }
+      100% { transform: translateY(-26px); opacity: 0.14; }
+    }
+    .cyber-anim-1 { animation: cyber-float-1 7s ease-in-out infinite; }
+    .cyber-anim-2 { animation: cyber-float-2 9s ease-in-out infinite; }
+    .cyber-anim-3 { animation: cyber-float-3 8s ease-in-out infinite; }
+    .cyber-anim-4 { animation: cyber-drift 10s ease-in-out infinite; }
+
+    .binary-stream {
+      position: absolute;
+      color: rgba(153, 202, 255, 0.035);
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      letter-spacing: 0.15em;
+      white-space: pre;
+      pointer-events: none;
+      animation: cyber-drift 12s ease-in-out infinite;
+    }
+
+    .step-badge { font-family: 'Space Grotesk', sans-serif; }
+
+    .nav-item { position: relative; }
+    .nav-item.active { color: #004EE0 !important; font-weight: 700; }
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      left: 14px; right: 14px; bottom: 2px;
+      height: 2.5px; border-radius: 2px;
+      background: #004EE0;
+      animation: fade-up 300ms ease both;
+    }
+    .mobile-nav-link.active {
+      color: #004EE0 !important;
+      font-weight: 700;
+      background-color: #E3F2FF;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      background: currentColor;
+      margin-left: 2px;
+      animation: cursor-blink 0.8s step-end infinite;
+    }
+    @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* Severity badges */
+    .sev-critical { background: linear-gradient(135deg,#7f1d1d,#dc2626); color:#fff; }
+    .sev-high { background: linear-gradient(135deg,#b91c1c,#ef4444); color:#fff; }
+    .sev-medium { background: linear-gradient(135deg,#b45309,#f59e0b); color:#fff; }
+
+    /* Vulnerability cards (styled like Certifications section) */
+    .vuln-card { border: 1px solid rgba(24,131,255,0.4); }
+
+    /* Severity chart bars */
+    .chart-bar {
+      transition: height 900ms cubic-bezier(0.2,0.8,0.2,1);
+      height: 0%;
+    }
+    #vuln-summary.in-view .chart-bar.crit { height: 100%; }
+    #vuln-summary.in-view .chart-bar.high { height: 100%; }
+    #vuln-summary.in-view .chart-bar.med { height: 20%; }
+    #vuln-summary.in-view .chart-bar.low { height: 4%; }
+
+    /* Lightbox */
+    #lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(4, 46, 123, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: fade-up 250ms ease both;
+    }
+    #lightbox-overlay.open { display: flex; }
+    #lightbox-overlay img {
+      max-width: min(90vw, 900px);
+      max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 30px 60px -15px rgba(0,0,0,0.6);
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      color: #fff;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 9999px;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: background 200ms ease;
+    }
+    #lightbox-close:hover { background: rgba(255,255,255,0.25); }
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground">
+
+  <!-- Header -->
+  <header id="header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-4">
+        <a href="index.html#projects" id="back-link" class="group hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full border-[6px] border-ocean-sky/80 transition-all hover:border-ocean-sky hover:bg-white/10">
+          <i data-lucide="arrow-left" class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"></i>
+        </a>
+        <a href="index.html" class="group flex items-center gap-5">
+          <span class="relative flex h-9 items-center font-display text-2xl font-bold tracking-tight">
+            <span class="relative z-10 text-ocean-royal transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">F</span>
+            <span class="relative -ml-1 text-ocean-sky transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5">A</span>
+          </span>
+        </a>
+      </div>
+
+      <nav class="hidden items-center gap-1 md:flex">
+        <a href="#idea" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Idea</a>
+        <a href="#scope" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Scope</a>
+        <a href="#methodology" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Methodology</a>
+        <a href="#tools" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Tools</a>
+        <a href="#vulnerabilities" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Vulnerabilities</a>
+      </nav>
+
+      <button id="menu-btn" class="md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white" aria-label="Menu">
+        Menu
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-background">
+      <div class="mx-auto flex max-w-6xl flex-col px-5 py-3">
+        <a href="index.html#projects" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">← Back to Portfolio</a>
+        <a href="#idea" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Idea</a>
+        <a href="#scope" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Scope</a>
+        <a href="#methodology" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Methodology</a>
+        <a href="#tools" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Tools</a>
+        <a href="#vulnerabilities" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Vulnerabilities</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="top" class="relative overflow-hidden gradient-hero">
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+    <div class="absolute -left-24 top-40 h-72 w-72 rounded-full bg-ocean-bright/30 blur-3xl float-slow"></div>
+    <div class="absolute -right-16 top-24 h-64 w-64 rounded-full bg-ocean-sky/25 blur-3xl float-slow [animation-delay:1.5s]"></div>
+
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <i data-lucide="bug" class="cyber-icon cyber-anim-1" style="top:10%; left:5%; width:120px; height:120px;"></i>
+      <i data-lucide="shield-alert" class="cyber-icon cyber-anim-2" style="top:14%; right:6%; width:110px; height:110px; animation-delay:0.6s;"></i>
+      <i data-lucide="terminal" class="cyber-icon cyber-anim-3" style="bottom:18%; left:6%; width:100px; height:100px; animation-delay:1.2s;"></i>
+      <i data-lucide="smartphone" class="cyber-icon cyber-anim-1" style="bottom:12%; right:7%; width:100px; height:100px; animation-delay:1.8s;"></i>
+      <i data-lucide="database" class="cyber-icon cyber-anim-4" style="top:46%; right:3%; width:85px; height:85px; animation-delay:1.5s;"></i>
+      <i data-lucide="lock-keyhole" class="cyber-icon cyber-anim-2" style="top:44%; left:3%; width:80px; height:80px; animation-delay:2.4s;"></i>
+
+      <div class="binary-stream" style="top:6%; left:40%; font-size:18px;">01001<br>11010<br>00101</div>
+      <div class="binary-stream" style="bottom:8%; right:34%; animation-delay:1.4s; font-size:18px;">10110<br>01001<br>11100</div>
+    </div>
+
+    <div class="relative mx-auto flex min-h-[86vh] max-w-6xl flex-col items-center justify-center px-5 pt-28 pb-16 text-center">
+
+      <p id="typewriter" class="fade-up mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-ocean-sky [animation-delay:0ms]">
+        <span id="typewriter-text"></span><span class="typewriter-cursor">&nbsp;</span>
+      </p>
+
+<h1 class="fade-up text-3xl font-bold leading-[1.05] sm:text-4xl md:text-5xl [animation-delay:80ms]">
+  <span class="text-shimmer">App Security</span>
+</h1>
+
+      <p class="fade-up mt-8 max-w-2xl text-sm text-white/85 sm:text-base [animation-delay:160ms]">
+Penetration Testing of the Insecure and Vulnerable DVIA App      </p>
+    </div>
+  </section>
+
+ <!-- Idea / Overview Section -->
+<section id="idea" class="relative">
+  <div class="reveal mx-auto max-w-6xl px-5 py-14 sm:py-20 md:py-24">
+    <div class="mx-auto mb-10 max-w-3xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        The Project
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+        What is this assessment?
+      </h2>
+    </div>
+
+    <div class="grid gap-8">
+      <div class="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-5 sm:p-10 shadow-sm card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <p class="text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+          This project presents a security assessment of the <span class="font-semibold text-ocean-deep">Diva</span> mobile application, a purposely vulnerable Android APK used for security training. The assessment simulates real-world attacks to identify, exploit, and document mobile security vulnerabilities.
+        </p>
+        <p class="mt-4 sm:mt-5 text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+          The assessment followed a <span class="font-semibold text-ocean-deep">Black Box</span> methodology, approach, simulating an external attacker with no prior knowledge of the application to evaluate its security defenses.
+        </p>
+        <p class="mt-4 sm:mt-5 text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+          The evaluation identified and analyzed the <span class="font-semibold text-ocean-deep">8 most critical vulnerabilities</span>, documenting each with proof of concept, impact, and remediation recommendations.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Scope — Redesign</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'ocean-deep':  '#0A2E5C',
+          'ocean-royal': '#1883FF',
+          'ocean-bright':'#4FC3F7',
+          'ocean-sky':   '#4FC3F7',
+          'crit-red':    '#C81E3A',
+          'high-red':    '#FF5B5B',
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body{ font-family:'Inter',sans-serif; background:#F7FAFF; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  .gradient-band{
+    background:
+      radial-gradient(1200px 500px at 10% -10%, rgba(24,131,255,0.05), transparent 60%),
+      radial-gradient(900px 500px at 100% 110%, rgba(79,195,247,0.05), transparent 55%),
+      #FFFFFF;
+  }
+  .gradient-text{
+    background:linear-gradient(90deg, #0A2E5C, #1883FF);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .reveal{ animation: rise .7s ease both; }
+  @keyframes rise{ from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:translateY(0)} }
+
+  .caret{
+    display:inline-block; width:8px; height:1.1em; background:#4FC3F7;
+    margin-inline-start:2px; vertical-align:-2px;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0 } }
+</style>
+</head>
+<body class="antialiased">
+
+  <!-- Scope Section -->
+  <section id="scope" class="relative gradient-band">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Engagement Details
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          Scope
+        </h2>
+      </div>
+
+      <!-- Manifest card -->
+      <div class="mx-auto max-w-2xl overflow-hidden rounded-2xl" style="background:#0A2E5C; box-shadow: 0 25px 60px -20px rgba(10,46,92,0.5); border:1px solid rgba(24,131,255,0.35);">
+
+        <div class="flex items-center gap-2 border-b border-white/10 bg-white/[0.04] px-4 py-3">
+          <span class="h-2.5 w-2.5 rounded-full" style="background:#ff5f57;"></span>
+          <span class="h-2.5 w-2.5 rounded-full" style="background:#febc2e;"></span>
+          <span class="h-2.5 w-2.5 rounded-full" style="background:#28c840;"></span>
+          <span class="ms-3 mono text-[11px] text-white/40">scope.yaml</span>
+          <span class="ms-auto rounded-full bg-ocean-royal/15 px-2.5 py-1 text-[10px] font-bold tracking-widest text-ocean-bright mono">
+            TARGET LOCKED
+          </span>
+        </div>
+
+        <div class="px-6 py-7 sm:px-8">
+          <p class="mono mb-5 text-[13px] text-white/40">
+            <span class="text-ocean-bright">$</span> cat scope.yaml<span class="caret"></span>
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <i data-lucide="smartphone" class="mt-0.5 h-4 w-4 shrink-0 text-ocean-bright"></i>
+              <p class="mono text-sm leading-relaxed">
+                <span class="text-ocean-bright">application:</span>
+                <span class="text-white/90">DivaApplication.apk</span>
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <i data-lucide="cpu" class="mt-0.5 h-4 w-4 shrink-0 text-ocean-bright"></i>
+              <p class="mono text-sm leading-relaxed">
+                <span class="text-ocean-bright">platform:</span>
+                <span class="text-white/90">Android</span>
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <i data-lucide="laptop" class="mt-0.5 h-4 w-4 shrink-0 text-ocean-bright"></i>
+              <p class="mono text-sm leading-relaxed">
+                <span class="text-ocean-bright">environment:</span>
+                <span class="text-white/90">macOS + Windows</span>
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <i data-lucide="crosshair" class="mt-0.5 h-4 w-4 shrink-0 text-ocean-bright"></i>
+              <p class="mono text-sm leading-relaxed">
+                <span class="text-ocean-bright">approach:</span>
+                <span class="text-white/90">Black Box Penetration Testing</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
+
+ <!-- Methodology Section -->
+  <style>
+    #methodology .meth-card{
+      transition: border-color .4s ease, background .4s ease, box-shadow .4s ease, transform .4s ease;
+    }
+    #methodology.in-view .meth-card{ animation: methPulse 1.5s ease-out both; }
+    #methodology.in-view .meth-card:nth-child(1){ animation-delay: .1s; }
+    #methodology.in-view .meth-card:nth-child(2){ animation-delay: 2.6s; }
+    #methodology.in-view .meth-card:nth-child(3){ animation-delay: 5.1s; }
+    #methodology.in-view .meth-card:nth-child(4){ animation-delay: 7.6s; }
+
+    #methodology.in-view .meth-card:nth-child(1) .meth-icon{ animation: methIconPulse 1.5s ease-out .1s both; }
+    #methodology.in-view .meth-card:nth-child(2) .meth-icon{ animation: methIconPulse 1.5s ease-out 2.6s both; }
+    #methodology.in-view .meth-card:nth-child(3) .meth-icon{ animation: methIconPulse 1.5s ease-out 5.1s both; }
+    #methodology.in-view .meth-card:nth-child(4) .meth-icon{ animation: methIconPulse 1.5s ease-out 7.6s both; }
+
+    #methodology.in-view .meth-card:nth-child(1) .meth-badge{ animation: methBadgeGlow 1.5s ease-out .1s both; }
+    #methodology.in-view .meth-card:nth-child(2) .meth-badge{ animation: methBadgeGlow 1.5s ease-out 2.6s both; }
+    #methodology.in-view .meth-card:nth-child(3) .meth-badge{ animation: methBadgeGlow 1.5s ease-out 5.1s both; }
+    #methodology.in-view .meth-card:nth-child(4) .meth-badge{ animation: methBadgeGlow 1.5s ease-out 7.6s both; }
+
+    /* Vertical dots (mobile / tablet) light up with the same timing as their card */
+    #methodology.in-view .meth-card:nth-child(1) .meth-dot-v{ animation: methDotLight 1.5s ease-out .1s both; }
+    #methodology.in-view .meth-card:nth-child(2) .meth-dot-v{ animation: methDotLight 1.5s ease-out 2.6s both; }
+    #methodology.in-view .meth-card:nth-child(3) .meth-dot-v{ animation: methDotLight 1.5s ease-out 5.1s both; }
+    #methodology.in-view .meth-card:nth-child(4) .meth-dot-v{ animation: methDotLight 1.5s ease-out 7.6s both; }
+
+    /* Horizontal connecting timeline — desktop (lg) only */
+    #methodology .meth-timeline{ display:none; }
+    @media (min-width: 1024px){
+      #methodology .meth-timeline{ display:flex; align-items:center; }
+    }
+    #methodology .meth-dot{
+      background: rgba(255,255,255,0.25);
+      box-shadow: none;
+      transition: background .3s ease, box-shadow .3s ease;
+    }
+    #methodology .meth-seg{ background: rgba(255,255,255,0.12); }
+    #methodology .meth-seg-fill{
+      transform-origin: left center;
+      transform: scaleX(0);
+      opacity: 1;
+    }
+    #methodology.in-view .meth-dot:nth-child(1){ animation: methDotLight 1.5s ease-out .1s both; }
+    #methodology.in-view .meth-dot:nth-child(3){ animation: methDotLight 1.5s ease-out 2.6s both; }
+    #methodology.in-view .meth-dot:nth-child(5){ animation: methDotLight 1.5s ease-out 5.1s both; }
+    #methodology.in-view .meth-dot:nth-child(7){ animation: methDotLight 1.5s ease-out 7.6s both; }
+    #methodology.in-view .meth-seg:nth-child(2) .meth-seg-fill{ animation: methSegFill 1.3s ease-out 1.3s both; }
+    #methodology.in-view .meth-seg:nth-child(4) .meth-seg-fill{ animation: methSegFill 1.3s ease-out 3.8s both; }
+    #methodology.in-view .meth-seg:nth-child(6) .meth-seg-fill{ animation: methSegFill 1.3s ease-out 6.3s both; }
+    @keyframes methSegFill{
+      0%{ transform: scaleX(0); opacity: 1; }
+      70%{ transform: scaleX(1); opacity: 1; }
+      100%{ transform: scaleX(1); opacity: 0; }
+    }
+    @keyframes methPulse{
+      0%{ border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); box-shadow: none; transform: translateY(0) scale(1); }
+      25%{ border-color: rgba(153,202,255,0.9); background: rgba(153,202,255,0.14); box-shadow: 0 0 0 1px rgba(153,202,255,0.45), 0 22px 45px -15px rgba(24,131,255,0.65); transform: translateY(-5px) scale(1.02); }
+      65%{ border-color: rgba(153,202,255,0.5); background: rgba(255,255,255,0.07); box-shadow: 0 12px 28px -12px rgba(24,131,255,0.35); transform: translateY(-2px) scale(1.005); }
+      100%{ border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); box-shadow: none; transform: translateY(0) scale(1); }
+    }
+    @keyframes methIconPulse{
+      0%{ box-shadow: 0 10px 15px -3px rgba(24,131,255,0.3); transform: scale(1); }
+      30%{ box-shadow: 0 0 0 10px rgba(153,202,255,0.28), 0 10px 28px -3px rgba(24,131,255,0.65); transform: scale(1.18); }
+      100%{ box-shadow: 0 10px 15px -3px rgba(24,131,255,0.3); transform: scale(1); }
+    }
+    @keyframes methBadgeGlow{
+      0%{ color: #99CAFF; text-shadow: none; }
+      30%{ color: #ffffff; text-shadow: 0 0 12px rgba(153,202,255,0.9); }
+      100%{ color: #99CAFF; text-shadow: none; }
+    }
+    @keyframes methDotLight{
+      0%{ background: rgba(255,255,255,0.25); box-shadow: none; }
+      30%{ background: #99CAFF; box-shadow: 0 0 0 6px rgba(153,202,255,0.25), 0 0 16px rgba(24,131,255,0.85); }
+      100%{ background: rgba(255,255,255,0.25); box-shadow: none; }
+    }
+
+    /* Vertical connecting timeline — mobile / tablet (below lg) */
+    .meth-track-v{ background: linear-gradient(180deg, rgba(153,202,255,0.05), rgba(153,202,255,0.45) 8%, rgba(153,202,255,0.45) 92%, rgba(153,202,255,0.05)); }
+  </style>
+  <section id="methodology" class="relative bg-ocean-deep text-white">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+          <span class="h-px w-8 bg-ocean-sky/60"></span>
+          How It Was Done
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          Methodology
+        </h2>
+      </div>
+
+      <!-- Horizontal connecting timeline (desktop / lg only) -->
+      <div class="meth-timeline mb-4 px-[6%]">
+        <div class="meth-dot h-3 w-3 shrink-0 rounded-full"></div>
+        <div class="meth-seg relative h-0.5 flex-1 overflow-hidden">
+          <div class="meth-seg-fill absolute inset-0 bg-gradient-to-r from-ocean-bright to-ocean-sky"></div>
+        </div>
+        <div class="meth-dot h-3 w-3 shrink-0 rounded-full"></div>
+        <div class="meth-seg relative h-0.5 flex-1 overflow-hidden">
+          <div class="meth-seg-fill absolute inset-0 bg-gradient-to-r from-ocean-bright to-ocean-sky"></div>
+        </div>
+        <div class="meth-dot h-3 w-3 shrink-0 rounded-full"></div>
+        <div class="meth-seg relative h-0.5 flex-1 overflow-hidden">
+          <div class="meth-seg-fill absolute inset-0 bg-gradient-to-r from-ocean-bright to-ocean-sky"></div>
+        </div>
+        <div class="meth-dot h-3 w-3 shrink-0 rounded-full"></div>
+      </div>
+
+      <!-- Cards + vertical timeline (mobile/tablet) -->
+      <div class="relative">
+        <div class="meth-track-v absolute left-[18px] top-3 bottom-3 w-0.5 lg:hidden"></div>
+
+        <div class="grid gap-6 lg:grid-cols-4">
+          <div class="meth-card relative rounded-2xl border border-white/20 bg-white/[0.05] p-6 pl-12 lg:pl-6 backdrop-blur">
+            <span class="meth-dot-v absolute left-3 top-7 h-3 w-3 rounded-full lg:hidden"></span>
+            <div class="meth-icon mb-4 grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+              <i data-lucide="clipboard-list" class="h-5 w-5"></i>
+            </div>
+            <span class="meth-badge step-badge text-xs font-bold uppercase tracking-[0.15em] text-ocean-sky">01</span>
+            <h3 class="mt-1 font-semibold text-white">Planning &amp; Preparation</h3>
+            <p class="mt-2 text-xs leading-relaxed text-white/70">Set up the testing lab: emulators, ADB, and reverse-engineering tools.</p>
+          </div>
+
+          <div class="meth-card relative rounded-2xl border border-white/20 bg-white/[0.05] p-6 pl-12 lg:pl-6 backdrop-blur">
+            <span class="meth-dot-v absolute left-3 top-7 h-3 w-3 rounded-full lg:hidden"></span>
+            <div class="meth-icon mb-4 grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+              <i data-lucide="search" class="h-5 w-5"></i>
+            </div>
+            <span class="meth-badge step-badge text-xs font-bold uppercase tracking-[0.15em] text-ocean-sky">02</span>
+            <h3 class="mt-1 font-semibold text-white">Information Gathering</h3>
+            <p class="mt-2 text-xs leading-relaxed text-white/70">Decompiled the APK and inspected runtime behavior and stored data.</p>
+          </div>
+
+          <div class="meth-card relative rounded-2xl border border-white/20 bg-white/[0.05] p-6 pl-12 lg:pl-6 backdrop-blur">
+            <span class="meth-dot-v absolute left-3 top-7 h-3 w-3 rounded-full lg:hidden"></span>
+            <div class="meth-icon mb-4 grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+              <i data-lucide="flame" class="h-5 w-5"></i>
+            </div>
+            <span class="meth-badge step-badge text-xs font-bold uppercase tracking-[0.15em] text-ocean-sky">03</span>
+            <h3 class="mt-1 font-semibold text-white">Risk Analysis &amp; Exploitation</h3>
+            <p class="mt-2 text-xs leading-relaxed text-white/70">Exploited each vulnerability found during code analysis to confirm impact.</p>
+          </div>
+
+          <div class="meth-card relative rounded-2xl border border-white/20 bg-white/[0.05] p-6 pl-12 lg:pl-6 backdrop-blur">
+            <span class="meth-dot-v absolute left-3 top-7 h-3 w-3 rounded-full lg:hidden"></span>
+            <div class="meth-icon mb-4 grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+              <i data-lucide="file-text" class="h-5 w-5"></i>
+            </div>
+            <span class="meth-badge step-badge text-xs font-bold uppercase tracking-[0.15em] text-ocean-sky">04</span>
+            <h3 class="mt-1 font-semibold text-white">Reporting</h3>
+            <p class="mt-2 text-xs leading-relaxed text-white/70">Documented observations, PoC, impact, likelihood, and recommendations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var el = document.getElementById('methodology');
+      if (!el) return;
+
+      var CYCLE_END = 9.1;   // seconds — when the last card's pulse finishes
+      var PAUSE = 2;         // seconds to wait before replaying
+      var TOTAL = (CYCLE_END + PAUSE) * 1000;
+
+      function playCycle() {
+        el.classList.remove('in-view');
+        void el.offsetWidth; // force reflow so the browser registers the class removal
+        el.classList.add('in-view');
+      }
+
+      var started = false;
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !started) {
+            started = true;
+            playCycle();
+            setInterval(playCycle, TOTAL);
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+      obs.observe(el);
+    })();
+  </script>
+  <!-- Tools & Technologies Section -->
+  <style>
+    #tools .tech-card{
+      opacity:0; transform:translateY(20px);
+      transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    #tools.in-view .tech-card{animation:techFadeUp .6s ease-out forwards;}
+    #tools.in-view .tech-card:nth-child(1){animation-delay:.05s;}
+    #tools.in-view .tech-card:nth-child(2){animation-delay:.2s;}
+    #tools.in-view .tech-card:nth-child(3){animation-delay:.35s;}
+    #tools.in-view .tech-card:nth-child(4){animation-delay:.5s;}
+    @keyframes techFadeUp{ 0%{opacity:0;transform:translateY(20px);} 100%{opacity:1;transform:translateY(0);} }
+    #tools .tech-card:hover{ transform:translateY(-4px); box-shadow:0 14px 28px -10px rgba(24,131,255,0.25); }
+    #tools .tech-tag{ transition:transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease; }
+    #tools .tech-tag:hover{ transform:translateY(-2px); box-shadow:0 6px 14px -4px rgba(24,131,255,0.25); }
+  </style>
+  <section id="tools" class="relative">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Built With
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          Tools &amp; Technologies
+        </h2>
+      </div>
+
+      <div class="grid gap-5 md:grid-cols-2">
+
+        <div class="tech-card rounded-2xl bg-card p-6" style="border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-1 flex items-center gap-3">
+            <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="tablet-smartphone" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-semibold text-foreground">Emulation</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Genymotion</span>
+            <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">BlueStacks 5</span>
+            <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">VirtualBox</span>
+          </div>
+        </div>
+
+        <div class="tech-card rounded-2xl bg-card p-6" style="border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-1 flex items-center gap-3">
+            <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="terminal-square" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-semibold text-foreground">Runtime &amp; Access</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">ADB (Android Debug Bridge)</span>
+            <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Logcat</span>
+            <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">ADB Shell</span>
+          </div>
+        </div>
+
+        <div class="tech-card rounded-2xl bg-card p-6" style="border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-1 flex items-center gap-3">
+            <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="binary" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-semibold text-foreground">Reverse Engineering</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">JADX GUI</span>
+            <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">Ghidra (NSA)</span>
+          </div>
+        </div>
+
+        <div class="tech-card rounded-2xl bg-card p-6" style="border: 1px solid rgba(24,131,255,0.4);">
+          <div class="mb-1 flex items-center gap-3">
+            <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+              <i data-lucide="shield-check" class="h-5 w-5"></i>
+            </div>
+            <h3 class="font-semibold text-foreground">Static &amp; Dynamic Analysis</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">MobSF</span>
+                        <span class="tech-tag rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-ocean-bright hover:bg-ocean-mist">OWASP MSTG</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      var el = document.getElementById('tools');
+      if(!el) return;
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){ el.classList.add('in-view'); obs.disconnect(); }
+        });
+      }, { threshold: 0.2 });
+      obs.observe(el);
+    })();
+  </script>
+
+  <!-- Vulnerabilities Section (matches Certifications style) -->
+<section id="vulnerabilities" class="relative">
+  <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+    <div class="mb-10 max-w-2xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        Key Findings
+      </div>
+<h2 class="text-2xl font-bold tracking-tight sm:text-4xl gradient-text">
+  Vulnerabilities Discovered
+</h2>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
+      <div class="group relative rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <span class="absolute right-4 top-4 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white" style="background:#dc2626;">Critical</span>
+        <div class="flex items-center gap-3">
+          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+            <i data-lucide="database" class="h-5 w-5"></i>
+          </div>
+          <h3 class="text-sm font-semibold text-blue-900">SQL Injection</h3>
+        </div>
+        <div class="mt-2.5 text-xs text-muted-foreground">Unsanitized queries allowed extraction of all user records with a single malicious input.</div>
+        <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('a1.png')">
+          <img src="a1.png" alt="SQL Injection" class="h-full w-full object-cover transition-transform hover:scale-110">
+        </div>
+      </div>
+
+      <div class="group relative rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <span class="absolute right-4 top-4 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white" style="background:#dc2626;">Critical</span>
+        <div class="flex items-center gap-3">
+          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+            <i data-lucide="bomb" class="h-5 w-5"></i>
+          </div>
+          <h3 class="text-sm font-semibold text-blue-900">Native Code Buffer Overflow</h3>
+        </div>
+        <div class="mt-2.5 text-xs text-muted-foreground">Unsafe strcpy() usage in a native library allowed crafted input to crash the app and reveal hidden logic.</div>
+        <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('a2.png')">
+          <img src="a2.png" alt="Native Code Buffer Overflow" class="h-full w-full object-cover transition-transform hover:scale-110">
+        </div>
+      </div>
+
+      <div class="group relative rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <span class="absolute right-4 top-4 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white" style="background:#f97316;">High</span>
+        <div class="flex items-center gap-3">
+          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+            <i data-lucide="key-round" class="h-5 w-5"></i>
+          </div>
+          <h3 class="text-sm font-semibold text-blue-900">Access Control Issues</h3>
+        </div>
+        <div class="mt-2.5 text-xs text-muted-foreground">PIN verification relied only on an intent extra, bypassed via ADB to expose API credentials.</div>
+        <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('a3.png')">
+          <img src="a3.png" alt="Access Control Issues" class="h-full w-full object-cover transition-transform hover:scale-110">
+        </div>
+      </div>
+
+      <div class="group relative rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <span class="absolute right-4 top-4 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white" style="background:#f97316;">High</span>
+        <div class="flex items-center gap-3">
+          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+            <i data-lucide="code-2" class="h-5 w-5"></i>
+          </div>
+          <h3 class="text-sm font-semibold text-blue-900">Hardcoding Issues</h3>
+        </div>
+        <div class="mt-2.5 text-xs text-muted-foreground">A secret key embedded in plaintext source code allowed a full security-check bypass.</div>
+        <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('a4.png')">
+          <img src="a4.png" alt="Hardcoding Issues" class="h-full w-full object-cover transition-transform hover:scale-110">
+        </div>
+      </div>
+
+      <div class="group relative rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <span class="absolute right-4 top-4 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white" style="background:#f97316;">High</span>
+        <div class="flex items-center gap-3">
+          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+            <i data-lucide="scroll-text" class="h-5 w-5"></i>
+          </div>
+          <h3 class="text-sm font-semibold text-blue-900">Insecure Logging</h3>
+        </div>
+        <div class="mt-2.5 text-xs text-muted-foreground">Credit card numbers were written to system logs in plaintext via Log.e(), extractable through logcat.</div>
+        <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('a5.png')">
+          <img src="a5.png" alt="Insecure Logging" class="h-full w-full object-cover transition-transform hover:scale-110">
+        </div>
+      </div>
+
+      <div class="group relative rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <span class="absolute right-4 top-4 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white" style="background:#f97316;">High</span>
+        <div class="flex items-center gap-3">
+          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+            <i data-lucide="folder-lock" class="h-5 w-5"></i>
+          </div>
+          <h3 class="text-sm font-semibold text-blue-900">Insecure Data Storage</h3>
+        </div>
+        <div class="mt-2.5 text-xs text-muted-foreground">Third-party credentials were stored unencrypted in SharedPreferences, readable via ADB.</div>
+        <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('a6.png')">
+          <img src="a6.png" alt="Insecure Data Storage" class="h-full w-full object-cover transition-transform hover:scale-110">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer class="border-t border-border bg-background">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row">
+      <div class="flex items-center gap-2">
+        <i data-lucide="code-2" class="h-3.5 w-3.5 text-ocean-royal"></i>
+        <span>Fajer Mohammed Alamro</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox modal -->
+  <div id="lightbox-overlay" onclick="if(event.target===this) closeLightbox()">
+    <button id="lightbox-close" onclick="closeLightbox()" aria-label="Close">
+      <i data-lucide="x" class="h-4 w-4"></i>
+    </button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    function openLightbox(src) {
+      var overlay = document.getElementById('lightbox-overlay');
+      var img = document.getElementById('lightbox-img');
+      img.src = src;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      var overlay = document.getElementById('lightbox-overlay');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    (function () {
+      const text = "Penetration Testing";
+      const el = document.getElementById('typewriter-text');
+      let i = 0;
+
+      function type() {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, 45);
+        } else {
+          setTimeout(erase, 2200);
+        }
+      }
+
+      function erase() {
+        if (i > 0) {
+          el.textContent = text.substring(0, i - 1);
+          i--;
+          setTimeout(erase, 25);
+        } else {
+          setTimeout(type, 400);
+        }
+      }
+
+      setTimeout(type, 500);
+    })();
+
+    const header = document.getElementById('header');
+    const backLink = document.getElementById('back-link');
+    const navItems = document.querySelectorAll('.nav-item');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const menuBtn = document.getElementById('menu-btn');
+    const sections = document.querySelectorAll('section[id]');
+
+    let isScrolled = false;
+    let activeSection = 'top';
+
+    function applyNavStyles() {
+      if (isScrolled) {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
+        menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-royal/40 px-3.5 py-1.5 text-xs font-medium text-ocean-royal transition-all hover:border-ocean-royal hover:bg-ocean-mist";
+      } else {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
+        menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-sky/50 px-3.5 py-1.5 text-xs font-medium text-white/90 transition-all hover:border-ocean-sky hover:bg-white/10";
+      }
+
+      navItems.forEach(item => {
+        const targetId = item.getAttribute('href').replace('#', '');
+        const isActive = targetId === activeSection;
+        const baseClasses = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors";
+        const inactiveColor = isScrolled
+          ? "text-muted-foreground hover:text-ocean-royal"
+          : "text-white/75 hover:text-white";
+
+        item.className = isActive
+          ? `${baseClasses} active`
+          : `${baseClasses} ${inactiveColor}`;
+      });
+
+      mobileNavLinks.forEach(link => {
+        const targetId = link.getAttribute('href').replace(/^.*#/, '');
+        const isActive = targetId === activeSection;
+        const base = "mobile-nav-link rounded-md px-2 py-2 text-sm hover:bg-secondary";
+        link.className = isActive
+          ? `${base} active`
+          : `${base} text-foreground`;
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      isScrolled = window.scrollY > 12;
+      applyNavStyles();
+    });
+
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeSection = entry.target.id;
+            applyNavStyles();
+          }
+        });
+      }, {
+        threshold: 0,
+        rootMargin: '-45% 0px -50% 0px'
+      });
+      sections.forEach((section) => sectionObserver.observe(section));
+    }
+
+    applyNavStyles();
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (isHidden) {
+        mobileMenu.classList.remove('hidden');
+        menuBtn.innerText = 'Close';
+      } else {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      }
+    });
+
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      });
+    });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach((el) => io.observe(el));
+    } else {
+      revealEls.forEach((e) => e.classList.add('reveal-in'));
+    }
+  </script>
+</body>
+</html>

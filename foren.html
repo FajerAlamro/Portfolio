@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ForenX | Fajer Alamro</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <!-- Tailwind Custom Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-deep': '#042E7B',
+            'ocean-royal': '#004EE0',
+            'ocean-bright': '#1883FF',
+            'ocean-sky': '#99CAFF',
+            'ocean-mist': '#E3F2FF',
+            background: '#f8fafc',
+            foreground: '#0f172a',
+            card: '#ffffff',
+            'card-foreground': '#0f172a',
+            border: '#e2e8f0',
+            muted: '#f1f5f9',
+            'muted-foreground': '#64748b',
+            secondary: '#E3F2FF',
+            'secondary-foreground': '#042E7B',
+            'crit-red': '#dc2626',
+            'high-red': '#ef4444',
+            'med-amber': '#f59e0b',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Component Styles -->
+  <style>
+    :root {
+      --ocean-deep: #042E7B;
+      --ocean-royal: #004EE0;
+      --ocean-bright: #1883FF;
+      --ocean-sky: #99CAFF;
+      --ocean-mist: #E3F2FF;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .gradient-hero {
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(24, 131, 255, 0.55), transparent 60%),
+        radial-gradient(800px 400px at 10% 20%, rgba(0, 78, 224, 0.6), transparent 60%),
+        linear-gradient(180deg, #042E7B, #021a47);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #042E7B, #1883FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .gradient-band {
+      background: linear-gradient(135deg, rgba(227, 242, 255, 0.6), #ffffff);
+    }
+
+    .card-hover {
+      transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 400ms, border-color 300ms;
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px -22px rgba(0, 78, 224, 0.4);
+      border-color: rgba(24, 131, 255, 0.55);
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-slow { animation: float-slow 6s ease-in-out infinite; }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fade-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+    @keyframes text-shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .text-shimmer {
+      background: linear-gradient(90deg, #E3F2FF, #99CAFF, #1883FF, #99CAFF, #E3F2FF);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: text-shimmer 5s linear infinite;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 800ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-in { opacity: 1; transform: translateY(0); }
+
+    .shine { position: relative; overflow: hidden; }
+    @keyframes shine {
+      0% { transform: translateX(-120%) skewX(-20deg); }
+      100% { transform: translateX(220%) skewX(-20deg); }
+    }
+    .shine::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: translateX(-120%) skewX(-20deg);
+    }
+    .shine:hover::after { animation: shine 1.2s ease-in-out; }
+
+    .cyber-icon {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.03);
+      stroke-width: 1;
+      pointer-events: none;
+    }
+    @keyframes cyber-float-1 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(14px, -22px) rotate(8deg); }
+    }
+    @keyframes cyber-float-2 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-18px, 16px) rotate(-6deg); }
+    }
+    @keyframes cyber-float-3 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(10px, 20px) rotate(10deg); }
+    }
+    @keyframes cyber-drift {
+      0% { transform: translateY(0); opacity: 0.14; }
+      50% { opacity: 0.26; }
+      100% { transform: translateY(-26px); opacity: 0.14; }
+    }
+    .cyber-anim-1 { animation: cyber-float-1 7s ease-in-out infinite; }
+    .cyber-anim-2 { animation: cyber-float-2 9s ease-in-out infinite; }
+    .cyber-anim-3 { animation: cyber-float-3 8s ease-in-out infinite; }
+    .cyber-anim-4 { animation: cyber-drift 10s ease-in-out infinite; }
+
+    .binary-stream {
+      position: absolute;
+      color: rgba(153, 202, 255, 0.035);
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      letter-spacing: 0.15em;
+      white-space: pre;
+      pointer-events: none;
+      animation: cyber-drift 12s ease-in-out infinite;
+    }
+
+    .step-badge { font-family: 'Space Grotesk', sans-serif; }
+
+    .nav-item { position: relative; }
+    .nav-item.active { color: #004EE0 !important; font-weight: 700; }
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      left: 14px; right: 14px; bottom: 2px;
+      height: 2.5px; border-radius: 2px;
+      background: #004EE0;
+      animation: fade-up 300ms ease both;
+    }
+    .mobile-nav-link.active {
+      color: #004EE0 !important;
+      font-weight: 700;
+      background-color: #E3F2FF;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      background: currentColor;
+      margin-left: 2px;
+      animation: cursor-blink 0.8s step-end infinite;
+    }
+    @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* Tag badges */
+    .tag-law { background: linear-gradient(135deg,#042E7B,#1883FF); color:#fff; }
+    .tag-tech { background: linear-gradient(135deg,#0f766e,#14b8a6); color:#fff; }
+
+    /* Evidence / hint cards */
+    .hint-card { border: 1px solid rgba(24,131,255,0.4); }
+
+    /* Lightbox */
+    #lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(4, 46, 123, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: fade-up 250ms ease both;
+    }
+    #lightbox-overlay.open { display: flex; }
+    #lightbox-overlay img {
+      max-width: min(90vw, 900px);
+      max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 30px 60px -15px rgba(0,0,0,0.6);
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      color: #fff;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 9999px;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: background 200ms ease;
+    }
+    #lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
+    /* Timeline (Investigation) */
+    #timeline-forensx { position: relative; }
+    .fx-track {
+      position: absolute;
+      top: 0; bottom: 0; left: 27px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(153,202,255,0.05), rgba(153,202,255,0.55) 8%, rgba(153,202,255,0.55) 92%, rgba(153,202,255,0.05));
+    }
+    @media (min-width: 768px) { .fx-track { left: 50%; margin-left: -1px; } }
+    .fx-progress {
+      position: absolute; top: 0; left: 0; width: 100%; height: 0%;
+      background: linear-gradient(180deg, #99CAFF, #1883FF);
+      transition: height 100ms linear;
+      box-shadow: 0 0 14px rgba(153,202,255,0.7);
+    }
+    .fx-node {
+      transition: transform 500ms cubic-bezier(0.2,0.8,0.2,1), background 400ms, border-color 400ms, box-shadow 400ms;
+      transform: scale(0.72);
+    }
+    .fx-node.lit {
+      transform: scale(1);
+      background: linear-gradient(145deg, #1883FF, #004EE0);
+      border-color: #99CAFF;
+      box-shadow: 0 0 0 6px rgba(153,202,255,0.12), 0 8px 24px rgba(24,131,255,0.5);
+    }
+    .fx-card {
+      opacity: 0.35;
+      transform: translateY(14px);
+      transition: opacity 600ms cubic-bezier(0.2,0.8,0.2,1), transform 600ms cubic-bezier(0.2,0.8,0.2,1);
+    }
+    .fx-card.lit { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground">
+
+  <!-- Header -->
+  <header id="header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-4">
+        <a href="index.html#projects" id="back-link" class="group hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full border-[6px] border-ocean-sky/80 transition-all hover:border-ocean-sky hover:bg-white/10">
+          <i data-lucide="arrow-left" class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"></i>
+        </a>
+        <a href="index.html" class="group flex items-center gap-5">
+          <span class="relative flex h-9 items-center font-display text-2xl font-bold tracking-tight">
+            <span class="relative z-10 text-ocean-royal transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">F</span>
+            <span class="relative -ml-1 text-ocean-sky transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5">A</span>
+          </span>
+        </a>
+      </div>
+
+      <nav class="hidden items-center gap-1 md:flex">
+        <a href="#idea" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Idea</a>
+        <a href="#methodology" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Methodology</a>
+        <a href="#case" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">The Case</a>
+        <a href="#compliance" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Guidelines</a>
+        <a href="#gallery" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Gallery</a>
+      </nav>
+
+      <button id="menu-btn" class="md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white" aria-label="Menu">
+        Menu
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-background">
+      <div class="mx-auto flex max-w-6xl flex-col px-5 py-3">
+        <a href="index.html#projects" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">← Back to Portfolio</a>
+        <a href="#idea" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Idea</a>
+        <a href="#methodology" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Methodology</a>
+        <a href="#case" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">The Case</a>
+        <a href="#compliance" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Guidelines</a>
+        <a href="#gallery" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Gallery</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="top" class="relative overflow-hidden gradient-hero">
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+    <div class="absolute -left-24 top-40 h-72 w-72 rounded-full bg-ocean-bright/30 blur-3xl float-slow"></div>
+    <div class="absolute -right-16 top-24 h-64 w-64 rounded-full bg-ocean-sky/25 blur-3xl float-slow [animation-delay:1.5s]"></div>
+
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <i data-lucide="fingerprint" class="cyber-icon cyber-anim-1" style="top:10%; left:5%; width:120px; height:120px;"></i>
+      <i data-lucide="hard-drive" class="cyber-icon cyber-anim-2" style="top:14%; right:6%; width:110px; height:110px; animation-delay:0.6s;"></i>
+      <i data-lucide="search" class="cyber-icon cyber-anim-3" style="bottom:18%; left:6%; width:100px; height:100px; animation-delay:1.2s;"></i>
+      <i data-lucide="folder-lock" class="cyber-icon cyber-anim-1" style="bottom:12%; right:7%; width:100px; height:100px; animation-delay:1.8s;"></i>
+      <i data-lucide="scale" class="cyber-icon cyber-anim-4" style="top:46%; right:3%; width:85px; height:85px; animation-delay:1.5s;"></i>
+      <i data-lucide="file-search" class="cyber-icon cyber-anim-2" style="top:44%; left:3%; width:80px; height:80px; animation-delay:2.4s;"></i>
+
+      <div class="binary-stream" style="top:6%; left:40%; font-size:18px;">01001<br>11010<br>00101</div>
+      <div class="binary-stream" style="bottom:8%; right:34%; animation-delay:1.4s; font-size:18px;">10110<br>01001<br>11100</div>
+    </div>
+
+    <div class="relative mx-auto flex min-h-[86vh] max-w-6xl flex-col items-center justify-center px-5 pt-28 pb-16 text-center">
+
+      <p id="typewriter" class="fade-up mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-ocean-sky [animation-delay:0ms]">
+        <span id="typewriter-text"></span><span class="typewriter-cursor">&nbsp;</span>
+      </p>
+
+      <h1 class="fade-up text-5xl font-bold leading-[1.05] sm:text-6xl md:text-7xl [animation-delay:80ms]">
+        <span class="text-shimmer">ForenX</span>
+      </h1>
+
+      <p class="fade-up mt-8 max-w-2xl text-sm text-white/85 sm:text-base [animation-delay:160ms]">
+A live cybercrime investigation based on the real Morgan Stanley insider data breach      </p>
+    </div>
+  </section>
+<!-- Idea / Overview Section -->
+<section id="idea" class="relative">
+  <div class="reveal mx-auto max-w-6xl px-5 py-14 sm:py-20 md:py-24">
+    <div class="mx-auto mb-10 max-w-3xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        The Idea
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+        What is ForenX?
+      </h2>
+    </div>
+
+    <div class="grid gap-8">
+      <div class="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-5 sm:p-10 shadow-sm card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <p class="text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+ForenX is a cybercrime and digital forensics awareness project based on  <span class="font-semibold text-ocean-deep"> the Morgan Stanley insider data breach (2011–2014)</span>. The project recreates the real case through a live investigation, where the team acts as digital forensics investigators instead of presenting the case through a traditional video or poster.
+        </p>
+        <p class="mt-4 sm:mt-5 text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+          The experience begins with the case background and seized evidence, including a laptop, USB drive, phone, notebook, and confidential documents. Visitors then explore evidence preservation, chain of custody, forensic imaging, and digital analysis before reconstructing the incident timeline using clue cards.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Methodology Section -->
+  <style>
+    #methodology .meth-card{
+      transition: border-color .4s ease, background .4s ease, box-shadow .4s ease, transform .4s ease;
+    }
+    #methodology.in-view .meth-card{ animation: methPulse 1.5s ease-out both; }
+    #methodology.in-view .meth-card:nth-child(1){ animation-delay: .1s; }
+    #methodology.in-view .meth-card:nth-child(2){ animation-delay: 2.6s; }
+    #methodology.in-view .meth-card:nth-child(3){ animation-delay: 5.1s; }
+    #methodology.in-view .meth-card:nth-child(4){ animation-delay: 7.6s; }
+
+    #methodology.in-view .meth-card:nth-child(1) .meth-icon{ animation: methIconPulse 1.5s ease-out .1s both; }
+    #methodology.in-view .meth-card:nth-child(2) .meth-icon{ animation: methIconPulse 1.5s ease-out 2.6s both; }
+    #methodology.in-view .meth-card:nth-child(3) .meth-icon{ animation: methIconPulse 1.5s ease-out 5.1s both; }
+    #methodology.in-view .meth-card:nth-child(4) .meth-icon{ animation: methIconPulse 1.5s ease-out 7.6s both; }
+
+    #methodology.in-view .meth-card:nth-child(1) .meth-badge{ animation: methBadgeGlow 1.5s ease-out .1s both; }
+    #methodology.in-view .meth-card:nth-child(2) .meth-badge{ animation: methBadgeGlow 1.5s ease-out 2.6s both; }
+    #methodology.in-view .meth-card:nth-child(3) .meth-badge{ animation: methBadgeGlow 1.5s ease-out 5.1s both; }
+    #methodology.in-view .meth-card:nth-child(4) .meth-badge{ animation: methBadgeGlow 1.5s ease-out 7.6s both; }
+
+    #methodology.in-view .meth-card:nth-child(1) .meth-dot-v{ animation: methDotLight 1.5s ease-out .1s both; }
+    #methodology.in-view .meth-card:nth-child(2) .meth-dot-v{ animation: methDotLight 1.5s ease-out 2.6s both; }
+    #methodology.in-view .meth-card:nth-child(3) .meth-dot-v{ animation: methDotLight 1.5s ease-out 5.1s both; }
+    #methodology.in-view .meth-card:nth-child(4) .meth-dot-v{ animation: methDotLight 1.5s ease-out 7.6s both; }
+
+    #methodology .meth-timeline{ display:none; }
+    @media (min-width: 1024px){
+      #methodology .meth-timeline{ display:flex; align-items:center; }
+    }
+    #methodology .meth-dot{
+      background: rgba(255,255,255,0.25);
+      box-shadow: none;
+      transition: background .3s ease, box-shadow .3s ease;
+    }
+    #methodology .meth-seg{ background: rgba(255,255,255,0.12); }
+    #methodology .meth-seg-fill{
+      transform-origin: left center;
+      transform: scaleX(0);
+      opacity: 1;
+    }
+    #methodology.in-view .meth-dot:nth-child(1){ animation: methDotLight 1.5s ease-out .1s both; }
+    #methodology.in-view .meth-dot:nth-child(3){ animation: methDotLight 1.5s ease-out 2.6s both; }
+    #methodology.in-view .meth-dot:nth-child(5){ animation: methDotLight 1.5s ease-out 5.1s both; }
+    #methodology.in-view .meth-dot:nth-child(7){ animation: methDotLight 1.5s ease-out 7.6s both; }
+    #methodology.in-view .meth-seg:nth-child(2) .meth-seg-fill{ animation: methSegFill 1.3s ease-out 1.3s both; }
+    #methodology.in-view .meth-seg:nth-child(4) .meth-seg-fill{ animation: methSegFill 1.3s ease-out 3.8s both; }
+    #methodology.in-view .meth-seg:nth-child(6) .meth-seg-fill{ animation: methSegFill 1.3s ease-out 6.3s both; }
+    @keyframes methSegFill{
+      0%{ transform: scaleX(0); opacity: 1; }
+      70%{ transform: scaleX(1); opacity: 1; }
+      100%{ transform: scaleX(1); opacity: 0; }
+    }
+    @keyframes methPulse{
+      0%{ border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); box-shadow: none; transform: translateY(0) scale(1); }
+      25%{ border-color: rgba(153,202,255,0.9); background: rgba(153,202,255,0.14); box-shadow: 0 0 0 1px rgba(153,202,255,0.45), 0 22px 45px -15px rgba(24,131,255,0.65); transform: translateY(-5px) scale(1.02); }
+      65%{ border-color: rgba(153,202,255,0.5); background: rgba(255,255,255,0.07); box-shadow: 0 12px 28px -12px rgba(24,131,255,0.35); transform: translateY(-2px) scale(1.005); }
+      100%{ border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); box-shadow: none; transform: translateY(0) scale(1); }
+    }
+    @keyframes methIconPulse{
+      0%{ box-shadow: 0 10px 15px -3px rgba(24,131,255,0.3); transform: scale(1); }
+      30%{ box-shadow: 0 0 0 10px rgba(153,202,255,0.28), 0 10px 28px -3px rgba(24,131,255,0.65); transform: scale(1.18); }
+      100%{ box-shadow: 0 10px 15px -3px rgba(24,131,255,0.3); transform: scale(1); }
+    }
+    @keyframes methBadgeGlow{
+      0%{ color: #99CAFF; text-shadow: none; }
+      30%{ color: #ffffff; text-shadow: 0 0 12px rgba(153,202,255,0.9); }
+      100%{ color: #99CAFF; text-shadow: none; }
+    }
+    @keyframes methDotLight{
+      0%{ background: rgba(255,255,255,0.25); box-shadow: none; }
+      30%{ background: #99CAFF; box-shadow: 0 0 0 6px rgba(153,202,255,0.25), 0 0 16px rgba(24,131,255,0.85); }
+      100%{ background: rgba(255,255,255,0.25); box-shadow: none; }
+    }
+    .meth-track-v{ background: linear-gradient(180deg, rgba(153,202,255,0.05), rgba(153,202,255,0.45) 8%, rgba(153,202,255,0.45) 92%, rgba(153,202,255,0.05)); }
+  </style>
+  <section id="methodology" class="relative bg-ocean-deep text-white">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+          <span class="h-px w-8 bg-ocean-sky/60"></span>
+          How It Was Done
+        </div>
+        <h2 class="text-2xl font-bold tracking-tight text-white sm:text-4xl gradient-text">
+          Forensics Methodology
+        </h2>
+      </div>
+
+      <div class="meth-timeline mb-4 px-[6%]">
+        <div class="meth-dot h-3 w-3 shrink-0 rounded-full"></div>
+        <div class="meth-seg relative h-0.5 flex-1 overflow-hidden">
+          <div class="meth-seg-fill absolute inset-0 bg-gradient-to-r from-ocean-bright to-ocean-sky"></div>
+        </div>
+        <div class="meth-dot h-3 w-3 shrink-0 rounded-full"></div>
+        <div class="meth-seg relative h-0.5 flex-1 overflow-hidden">
+          <div class="meth-seg-fill absolute inset-0 bg-gradient-to-r from-ocean-bright to-ocean-sky"></div>
+        </div>
+        <div class="meth-dot h-3 w-3 shrink-0 rounded-full"></div>
+        <div class="meth-seg relative h-0.5 flex-1 overflow-hidden">
+          <div class="meth-seg-fill absolute inset-0 bg-gradient-to-r from-ocean-bright to-ocean-sky"></div>
+        </div>
+        <div class="meth-dot h-3 w-3 shrink-0 rounded-full"></div>
+      </div>
+
+      <div class="relative">
+        <div class="meth-track-v absolute left-[18px] top-3 bottom-3 w-0.5 lg:hidden"></div>
+
+        <div class="grid gap-6 lg:grid-cols-4">
+          <div class="meth-card relative rounded-2xl border border-white/20 bg-white/[0.05] p-6 pl-12 lg:pl-6 backdrop-blur">
+            <span class="meth-dot-v absolute left-3 top-7 h-3 w-3 rounded-full lg:hidden"></span>
+            <div class="meth-icon mb-4 grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+              <i data-lucide="scan-search" class="h-5 w-5"></i>
+            </div>
+            <span class="meth-badge step-badge text-xs font-bold uppercase tracking-[0.15em] text-ocean-sky">01</span>
+            <h3 class="mt-1 font-semibold text-white">Evidence ID &amp; Preservation</h3>
+            <p class="mt-2 text-xs leading-relaxed text-white/70">Identified and bagged the laptop, USB drive, phone, and documents without altering originals.</p>
+          </div>
+
+          <div class="meth-card relative rounded-2xl border border-white/20 bg-white/[0.05] p-6 pl-12 lg:pl-6 backdrop-blur">
+            <span class="meth-dot-v absolute left-3 top-7 h-3 w-3 rounded-full lg:hidden"></span>
+            <div class="meth-icon mb-4 grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+              <i data-lucide="clipboard-check" class="h-5 w-5"></i>
+            </div>
+            <span class="meth-badge step-badge text-xs font-bold uppercase tracking-[0.15em] text-ocean-sky">02</span>
+            <h3 class="mt-1 font-semibold text-white">Chain of Custody &amp; Imaging</h3>
+            <p class="mt-2 text-xs leading-relaxed text-white/70">Logged custody of every item and created a write-blocked forensic image before analysis.</p>
+          </div>
+
+          <div class="meth-card relative rounded-2xl border border-white/20 bg-white/[0.05] p-6 pl-12 lg:pl-6 backdrop-blur">
+            <span class="meth-dot-v absolute left-3 top-7 h-3 w-3 rounded-full lg:hidden"></span>
+            <div class="meth-icon mb-4 grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+              <i data-lucide="binoculars" class="h-5 w-5"></i>
+            </div>
+            <span class="meth-badge step-badge text-xs font-bold uppercase tracking-[0.15em] text-ocean-sky">03</span>
+            <h3 class="mt-1 font-semibold text-white">Digital Evidence Examination</h3>
+            <p class="mt-2 text-xs leading-relaxed text-white/70">Analyzed browser history, file transfers, and access logs to reconstruct the attack timeline.</p>
+          </div>
+
+          <div class="meth-card relative rounded-2xl border border-white/20 bg-white/[0.05] p-6 pl-12 lg:pl-6 backdrop-blur">
+            <span class="meth-dot-v absolute left-3 top-7 h-3 w-3 rounded-full lg:hidden"></span>
+            <div class="meth-icon mb-4 grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-royal text-white shadow-lg">
+              <i data-lucide="file-text" class="h-5 w-5"></i>
+            </div>
+            <span class="meth-badge step-badge text-xs font-bold uppercase tracking-[0.15em] text-ocean-sky">04</span>
+            <h3 class="mt-1 font-semibold text-white">Reporting &amp; Reconstruction</h3>
+            <p class="mt-2 text-xs leading-relaxed text-white/70">Documented findings and had visitors reorder clue cards to rebuild the sequence of events.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var el = document.getElementById('methodology');
+      if (!el) return;
+
+      var CYCLE_END = 9.1;
+      var PAUSE = 2;
+      var TOTAL = (CYCLE_END + PAUSE) * 1000;
+
+      function playCycle() {
+        el.classList.remove('in-view');
+        void el.offsetWidth;
+        el.classList.add('in-view');
+      }
+
+      var started = false;
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !started) {
+            started = true;
+            playCycle();
+            setInterval(playCycle, TOTAL);
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+      obs.observe(el);
+    })();
+  </script>
+
+  <!-- The Case Section -->
+  <section id="case" class="relative gradient-band">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          The Investigation
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+         Inside the Breach
+        </h2>
+<p class="mt-3 text-xs sm:text-sm text-justify sm:text-left text-muted-foreground">
+From 2011 to 2014, a Morgan adviser stole client data through 6,000 unauthorized searches before being caught after the records appeared on Pastebin
+</p>
+      </div>
+
+      <div id="timeline-forensx" class="relative mt-14">
+        <div class="fx-track">
+          <div id="fx-progress" class="fx-progress"></div>
+        </div>
+
+        <!-- Hint 1 -->
+        <div class="fx-step relative mb-14 flex md:mb-16 md:items-center" data-index="0">
+          <div class="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center">
+            <div class="fx-node flex h-11 w-11 items-center justify-center rounded-full border-2 border-ocean-royal/25 bg-white">
+              <i data-lucide="search" class="h-5 w-5 text-ocean-royal"></i>
+            </div>
+          </div>
+          <div class="fx-card ml-6 flex-1 rounded-2xl border border-border bg-card p-4 shadow-sm md:ml-10 md:max-w-sm">
+            <span class="step-badge text-xs font-bold uppercase tracking-[0.2em] text-ocean-royal">Evidence 01</span>
+            <h3 class="mt-2 font-semibold text-ocean-deep">Unauthorized Search Pattern</h3>
+            <p class="mt-2 text-xs text-muted-foreground">Logs show repeated use of branch and group IDs that didn't belong to him, ~6,000 searches outside his assigned client group.</p>
+          </div>
+        </div>
+
+        <!-- Hint 2 -->
+        <div class="fx-step relative mb-14 flex md:mb-16 md:items-center md:flex-row-reverse" data-index="1">
+          <div class="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center">
+            <div class="fx-node flex h-11 w-11 items-center justify-center rounded-full border-2 border-ocean-royal/25 bg-white">
+              <i data-lucide="upload" class="h-5 w-5 text-ocean-royal"></i>
+            </div>
+          </div>
+          <div class="fx-card ml-6 flex-1 rounded-2xl border border-border bg-card p-4 shadow-sm md:ml-0 md:mr-10 md:max-w-sm md:text-right">
+            <span class="step-badge text-xs font-bold uppercase tracking-[0.2em] text-ocean-royal">Evidence 02</span>
+            <h3 class="mt-2 font-semibold text-ocean-deep">Personal Site as Exfiltration Channel</h3>
+            <p class="mt-2 text-xs text-muted-foreground">Browser history shows repeated uploads to galenmarsh.com, unblocked because the web filter classified it as "uncategorized."</p>
+          </div>
+        </div>
+
+        <!-- Hint 3 -->
+        <div class="fx-step relative mb-14 flex md:mb-16 md:items-center" data-index="2">
+          <div class="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center">
+            <div class="fx-node flex h-11 w-11 items-center justify-center rounded-full border-2 border-ocean-royal/25 bg-white">
+              <i data-lucide="globe" class="h-5 w-5 text-ocean-royal"></i>
+            </div>
+          </div>
+          <div class="fx-card ml-6 flex-1 rounded-2xl border border-border bg-card p-4 shadow-sm md:ml-10 md:max-w-sm">
+            <span class="step-badge text-xs font-bold uppercase tracking-[0.2em] text-ocean-royal">Evidence 03</span>
+            <h3 class="mt-2 font-semibold text-ocean-deep">Data Surfaces on Pastebin</h3>
+            <p class="mt-2 text-xs text-muted-foreground">A routine internet sweep found confidential records from ~900 client accounts publicly posted, triggering the internal investigation.</p>
+          </div>
+        </div>
+
+        <!-- Hint 4 -->
+        <div class="fx-step relative mb-14 flex md:mb-16 md:items-center md:flex-row-reverse" data-index="3">
+          <div class="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center">
+            <div class="fx-node flex h-11 w-11 items-center justify-center rounded-full border-2 border-ocean-royal/25 bg-white">
+              <i data-lucide="server" class="h-5 w-5 text-ocean-royal"></i>
+            </div>
+          </div>
+          <div class="fx-card ml-6 flex-1 rounded-2xl border border-border bg-card p-4 shadow-sm md:ml-0 md:mr-10 md:max-w-sm md:text-right">
+            <span class="step-badge text-xs font-bold uppercase tracking-[0.2em] text-ocean-royal">Evidence 04</span>
+            <h3 class="mt-2 font-semibold text-ocean-deep">Home Server Compromise</h3>
+            <p class="mt-2 text-xs text-muted-foreground">Forensic analysis showed the personal server was breached by a third party weeks before the data went public.</p>
+          </div>
+        </div>
+
+        <!-- Hint 5 -->
+        <div class="fx-step relative flex md:items-center" data-index="4">
+          <div class="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center">
+            <div class="fx-node flex h-11 w-11 items-center justify-center rounded-full border-2 border-ocean-royal/25 bg-white">
+              <i data-lucide="gavel" class="h-5 w-5 text-ocean-royal"></i>
+            </div>
+          </div>
+          <div class="fx-card ml-6 flex-1 rounded-2xl border border-border bg-card p-4 shadow-sm md:ml-10 md:max-w-sm">
+            <span class="step-badge text-xs font-bold uppercase tracking-[0.2em] text-ocean-royal">Evidence 05</span>
+            <h3 class="mt-2 font-semibold text-ocean-deep">Hardware Seized, Guilty Plea</h3>
+            <p class="mt-2 text-xs text-muted-foreground">The court ordered forfeiture of the personal server and hardware; the adviser paid $600K restitution and lost his job.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guidelines / Forensics Guidelines Section -->
+  <style>
+    .gl-item{
+      transition: padding-left .9s ease;
+    }
+    .gl-num{
+      transition: color 1.1s ease;
+    }
+    .gl-icon{
+      transition: background-color 1.1s ease, color 1.1s ease;
+    }
+    .gl-item.gl-active{
+      padding-left: 0.75rem;
+    }
+    .gl-item.gl-active .gl-num{
+      color: #004EE0;
+    }
+    .gl-item.gl-active .gl-icon{
+      background-color: #004EE0;
+      color: #ffffff;
+    }
+  </style>
+  <section id="compliance" class="relative">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          The Standard We Followed
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          Forensics Guidelines
+        </h2>
+
+      </div>
+
+      <div class="divide-y divide-border border-t border-b border-border">
+
+        <div class="gl-item group mx-auto flex max-w-3xl flex-col gap-4 py-7 transition-all duration-300 sm:flex-row sm:items-center sm:gap-8">
+          <span class="gl-num step-badge w-16 shrink-0 text-4xl font-bold text-ocean-mist sm:text-5xl">01</span>
+          <div class="gl-icon grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ocean-mist text-ocean-royal">
+            <i data-lucide="scan-search" class="h-4.5 w-4.5"></i>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-base font-semibold text-ocean-deep">Evidence Identification</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">All potential evidence was identified first, including the suspect's laptop, USB drive, phone, and printed confidential documents.</p>
+          </div>
+        </div>
+
+        <div class="gl-item group mx-auto flex max-w-3xl flex-col gap-4 py-7 transition-all duration-300 sm:flex-row sm:items-center sm:gap-8">
+          <span class="gl-num step-badge w-16 shrink-0 text-4xl font-bold text-ocean-mist sm:text-5xl">02</span>
+          <div class="gl-icon grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ocean-mist text-ocean-royal">
+            <i data-lucide="package-check" class="h-4.5 w-4.5"></i>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-base font-semibold text-ocean-deep">Evidence Preservation</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">Every item was sealed in labelled evidence bags to prevent contamination, with original devices left unmodified.</p>
+          </div>
+        </div>
+
+        <div class="gl-item group mx-auto flex max-w-3xl flex-col gap-4 py-7 transition-all duration-300 sm:flex-row sm:items-center sm:gap-8">
+          <span class="gl-num step-badge w-16 shrink-0 text-4xl font-bold text-ocean-mist sm:text-5xl">03</span>
+          <div class="gl-icon grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ocean-mist text-ocean-royal">
+            <i data-lucide="clipboard-list" class="h-4.5 w-4.5"></i>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-base font-semibold text-ocean-deep">Chain of Custody</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">A documented record tracked who collected each item, when, and how it was handled throughout the investigation.</p>
+          </div>
+        </div>
+
+        <div class="gl-item group mx-auto flex max-w-3xl flex-col gap-4 py-7 transition-all duration-300 sm:flex-row sm:items-center sm:gap-8">
+          <span class="gl-num step-badge w-16 shrink-0 text-4xl font-bold text-ocean-mist sm:text-5xl">04</span>
+          <div class="gl-icon grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ocean-mist text-ocean-royal">
+            <i data-lucide="shield-check" class="h-4.5 w-4.5"></i>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-base font-semibold text-ocean-deep">Forensic Imaging &amp; Write Blocking</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">A write-blocked forensic image was created before analysis, so investigators worked on a copy while the original stayed untouched.</p>
+          </div>
+        </div>
+
+        <div class="gl-item group mx-auto flex max-w-3xl flex-col gap-4 py-7 transition-all duration-300 sm:flex-row sm:items-center sm:gap-8">
+          <span class="gl-num step-badge w-16 shrink-0 text-4xl font-bold text-ocean-mist sm:text-5xl">05</span>
+          <div class="gl-icon grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ocean-mist text-ocean-royal">
+            <i data-lucide="binoculars" class="h-4.5 w-4.5"></i>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-base font-semibold text-ocean-deep">Digital Evidence Examination</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">Browser history, file transfers, USB records, and logs were analyzed to identify suspicious activity tied to the theft.</p>
+          </div>
+        </div>
+
+      </div>
+
+<!-- Key takeaway -->
+<div class="mt-8 mx-auto max-w-2xl rounded-xl p-5 text-center"
+     style="background: linear-gradient(135deg, rgba(4,46,123,0.06), rgba(24,131,255,0.08)); border: 1px solid rgba(24,131,255,0.3);">
+
+  <i data-lucide="quote" class="mx-auto h-5 w-5 text-ocean-royal/60"></i>
+
+  <p class="mt-2 text-sm font-semibold text-ocean-deep">
+    "Trust is not a security control! Access must be limited, monitored, and used responsibly."
+  </p>
+
+  <p class="mt-1 text-[11px] text-muted-foreground">
+    Key takeaway shared with visitors at the end of the investigation
+  </p>
+</div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var items = document.querySelectorAll('#compliance .gl-item');
+      if (!items.length || !('IntersectionObserver' in window)) return;
+
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('gl-active');
+          } else {
+            entry.target.classList.remove('gl-active');
+          }
+        });
+      }, { threshold: 0, rootMargin: '-40% 0px -40% 0px' });
+
+      items.forEach(function (item) { obs.observe(item); });
+    })();
+  </script>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="relative gradient-band">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Behind the Scenario
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+          The Investigation Corner
+        </h2>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div class="group relative overflow-hidden rounded-3xl card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+          <div class="h-64 w-full cursor-pointer overflow-hidden" onclick="openLightbox('f2.jpg')">
+            <img src="f2.jpg" alt="Physical evidence collection: evidence bags, chain of custody forms, and crime scene photos"
+                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                 onerror="this.parentElement.parentElement.querySelector('.fx-fallback').style.display='flex'; this.style.display='none';">
+            <div class="fx-fallback hidden h-full w-full items-center justify-center bg-ocean-mist/50">
+              <i data-lucide="image" class="h-8 w-8 text-ocean-royal/40"></i>
+            </div>
+          </div>
+          <div class="bg-card p-5">
+            <h3 class="text-sm font-semibold text-blue-900">Physical Evidence Collection</h3>
+            <p class="mt-2 text-xs text-muted-foreground">Evidence bags, chain of custody, and crime scene photos replicating real forensic evidence-handling</p>
+          </div>
+        </div>
+
+        <div class="group relative overflow-hidden rounded-3xl card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+          <div class="h-64 w-full cursor-pointer overflow-hidden" onclick="openLightbox('f1.jpg')">
+            <img src="f1.jpg" alt="Live scenario corner with police caution tape and evidence markers"
+                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                 onerror="this.parentElement.parentElement.querySelector('.fx-fallback').style.display='flex'; this.style.display='none';">
+            <div class="fx-fallback hidden h-full w-full items-center justify-center bg-ocean-mist/50">
+              <i data-lucide="image" class="h-8 w-8 text-ocean-royal/40"></i>
+            </div>
+          </div>
+          <div class="bg-card p-5">
+            <h3 class="text-sm font-semibold text-blue-900">Live Scenario Corner</h3>
+            <p class="mt-2 text-xs text-muted-foreground">A fully staged investigation corner with police caution tape and evidence markers for a realistic visitor experience</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-border bg-background">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row">
+      <div class="flex items-center gap-2">
+        <i data-lucide="code-2" class="h-3.5 w-3.5 text-ocean-royal"></i>
+        <span>Fajer Mohammed Alamro</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox modal -->
+  <div id="lightbox-overlay" onclick="if(event.target===this) closeLightbox()">
+    <button id="lightbox-close" onclick="closeLightbox()" aria-label="Close">
+      <i data-lucide="x" class="h-4 w-4"></i>
+    </button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    function openLightbox(src) {
+      var overlay = document.getElementById('lightbox-overlay');
+      var img = document.getElementById('lightbox-img');
+      img.src = src;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      var overlay = document.getElementById('lightbox-overlay');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    (function () {
+      const text = "Digital Forensics · Live Investigation";
+      const el = document.getElementById('typewriter-text');
+      let i = 0;
+
+      function type() {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, 45);
+        } else {
+          setTimeout(erase, 2200);
+        }
+      }
+
+      function erase() {
+        if (i > 0) {
+          el.textContent = text.substring(0, i - 1);
+          i--;
+          setTimeout(erase, 25);
+        } else {
+          setTimeout(type, 400);
+        }
+      }
+
+      setTimeout(type, 500);
+    })();
+
+    const header = document.getElementById('header');
+    const backLink = document.getElementById('back-link');
+    const navItems = document.querySelectorAll('.nav-item');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const menuBtn = document.getElementById('menu-btn');
+    const sections = document.querySelectorAll('section[id]');
+
+    let isScrolled = false;
+    let activeSection = 'top';
+
+    function applyNavStyles() {
+      if (isScrolled) {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
+        menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-royal/40 px-3.5 py-1.5 text-xs font-medium text-ocean-royal transition-all hover:border-ocean-royal hover:bg-ocean-mist";
+      } else {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
+        menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-sky/50 px-3.5 py-1.5 text-xs font-medium text-white/90 transition-all hover:border-ocean-sky hover:bg-white/10";
+      }
+
+      navItems.forEach(item => {
+        const targetId = item.getAttribute('href').replace('#', '');
+        const isActive = targetId === activeSection;
+        const baseClasses = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors";
+        const inactiveColor = isScrolled
+          ? "text-muted-foreground hover:text-ocean-royal"
+          : "text-white/75 hover:text-white";
+
+        item.className = isActive
+          ? `${baseClasses} active`
+          : `${baseClasses} ${inactiveColor}`;
+      });
+
+      mobileNavLinks.forEach(link => {
+        const targetId = link.getAttribute('href').replace(/^.*#/, '');
+        const isActive = targetId === activeSection;
+        const base = "mobile-nav-link rounded-md px-2 py-2 text-sm hover:bg-secondary";
+        link.className = isActive
+          ? `${base} active`
+          : `${base} text-foreground`;
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      isScrolled = window.scrollY > 12;
+      applyNavStyles();
+    });
+
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeSection = entry.target.id;
+            applyNavStyles();
+          }
+        });
+      }, {
+        threshold: 0,
+        rootMargin: '-45% 0px -50% 0px'
+      });
+      sections.forEach((section) => sectionObserver.observe(section));
+    }
+
+    applyNavStyles();
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (isHidden) {
+        mobileMenu.classList.remove('hidden');
+        menuBtn.innerText = 'Close';
+      } else {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      }
+    });
+
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuBtn.innerText = 'Menu';
+      });
+    });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach((el) => io.observe(el));
+    } else {
+      revealEls.forEach((e) => e.classList.add('reveal-in'));
+    }
+
+    /* Investigation timeline: fill the connecting line and light up nodes on scroll */
+    (function () {
+      const wrap = document.getElementById('timeline-forensx');
+      const progress = document.getElementById('fx-progress');
+      if (!wrap || !progress) return;
+
+      const nodes = Array.from(document.querySelectorAll('.fx-step'));
+
+      function update() {
+        const rect = wrap.getBoundingClientRect();
+        const viewportH = window.innerHeight;
+        const total = rect.height;
+
+        const raw = (viewportH * 0.6 - rect.top) / total;
+        const pct = Math.max(0, Math.min(1, raw));
+        progress.style.height = (pct * 100) + '%';
+
+        nodes.forEach((node) => {
+          const nRect = node.getBoundingClientRect();
+          const nodeCenter = nRect.top + nRect.height / 2;
+          const lit = nodeCenter < viewportH * 0.62;
+          const nodeEl = node.querySelector('.fx-node');
+          const cardEl = node.querySelector('.fx-card');
+          if (lit) {
+            nodeEl.classList.add('lit');
+            cardEl.classList.add('lit');
+          } else {
+            nodeEl.classList.remove('lit');
+            cardEl.classList.remove('lit');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+  </script>
+</body>
+</html>

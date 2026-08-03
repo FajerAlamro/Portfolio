@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fajr Alamro | Portfolio</title>
+  <title>Fajer Alamro</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <!-- Tailwind Custom Config -->
   <script>
     tailwind.config = {
@@ -243,6 +243,22 @@
       font-weight: 700;
       background-color: #E3F2FF;
     }
+    @keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.floating-img {
+  animation: float 3.5s ease-in-out infinite;
+}
+.floating-img-reverse {
+  animation: float 3.5s ease-in-out infinite;
+  animation-delay: 1.75s; /* نص المدة، عشان تبدأ من نقطة معاكسة */
+}
   </style>
 </head>
 <body class="min-h-screen bg-background text-foreground">
@@ -250,14 +266,12 @@
   <!-- Header -->
   <header id="header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent">
     <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-      <a href="#top" class="group flex items-center gap-2">
-        <span class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-ocean-royal to-ocean-bright text-white shadow-md transition-transform group-hover:rotate-3">
-          <span class="font-display text-sm font-bold">F</span>
-        </span>
-        <span id="header-title" class="font-display text-sm font-semibold tracking-tight transition-colors text-white">
-          Fajr Alamro
-        </span>
-      </a>
+<a href="#top" class="group flex items-center gap-5">
+  <span class="relative flex h-9 items-center font-display text-2xl font-bold tracking-tight">
+    <span class="relative z-10 text-ocean-royal transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">F</span>
+    <span class="relative -ml-1 text-ocean-sky transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5">A</span>
+  </span>
+</a>
 
       <nav class="hidden items-center gap-1 md:flex">
         <a href="#about" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">About</a>
@@ -317,7 +331,7 @@
       </p>
 
       <h1 class="fade-up text-5xl font-bold leading-[1.05] sm:text-6xl md:text-7xl [animation-delay:80ms]">
-        <span class="text-white">Fajr </span>
+        <span class="text-white">Fajer </span>
         <span class="text-shimmer">
           Alamro
         </span>
@@ -337,181 +351,356 @@
     </div>
   </section>
 
-  <!-- About Section -->
-  <section id="about" class="relative">
-    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
-      <div class="mx-auto mb-10 max-w-3xl">
-        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
-          <span class="h-px w-8 bg-ocean-royal/50"></span>
-          About Me
-        </div>
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
-          A short introduction
-        </h2>
+ <!-- About Section -->
+<section id="about" class="relative">
+  <div class="reveal mx-auto max-w-6xl px-4 sm:px-5 py-14 sm:py-24">
+    <div class="mx-auto mb-8 sm:mb-10 max-w-3xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        About Me
       </div>
+      <h2 class="text-2xl sm:text-4xl font-bold tracking-tight gradient-text">
+        A short introduction
+      </h2>
+    </div>
 
-      <div class="grid gap-8">
-        <div class="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-10 shadow-sm card-hover">
-          <p class="text-base text-justify leading-relaxed text-muted-foreground">
-First Class Honors graduate from King Saud University with a Bachelor's degree in Information Technology, specializing in Cybersecurity.
+    <div class="grid gap-8">
+      <div class="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-6 sm:p-10 shadow-sm card-hover">
+<p class="text-sm sm:text-base text-justify [text-justify:inter-word] leading-relaxed text-muted-foreground">
+  First Class Honors graduate from King Saud University with a Bachelor's degree in Information Technology, specializing in Cybersecurity. Gained hands-on experience through cybersecurity projects, technical clubs, and a graduation project developed in collaboration with IBM, focused on creating an innovative assistive solution for visually impaired individuals. Passionate about building secure, resilient digital systems while continuously expanding my cybersecurity expertise.
+</p>
 
-Gained hands-on experience through cybersecurity projects, technical clubs, and an IBM-collaborated graduation project focused on developing an AI- and IoT-based assistive solution for visually impaired individuals.
-
-Co-authored peer-reviewed research publications and passionate about building secure, resilient digital systems while continuously expanding my cybersecurity expertise.          </p>
-
-          <div class="mt-7">
-            <div class="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-ocean-royal">
-              Core Interests
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
-                <i data-lucide="shield" class="h-3.5 w-3.5"></i> Cybersecurity
-              </span>
-              <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
-                <i data-lucide="scale" class="h-3.5 w-3.5"></i> GRC
-              </span>
-              <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
-                <i data-lucide="monitor-check" class="h-3.5 w-3.5"></i> SOC
-              </span>
-              <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
-                <i data-lucide="siren" class="h-3.5 w-3.5"></i> Incident Response
-              </span>
-              <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-3 py-1.5 text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
-                <i data-lucide="code-2" class="h-3.5 w-3.5"></i> Application Security
-              </span>
-            </div>
+        <div class="mt-6 sm:mt-7">
+          <div class="mb-3 text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-ocean-royal">
+            Core Interests
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-2.5 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
+              <i data-lucide="shield" class="h-3.5 w-3.5"></i> Cybersecurity
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-2.5 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
+              <i data-lucide="scale" class="h-3.5 w-3.5"></i> GRC
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-2.5 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
+              <i data-lucide="monitor-check" class="h-3.5 w-3.5"></i> SOC
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-2.5 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
+              <i data-lucide="siren" class="h-3.5 w-3.5"></i> Incident Response
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-ocean-sky/40 bg-ocean-mist/60 px-2.5 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-xs font-medium text-ocean-deep transition-colors hover:bg-ocean-sky/40">
+              <i data-lucide="code-2" class="h-3.5 w-3.5"></i> Application Security
+            </span>
           </div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section id="projects" class="relative gradient-band">
-    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
-      <div class="mb-10 max-w-2xl">
-        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
-          <span class="h-px w-8 bg-ocean-royal/50"></span>
-           My Work
-        </div>
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
-         Projects
-        </h2>
+  </div>
+</section>
+<!-- Projects Section -->
+<section id="projects" class="relative gradient-band">
+  <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+    <div class="mb-10 max-w-2xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+         My Work
       </div>
-
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <!-- Project 1 -->
-<!-- Project 1 -->
-<article class="group relative overflow-hidden rounded-2xl border border-ocean-royal p-5 card-hover flex flex-col" style="background: linear-gradient(180deg, rgba(4,46,123,0.28) 0%, rgba(24,131,255,0.14) 30%, #F8FBFF 60%);">
-  <div class="shine mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-xl" style="position:relative; overflow:hidden; height:16rem;">
-    <img src="munir.png" alt="Munir project preview" class="relative h-full w-full object-contain p-3 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:100%; width:100%; object-fit:contain; padding:12px; box-sizing:border-box; filter: drop-shadow(0 18px 24px rgba(0,0,0,0.25));" onload="this.style.opacity=1" onerror="this.remove()">
-  </div>
-  <span class="self-start mb-2 inline-block rounded-full border border-ocean-royal bg-transparent px-2.5 py-1 text-[11px] font-medium text-ocean-royal">
-    Graduation Project
-  </span>
-  <h3 class="mt-2 text-xl font-bold gradient-text">Munir</h3>
-  <p class="mt-2 text-sm leading-relaxed text-muted-foreground text-justify">
-Smart glasses and a mobile app for visually impaired users, enabling face recognition, text reading, currency identification, and more.       </p>
-  <a href="#" target="_blank" rel="noreferrer" 
-     class="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-blue-900 transition-colors hover:text-ocean-royal">
-    View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
-  </a>
-</article>
-
-<!-- Project 2 -->
-<article class="group relative overflow-hidden rounded-2xl border border-ocean-royal p-5 card-hover flex flex-col" style="background: linear-gradient(180deg, rgba(4,46,123,0.28) 0%, rgba(24,131,255,0.14) 30%, #F8FBFF 60%);">
-  <div class="shine mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-xl" style="position:relative; overflow:hidden; height:16rem;">
-    <img src="yusr.png" alt="Yusr project preview" class="relative h-full w-full object-contain p-3 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:100%; width:100%; object-fit:contain; padding:12px; box-sizing:border-box; filter: drop-shadow(0 18px 24px rgba(0,0,0,0.25));" onload="this.style.opacity=1" onerror="this.remove()">
-  </div>
-  <span class="self-start mb-2 inline-block rounded-full border border-ocean-royal bg-transparent px-2.5 py-1 text-[11px] font-medium text-ocean-royal">
-    Entrepreneurship Project 
-  </span>
-  <h3 class="mt-2 text-xl font-bold gradient-text">Yusr</h3>
-  <p class="mt-2 text-sm leading-relaxed text-muted-foreground text-justify">
-Smart wristband for Hajj & Umrah pilgrims, featuring automatic ritual counting, health monitoring, GPS, and SOS.  </p>
-  <a href="#" target="_blank" rel="noreferrer" 
-     class="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-blue-900 transition-colors hover:text-ocean-royal">
-    View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
-  </a>
-</article>
-
-<!-- Project 3 -->
-<article class="group relative overflow-hidden rounded-2xl border border-ocean-royal p-5 card-hover flex flex-col" style="background: linear-gradient(180deg, rgba(4,46,123,0.28) 0%, rgba(24,131,255,0.14) 30%, #F8FBFF 60%);">
-  <div class="shine mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-xl" style="position:relative; overflow:hidden; height:16rem;">
-    <img src="diva.png" alt="Diva project preview" class="relative h-full w-full object-contain p-3 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:85%; width:85%; object-fit:contain; padding:12px; box-sizing:border-box; filter: drop-shadow(0 18px 24px rgba(0,0,0,0.25));" onload="this.style.opacity=1" onerror="this.remove()">
-  </div>
-  <span class="self-start mb-2 inline-block rounded-full border border-ocean-royal bg-transparent px-2.5 py-1 text-[11px] font-medium text-ocean-royal">
-   Penetration Testing
-  </span>
-  <h2 class="mt-2 text-lg font-bold gradient-text">
-Mobile App Security Assessment </h2>
-  <p class="mt-2 text-sm leading-relaxed text-muted-foreground text-justify">
-Conducted a security assessment of Diva Android application, identifying vulnerabilities through reverse engineering.  </p>
-  <a href="#" target="_blank" rel="noreferrer" 
-     class="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-blue-900 transition-colors hover:text-ocean-royal">
-    View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
-  </a>
-</article>
-      </div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+       Projects
+      </h2>
     </div>
-  </section>
 
-  <!-- Achievements Section -->
-  <section id="achievements" class="relative">
-    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
-      <div class="mb-10 max-w-2xl">
-        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
-          <span class="h-px w-8 bg-ocean-royal/50"></span>
-          Achievements · Honors · Awards
-        </div>
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
-          Recognitions along the way
-        </h2>
-      </div>
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 
-      <div class="grid gap-4 sm:grid-cols-2">
-        <div class="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 card-hover">
-          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-mist to-ocean-sky/50 text-ocean-royal">
-            <i data-lucide="trophy" class="h-5 w-5"></i>
-          </div>
-          <div class="min-w-0">
-            <div class="font-semibold text-foreground">First Class Honors</div>
-            <div class="mt-0.5 text-sm text-muted-foreground">Graduated with First Honors — King Saud University</div>
-          </div>
+      <!-- Project 1: Munir -->
+      <article class="group relative overflow-hidden rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 flex flex-col" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-2xl border border-white/50" style="background: rgba(255,255,255,0.3);">
+          <img src="munir.png" alt="Munir project preview" class="floating-img relative h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:100%; width:100%; object-fit:contain;" onload="this.style.opacity=1" onerror="this.remove()">
         </div>
+        <h3 class="text-xl font-bold text-ocean-deep">Munir</h3>
+        <span class="mt-1 block text-xs font-medium text-ocean-royal">Graduation Project</span>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 text-justify">
+          Smart glasses and a mobile app for visually impaired users, enabling face recognition, text reading, currency recognition, and more.
+        </p>
+        <a href="munir.html" target="_blank" rel="noreferrer" class="mt-auto pt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-ocean-royal transition-all duration-300 hover:border-white/60 hover:bg-white/40">
+          View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+      </article>
 
-        <div class="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 card-hover">
-          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-mist to-ocean-sky/50 text-ocean-royal">
-            <i data-lucide="presentation" class="h-5 w-5"></i>
-          </div>
-          <div class="min-w-0">
-            <div class="font-semibold text-foreground">Graduation Speaker</div>
-            <div class="mt-0.5 text-sm text-muted-foreground">Delivered the official graduation speech on behalf of peers</div>
-          </div>
+      <!-- Project 2: Yusr -->
+      <article class="group relative overflow-hidden rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 flex flex-col" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-2xl border border-white/50" style="background: rgba(255,255,255,0.3);">
+          <img src="yusr.png" alt="Yusr project preview" class="floating-img-reverse relative h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:100%; width:100%; object-fit:contain;" onload="this.style.opacity=1" onerror="this.remove()">
         </div>
+        <h3 class="text-xl font-bold text-ocean-deep">Yusr</h3>
+        <span class="mt-1 block text-xs font-medium text-ocean-royal">Entrepreneurship Project</span>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 text-justify">
+          Smart wristband for Hajj & Umrah pilgrims, featuring automatic ritual counting, health monitoring, GPS, and SOS.
+        </p>
+        <a href="yusr.html" target="_blank" rel="noreferrer" class="mt-auto pt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-ocean-royal transition-all duration-300 hover:border-white/60 hover:bg-white/40">
+          View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+      </article>
 
-        <div class="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 card-hover">
-          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-mist to-ocean-sky/50 text-ocean-royal">
-            <i data-lucide="medal" class="h-5 w-5"></i>
-          </div>
-          <div class="min-w-0">
-            <div class="font-semibold text-foreground">Published Researcher</div>
-            <div class="mt-0.5 text-sm text-muted-foreground">Peer-reviewed paper in an MDPI journal (Sensors)</div>
-          </div>
+      <!-- Project 3: Diva -->
+      <article class="group relative overflow-hidden rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 flex flex-col" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-2xl border border-white/50" style="background: rgba(255,255,255,0.3);">
+          <img src="diva.png" alt="Diva project preview" class="floating-img relative h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:82%; width:82%; object-fit:contain; margin:auto; display:block;" onload="this.style.opacity=1" onerror="this.remove()">
         </div>
+        <h3 class="text-lg font-bold text-ocean-deep">Mobile App Security Assessment</h3>
+        <span class="mt-1 block text-xs font-medium text-ocean-royal">Penetration Testing</span>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 text-justify">
+          Conducted a security assessment of the Diva Android app, identifying vulnerabilities through reverse engineering and analysis.
+        </p>
+        <a href="appsec.html" target="_blank" rel="noreferrer" class="mt-auto pt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-ocean-royal transition-all duration-300 hover:border-white/60 hover:bg-white/40">
+          View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+      </article>
 
-        <div class="flex items-start gap-4 rounded-2xl border border-border bg-card p-5 card-hover">
-          <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-mist to-ocean-sky/50 text-ocean-royal">
-            <i data-lucide="star" class="h-5 w-5"></i>
-          </div>
-          <div class="min-w-0">
-            <div class="font-semibold text-foreground">Conference Presenter</div>
-            <div class="mt-0.5 text-sm text-muted-foreground">Selected to present Munir at ICAN 2026 Conference</div>
-          </div>
+      <!-- Project 4: Forensics -->
+      <article class="group relative overflow-hidden rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 flex flex-col" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-2xl border border-white/50" style="background: rgba(255,255,255,0.3);">
+          <img src="foren.png" alt="Forensics project preview" class="floating-img relative h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:93%; width:93%; object-fit:contain; margin:auto; display:block;" onload="this.style.opacity=1" onerror="this.remove()">
         </div>
-      </div>
+        <h3 class="text-lg font-bold text-ocean-deep">Investigation Simulation</h3>
+        <span class="mt-1 block text-xs font-medium text-ocean-royal">Cybersecurity Forensics</span>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 text-justify">
+          Simulated a real-life ransomware attack scenario, covering digital forensics, incident response, and threat investigation.
+        </p>
+        <a href="foren.html" target="_blank" rel="noreferrer" class="mt-auto pt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-ocean-royal transition-all duration-300 hover:border-white/60 hover:bg-white/40">
+          View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+      </article>
+
+      <!-- Project 5: SQL Injection -->
+      <article class="group relative overflow-hidden rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 flex flex-col" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-2xl border border-white/50" style="background: rgba(255,255,255,0.3);">
+          <img src="sqli.png" alt="SQL Injection project preview" class="floating-img relative h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:82%; width:82%; object-fit:contain; margin:auto; display:block;" onload="this.style.opacity=1" onerror="this.remove()">
+        </div>
+        <h3 class="text-lg font-bold text-ocean-deep">SQL Injection</h3>
+        <span class="mt-1 block text-xs font-medium text-ocean-royal">Network Security</span>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 text-justify">
+          Simulated SQL Injection attacks using Kali Linux and jSQL, demonstrating database exploitation and secure coding practices.
+        </p>
+        <a href="network.html" target="_blank" rel="noreferrer" class="mt-auto pt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-ocean-royal transition-all duration-300 hover:border-white/60 hover:bg-white/40">
+          View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+      </article>
+
+      <!-- Project 6: Ransomware -->
+      <article class="group relative overflow-hidden rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 flex flex-col" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-2xl border border-white/50" style="background: rgba(255,255,255,0.3);">
+          <img src="Ransomware.png" alt="Ransomware project preview" class="floating-img relative h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:82%; width:82%; object-fit:contain; margin:auto; display:block;" onload="this.style.opacity=1" onerror="this.remove()">
+        </div>
+        <h3 class="text-lg font-bold text-ocean-deep">Ransomware Attack</h3>
+        <span class="mt-1 block text-xs font-medium text-ocean-royal">Security Awareness</span>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 text-justify">
+          Created an educational animation based on a realistic phishing-to-ransomware attack email scenario, promoting cybersecurity awareness.
+        </p>
+        <a href="rans.html" target="_blank" rel="noreferrer" class="mt-auto pt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-ocean-royal transition-all duration-300 hover:border-white/60 hover:bg-white/40">
+          View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+      </article>
+
+      <!-- Project 7: Wasl -->
+      <article class="group relative overflow-hidden rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 flex flex-col" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-2xl border border-white/50" style="background: rgba(255,255,255,0.3);">
+          <img src="wasl.png" alt="Wasl project preview" class="floating-img relative h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:82%; width:82%; object-fit:contain; margin:auto; display:block;" onload="this.style.opacity=1" onerror="this.remove()">
+        </div>
+        <h3 class="text-lg font-bold text-ocean-deep">Wasl</h3>
+        <span class="mt-1 block text-xs font-medium text-ocean-royal">Software Engineering</span>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 text-justify">
+          Built a full-stack platform connecting innovators with investors through project showcasing and opportunity discovery.
+        </p>
+        <a href="wasl.html" target="_blank" rel="noreferrer" class="mt-auto pt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-ocean-royal transition-all duration-300 hover:border-white/60 hover:bg-white/40">
+          View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+      </article>
+
+      <!-- Project 8: Dreamverse -->
+      <article class="group relative overflow-hidden rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 flex flex-col" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-2xl border border-white/50" style="background: rgba(255,255,255,0.3);">
+          <img src="deam.png" alt="Dreamverse project preview" class="floating-img relative h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:82%; width:82%; object-fit:contain; margin:auto; display:block;" onload="this.style.opacity=1" onerror="this.remove()">
+        </div>
+        <h3 class="text-lg font-bold text-ocean-deep">Dreamverse</h3>
+        <span class="mt-1 block text-xs font-medium text-ocean-royal">Project Management</span>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 text-justify">
+          Developed a project management plan for an AI-powered smart sleep capsule, including scope, scheduling, WBS, Gantt charts, and task planning.
+        </p>
+        <a href="dream.html" target="_blank" rel="noreferrer" class="mt-auto pt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-ocean-royal transition-all duration-300 hover:border-white/60 hover:bg-white/40">
+          View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+      </article>
+
+      <!-- Project 9: World of differences -->
+      <article class="group relative overflow-hidden rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 flex flex-col" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-2xl border border-white/50" style="background: rgba(255,255,255,0.3);">
+          <img src="network.png" alt="World of differences project preview" class="floating-img relative h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:82%; width:82%; object-fit:contain; margin:auto; display:block;" onload="this.style.opacity=1" onerror="this.remove()">
+        </div>
+        <h3 class="text-lg font-bold text-ocean-deep">World of differences</h3>
+        <span class="mt-1 block text-xs font-medium text-ocean-royal">Network project</span>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 text-justify">
+          Developed a multiplayer game using client-server architecture, enabling real-time gameplay synchronization.
+        </p>
+        <a href="#" target="_blank" rel="noreferrer" class="mt-auto pt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-ocean-royal transition-all duration-300 hover:border-white/60 hover:bg-white/40">
+          View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+      </article>
+
+      <!-- Project 10: Darek -->
+      <article class="group relative overflow-hidden rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 flex flex-col" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-2xl border border-white/50" style="background: rgba(255,255,255,0.3);">
+          <img src="logo1.png" alt="Darek project preview" class="floating-img relative h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:90%; width:90%; object-fit:contain; margin:auto; display:block;" onload="this.style.opacity=1" onerror="this.remove()">
+        </div>
+        <h3 class="text-lg font-bold text-ocean-deep">Darek</h3>
+        <span class="mt-1 block text-xs font-medium text-ocean-royal">Web Development</span>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 text-justify">
+          Developed an interactive property rental website enabling property browsing, booking, and listing management.
+        </p>
+        <a href="#" target="_blank" rel="noreferrer" class="mt-auto pt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-ocean-royal transition-all duration-300 hover:border-white/60 hover:bg-white/40">
+          View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+      </article>
+
+      <!-- Project 11: Smart Cart -->
+      <article class="group relative overflow-hidden rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 flex flex-col" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-2xl border border-white/50" style="background: rgba(255,255,255,0.3);">
+          <img src="ux.png" alt="Smart Cart project preview" class="floating-img relative h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:75%; width:75%; object-fit:contain; margin:auto; display:block;" onload="this.style.opacity=1" onerror="this.remove()">
+        </div>
+        <h3 class="text-lg font-bold text-ocean-deep">Smart Cart</h3>
+        <span class="mt-1 block text-xs font-medium text-ocean-royal">UI/UX Design</span>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 text-justify">
+          Designed a UI/UX concept for a smart shopping cart, enhancing the grocery shopping experience through an intuitive and user-friendly interface.
+        </p>
+        <a href="#" target="_blank" rel="noreferrer" class="mt-auto pt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-ocean-royal transition-all duration-300 hover:border-white/60 hover:bg-white/40">
+          View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+      </article>
+
+      <!-- Project 12: Beyond AI -->
+      <article class="group relative overflow-hidden rounded-3xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 flex flex-col" style="background: linear-gradient(135deg, rgba(255,255,255,0.55), rgba(227,242,255,0.35)); box-shadow: 0 8px 32px rgba(0,78,224,0.12); border: 1px solid rgba(24,131,255,0.4);">
+        <div class="mb-5 relative flex h-64 items-center justify-center overflow-hidden rounded-2xl border border-white/50" style="background: rgba(255,255,255,0.3);">
+          <img src="beyond.png" alt="Beyond AI project preview" class="floating-img relative h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-105 opacity-0" style="height:90%; width:90%; object-fit:contain; margin:auto; display:block;" onload="this.style.opacity=1" onerror="this.remove()">
+        </div>
+        <h3 class="text-lg font-bold text-ocean-deep">Beyond AI</h3>
+        <span class="mt-1 block text-xs font-medium text-ocean-royal">Full-Stack Website</span>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 text-justify">
+          Built a full-stack educational platform for the Beyond AI initiative with AI learning resources and practical tools.
+        </p>
+        <a href="#" target="_blank" rel="noreferrer" class="mt-auto pt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-4 py-2 text-sm font-semibold text-ocean-royal transition-all duration-300 hover:border-white/60 hover:bg-white/40">
+          View Project <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+        </a>
+      </article>
+
     </div>
-  </section>
+  </div>
+</section>
+<!-- Achievements Section -->
+<section id="achievements" class="relative">
+  <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+    <div class="mb-10 max-w-2xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        Achievements 
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+        Honors & Awards
+      </h2>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+<div class="flex items-start gap-4 rounded-2xl bg-card p-5 card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <div class="shrink-0 h-20 w-20 overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('ncaaa_cer.png')">
+          <img src="ncaaa_cer.png" alt="NCAAA Certificate" class="h-full w-full object-cover transition-transform hover:scale-110">
+        </div>
+        <div class="min-w-0">
+          <div class="font-semibold text-sm text-blue-900">National Accreditation Visit | NCAAA</div>
+          <div class="mt-3 text-xs text-muted-foreground">Contributed to the NCAAA accreditation visit for the Information Technology program.</div>
+        </div>
+      </div>
+
+<div class="flex items-start gap-4 rounded-2xl bg-card p-5 card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <div class="shrink-0 h-20 w-20 overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('wasl_cer.png')">
+          <img src="wasl_cer.png" alt="Software Engineering Competition Certificate" class="h-full w-full object-cover transition-transform hover:scale-110">
+        </div>
+        <div class="min-w-0">
+          <div class="font-semibold text-sm text-blue-900">1st Place | Software Engineering Competition</div>
+          <div class="mt-3 text-xs text-muted-foreground">Won 1st Place in the Software Engineering course for developing "Wasl," a full-stack platform connecting innovators with investors.</div>
+        </div>
+      </div>
+
+<div class="flex items-start gap-4 rounded-2xl bg-card p-5 card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <div class="shrink-0 h-20 w-20 overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('web_cer.png')">
+          <img src="web_cer.png" alt="Web Applications Engineering Competition Certificate" class="h-full w-full object-cover transition-transform hover:scale-110">
+        </div>
+        <div class="min-w-0">
+          <div class="font-semibold text-sm text-blue-900">1st Place | Web Applications Engineering Competition</div>
+          <div class="mt-3 text-xs text-muted-foreground">Won 1st Place in the Web Development course for developing the frontend of "Darek," a property rental platform.</div>
+        </div>
+      </div>
+
+<div class="flex items-start gap-4 rounded-2xl bg-card p-5 card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <div class="shrink-0 h-20 w-20 overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('ux_cer.png')">
+          <img src="ux_cer.png" alt="UI/UX Design Competition Certificate" class="h-full w-full object-cover transition-transform hover:scale-110">
+        </div>
+        <div class="min-w-0">
+          <div class="font-semibold text-sm text-blue-900">1st Place | UI/UX Design Competition</div>
+          <div class="mt-3 text-xs text-muted-foreground">Won 1st Place in the UI/UX Design course for "Smart Cart," a user-centered solution that reimagines the grocery shopping experience.</div>
+        </div>
+      </div>
+
+      
+<div class="flex items-start gap-4 rounded-2xl bg-card p-5 card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <div class="shrink-0 h-20 w-20 overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('ican.jpg')">
+          <img src="ican.jpg" alt="UI/UX Design Competition Certificate" class="h-full w-full object-cover transition-transform hover:scale-110">
+        </div>
+        <div class="min-w-0">
+          <div class="font-semibold text-sm text-blue-900">ICAN Conference</div>
+          <div class="mt-3 text-xs text-muted-foreground">Presented the "Munir" project at the ICAN Conference in collaboration with IBM</div>
+        </div>
+      </div>
+
+      
+<div class="flex items-start gap-4 rounded-2xl bg-card p-5 card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+        <div class="shrink-0 h-20 w-20 overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('tamkeen.jpg')">
+          <img src="tamkeen.jpg" alt="UI/UX Design Competition Certificate" class="h-full w-full object-cover transition-transform hover:scale-110">
+        </div>
+        <div class="min-w-0">
+          <div class="font-semibold text-sm text-blue-900">Tamkeen Exhibition</div>
+          <div class="mt-3 text-xs text-muted-foreground">Showcased the "Munir" project at the Tamkeen Exhibition in collaboration with IBM.</div>
+        </div>
+      </div>
+
+            
+<div class="flex items-start gap-4 rounded-2xl bg-card p-5 card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+  <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-mist to-ocean-sky/50 text-ocean-royal">
+    <i data-lucide="award" class="h-5 w-5"></i>
+  </div>
+  <div class="min-w-0">
+    <div class="font-semibold text-sm text-blue-900">Institutional Grant</div>
+    <div class="mt-3 text-xs text-muted-foreground">Received institutional funding to develop educational content and learning materials for the AI Fundamentals course.</div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; padding:20px; cursor:zoom-out;">
+  <img id="lightbox-img" src="" alt="Certificate full view" style="max-width:90%; max-height:90%; border-radius:12px; box-shadow:0 20px 50px rgba(0,0,0,0.5);">
+</div>
+
+<script>
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').style.display = 'none';
+  document.body.style.overflow = '';
+}
+</script>
 
   <!-- Publications Section -->
   <section id="publications" class="relative bg-ocean-deep text-white">
@@ -519,114 +708,158 @@ Conducted a security assessment of Diva Android application, identifying vulnera
       <div class="mb-10 max-w-2xl">
         <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
           <span class="h-px w-8 bg-ocean-sky/60"></span>
-          Publications
+          Research & papers
         </div>
         <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          Research & papers
+          Publications
         </h2>
       </div>
 
-      <div class="grid gap-4">
-        <a href="#" target="_blank" rel="noreferrer" class="group flex items-start gap-5 rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-ocean-sky/50 hover:bg-white/[0.07]">
-          <div class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-sky text-white">
-            <i data-lucide="book-open" class="h-5 w-5"></i>
-          </div>
-          <div class="min-w-0 flex-1">
-            <h3 class="text-lg font-semibold leading-snug text-white">
-              Munir: A Multimodal Smart-Glasses System for Enhancing Human–Computer Interaction for Visually Impaired Individuals
-            </h3>
-            <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
-              <span>Journal: Sensors — MDPI</span>
-              <span>Year: 2026</span>
-            </div>
-            <span class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-ocean-bright px-3 py-1.5 text-xs font-semibold text-white transition-transform group-hover:translate-x-0.5">
-              Read Paper <i data-lucide="external-link" class="h-3.5 w-3.5"></i>
-            </span>
-          </div>
-        </a>
+ <div class="grid gap-4">
+  <a href="https://www.mdpi.com/1424-8220/26/12/3950" target="_blank" rel="noreferrer" class="group flex items-center gap-5 rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-ocean-sky/50 hover:bg-white/[0.07]">
+    <div class="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-sky text-white">
+      <i data-lucide="book-open" class="h-6 w-6"></i>
+    </div>
+    <div class="min-w-0 flex-1">
+      <h3 class="text-base font-semibold leading-snug text-white">
+        Munir: A Multimodal Smart-Glasses System for Enhancing Human–Computer Interaction for Visually Impaired Individuals
+      </h3>
+      <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
+        <span>Journal: Sensors, MDPI</span>
+        <span>Publication Year: 2026</span>
       </div>
+      <span class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-ocean-bright px-3 py-1.5 text-xs font-semibold text-white transition-transform group-hover:translate-x-0.5">
+        Read Paper <i data-lucide="external-link" class="h-3.5 w-3.5"></i>
+      </span>
+    </div>
+  </a>
+</div>
+<br>
+<div class="grid gap-4">
+  <a href="https://www.mdpi.com/2076-3417/16/12/6166" target="_blank" rel="noreferrer" class="group flex items-center gap-5 rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-ocean-sky/50 hover:bg-white/[0.07]">
+    <div class="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-ocean-bright to-ocean-sky text-white">
+      <i data-lucide="book-open" class="h-6 w-6"></i>
+    </div>
+    <div class="min-w-0 flex-1">
+      <h3 class="text-base font-semibold leading-snug text-white">
+        A Hybrid Framework for Real-Time Saudi Riyal Banknote Recognition in Assistive Applications
+      </h3>
+      <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
+        <span>Journal: Applied Sciences, MDPI</span>
+        <span>Publication Year: 2026</span>
+      </div>
+      <span class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-ocean-bright px-3 py-1.5 text-xs font-semibold text-white transition-transform group-hover:translate-x-0.5">
+        Read Paper <i data-lucide="external-link" class="h-3.5 w-3.5"></i>
+      </span>
+    </div>
+  </a>
+</div>
+
     </div>
   </section>
-
-  <!-- Certifications Section -->
-  <section id="certifications" class="relative">
-    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
-      <div class="mb-10 max-w-2xl">
-        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
-          <span class="h-px w-8 bg-ocean-royal/50"></span>
-          Certifications
-        </div>
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
-          Continuous learning
-        </h2>
+<!-- Certifications Section -->
+<section id="certifications" class="relative">
+  <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+    <div class="mb-10 max-w-2xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        Credentials
       </div>
-
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="group rounded-2xl border border-border bg-card p-6 text-center card-hover">
-          <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-ocean-mist to-ocean-sky/60 text-ocean-royal transition-transform duration-500 group-hover:rotate-6">
-            <i data-lucide="shield-check" class="h-6 w-6"></i>
-          </div>
-          <h3 class="mt-4 text-sm font-semibold text-foreground">Cybersecurity Fundamentals</h3>
-          <div class="mt-2 inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
-            Global Security Institute
-          </div>
-        </div>
-
-        <div class="group rounded-2xl border border-border bg-card p-6 text-center card-hover">
-          <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-ocean-mist to-ocean-sky/60 text-ocean-royal transition-transform duration-500 group-hover:rotate-6">
-            <i data-lucide="network" class="h-6 w-6"></i>
-          </div>
-          <h3 class="mt-4 text-sm font-semibold text-foreground">Network Defense Architecture</h3>
-          <div class="mt-2 inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
-            Tech Systems Academy
-          </div>
-        </div>
-
-        <div class="group rounded-2xl border border-border bg-card p-6 text-center card-hover">
-          <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-ocean-mist to-ocean-sky/60 text-ocean-royal transition-transform duration-500 group-hover:rotate-6">
-            <i data-lucide="lock" class="h-6 w-6"></i>
-          </div>
-          <h3 class="mt-4 text-sm font-semibold text-foreground">Information Security Management</h3>
-          <div class="mt-2 inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
-            Cyber Management Board
-          </div>
-        </div>
-
-        <div class="group rounded-2xl border border-border bg-card p-6 text-center card-hover">
-          <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-ocean-mist to-ocean-sky/60 text-ocean-royal transition-transform duration-500 group-hover:rotate-6">
-            <i data-lucide="server-cog" class="h-6 w-6"></i>
-          </div>
-          <h3 class="mt-4 text-sm font-semibold text-foreground">Cloud Security Essentials</h3>
-          <div class="mt-2 inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
-            Cloud Learning Hub
-          </div>
-        </div>
-
-        <div class="group rounded-2xl border border-border bg-card p-6 text-center card-hover">
-          <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-ocean-mist to-ocean-sky/60 text-ocean-royal transition-transform duration-500 group-hover:rotate-6">
-            <i data-lucide="file-check-2" class="h-6 w-6"></i>
-          </div>
-          <h3 class="mt-4 text-sm font-semibold text-foreground">Ethical Hacking Basics</h3>
-          <div class="mt-2 inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
-            SecTraining Online
-          </div>
-        </div>
-
-        <div class="group rounded-2xl border border-border bg-card p-6 text-center card-hover">
-          <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-ocean-mist to-ocean-sky/60 text-ocean-royal transition-transform duration-500 group-hover:rotate-6">
-            <i data-lucide="award" class="h-6 w-6"></i>
-          </div>
-          <h3 class="mt-4 text-sm font-semibold text-foreground">AI for Everyone</h3>
-          <div class="mt-2 inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
-            Coursera
-          </div>
-        </div>
-      </div>
-      <p class="mt-8 text-center text-xs text-muted-foreground">
-        + Certificates updated regularly
-      </p>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+        Certifications
+      </h2>
     </div>
+<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="group rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+    <div class="inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+      Misk Skills & STC
+    </div>
+    <h3 class="mt-3 text-sm font-semibold text-blue-900">Cybersecurity Incident Response Analysis</h3>
+    <div class="mt-2.5 text-xs text-muted-foreground">Issued Jan 2026</div>
+    <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('misk.png')">
+      <img src="misk.png" alt="Cybersecurity Fundamentals Certificate" class="h-full w-full object-cover transition-transform hover:scale-110">
+    </div>
+  </div>
+
+  <div class="group rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+    <div class="inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+      Cyber Guard Club
+    </div>
+    <h3 class="mt-3 text-sm font-semibold text-blue-900">GRCP Camp</h3>
+    <div class="mt-2.5 text-xs text-muted-foreground">Issued Sep 2025</div>
+    <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('grc.png')">
+      <img src="grc.png" alt="Network Defense Architecture Certificate" class="h-full w-full object-cover transition-transform hover:scale-110" style="object-position: center 3%;">
+    </div>
+  </div>
+
+  <div class="group rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+    <div class="inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+      Cyber Security Club
+    </div>
+    <h3 class="mt-3 text-sm font-semibold text-blue-900">CyberKickStart Bootcamp</h3>
+    <div class="mt-2.5 text-xs text-muted-foreground">Issued Feb 2026</div>
+    <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('cyberboot.png')">
+      <img src="cyberboot.png" alt="CyberKickStart Bootcamp Certificate" class="h-full w-full object-cover transition-transform hover:scale-110" style="object-position: center 3%;">
+    </div>
+  </div>
+
+  <div class="group rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+    <div class="inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+      NewTech Initiative
+    </div>
+    <h3 class="mt-3 text-sm font-semibold text-blue-900">Cyber Security Roadmap</h3>
+    <div class="mt-2.5 text-xs text-muted-foreground">Issued Feb 2026</div>
+    <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('newtech.png')">
+      <img src="newtech.png" alt="AI for Everyone Certificate" class="h-full w-full object-cover transition-transform hover:scale-110">
+    </div>
+  </div>
+
+  <div class="group rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+    <div class="inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+      King Saud University (KSU)
+    </div>
+    <h3 class="mt-3 text-sm font-semibold text-blue-900">Foundation Program in AI</h3>
+    <div class="mt-2.5 text-xs text-muted-foreground">Issued Aug 2025</div>
+    <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('Certificate_KSU.jpg')">
+      <img src="Certificate_KSU.jpg" alt="Cloud Security Essentials Certificate" class="h-full w-full object-cover transition-transform hover:scale-110">
+    </div>
+  </div>
+
+  <div class="group rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+    <div class="inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+     SDAIA
+    </div>
+    <h3 class="mt-3 text-sm font-semibold text-blue-900">AI Concepts and Advanced Applications</h3>
+    <div class="mt-2.5 text-xs text-muted-foreground">Issued Aug 2025</div>
+    <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('sdaia.png')">
+      <img src="sdaia.png" alt="Ethical Hacking Basics Certificate" class="h-full w-full object-cover transition-transform hover:scale-110">
+    </div>
+  </div>
+
+  <div class="group rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+    <div class="inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+      IBM SkillsBuild
+    </div>
+    <h3 class="mt-3 text-sm font-semibold text-blue-900">AI Fundamentals with Capstone Project</h3>
+    <div class="mt-2.5 text-xs text-muted-foreground">Issued Jul 2025</div>
+    <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('Certificate_IBM.jpg')">
+      <img src="Certificate_IBM.jpg" alt="AI for Everyone Certificate" class="h-full w-full object-cover transition-transform hover:scale-110">
+    </div>
+  </div>
+
+  <div class="group rounded-2xl bg-card p-6 text-left card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+    <div class="inline-block rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-secondary-foreground">
+      SIDF Academy
+    </div>
+    <h3 class="mt-3 text-sm font-semibold text-blue-900">Project Management for Non-Project Managers</h3>
+    <div class="mt-2.5 text-xs text-muted-foreground">Issued Feb 2026</div>
+    <div class="mt-4 h-32 w-full overflow-hidden rounded-xl border border-border cursor-pointer" onclick="openLightbox('sidf.png')">
+      <img src="sidf.png" alt="AI for Everyone Certificate" class="h-full w-full object-cover transition-transform hover:scale-110">
+    </div>
+  </div>
+   </div>
   </section>
+
 
   <!-- Volunteering Section -->
   <section id="volunteering" class="relative bg-ocean-deep text-white">
@@ -634,47 +867,72 @@ Conducted a security assessment of Diva Android application, identifying vulnera
       <div class="mb-10 max-w-2xl">
         <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
           <span class="h-px w-8 bg-ocean-sky/60"></span>
-          Volunteering
+          Volunteer experiences
         </div>
         <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          Giving back to the community
+          Volunteering
         </h2>
       </div>
-
-      <div class="grid gap-5 md:grid-cols-2">
-        <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-ocean-sky/50">
-          <div class="absolute inset-0 grid-pattern opacity-30"></div>
-          <div class="relative flex gap-5">
-            <div class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-ocean-bright to-ocean-sky text-white transition-transform group-hover:scale-105">
-              <i data-lucide="presentation" class="h-6 w-6"></i>
-            </div>
-            <div class="min-w-0">
-              <h3 class="text-lg font-semibold text-white">ICAN 2026 Conference</h3>
-              <div class="mt-0.5 text-xs text-ocean-sky">Project Presenter · King Saud University, 2026</div>
-              <p class="mt-3 text-sm leading-relaxed text-white/75">
-                Presented the Munir project to conference visitors, engaged with attendees and discussed AI-powered assistive technology solutions.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-ocean-sky/50">
-          <div class="absolute inset-0 grid-pattern opacity-30"></div>
-          <div class="relative flex gap-5">
-            <div class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-ocean-bright to-ocean-sky text-white transition-transform group-hover:scale-105">
-              <i data-lucide="users" class="h-6 w-6"></i>
-            </div>
-            <div class="min-w-0">
-              <h3 class="text-lg font-semibold text-white">Career Guidance Fair</h3>
-              <div class="mt-0.5 text-xs text-ocean-sky">Participant · Riyadh, 2026</div>
-              <p class="mt-3 text-sm leading-relaxed text-white/75">
-                Attended the career guidance fair, connected with leading organizations and industry professionals in the field.
-              </p>
-            </div>
-          </div>
-        </div>
+<div class="grid gap-5 md:grid-cols-2">
+  <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-ocean-sky/50">
+    <div class="absolute inset-0 grid-pattern opacity-30"></div>
+    <div class="relative flex gap-5">
+      <div class="h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-white/10 cursor-pointer" onclick="openLightbox('club.jpg')">
+        <img src="club.jpg" alt="ICAN 2026 Conference" class="h-full w-full object-cover transition-transform hover:scale-110">
+      </div>
+      <div class="min-w-0 flex-1">
+        <h3 class="text-lg font-semibold text-white">Vice Chair of the HR Committee</h3>
+        <div class="mt-1 text-xs text-ocean-sky">Cyber Security Club</div>
+        <div class="mt-1 text-xs text-white/60">Aug 2025 - Dec 2025</div>
       </div>
     </div>
+  </div>
+
+  <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-ocean-sky/50">
+    <div class="absolute inset-0 grid-pattern opacity-30"></div>
+    <div class="relative flex gap-5">
+      <div class="h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-white/10 cursor-pointer" onclick="openLightbox('club2.jpg')">
+        <img src="club2.jpg" alt="Career Guidance Fair" class="h-full w-full object-cover transition-transform hover:scale-110">
+      </div>
+      <div class="min-w-0 flex-1">
+        <h3 class="text-lg font-semibold text-white">
+Technical Committee Member </h3>
+        <div class="mt-1 text-xs text-ocean-sky">ThakaaBeyond</div>
+        <div class="mt-1 text-xs text-white/60">Aug 2025 - Dec 2025</div>
+      </div>
+    </div>
+  </div>
+
+    <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-ocean-sky/50">
+    <div class="absolute inset-0 grid-pattern opacity-30"></div>
+    <div class="relative flex gap-5">
+      <div class="h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-white/10 cursor-pointer" onclick="openLightbox('club3.png')">
+        <img src="club3.png" alt="Career Guidance Fair" class="h-full w-full object-cover transition-transform hover:scale-110">
+      </div>
+      <div class="min-w-0 flex-1">
+        <h3 class="text-lg font-semibold text-white">
+Member of the HR Committee </h3>
+        <div class="mt-1 text-xs text-ocean-sky">Cyber Security Club</div>
+        <div class="mt-1 text-xs text-white/60">Jan 2025 - May 2025</div>
+      </div>
+    </div>
+  </div>
+
+      <div class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-ocean-sky/50">
+    <div class="absolute inset-0 grid-pattern opacity-30"></div>
+    <div class="relative flex gap-5">
+      <div class="h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-white/10 cursor-pointer" onclick="openLightbox('club4.png')">
+        <img src="club4.png" alt="Career Guidance Fair" class="h-full w-full object-cover transition-transform hover:scale-110">
+      </div>
+      <div class="min-w-0 flex-1">
+        <h3 class="text-lg font-semibold text-white">
+Student Activities Committee Member </h3>
+        <div class="mt-1 text-xs text-ocean-sky">CCIS Cultural and Social Club</div>
+        <div class="mt-1 text-xs text-white/60">Jan 2024 - May 2024</div>
+      </div>
+    </div>
+  </div>
+</div>
   </section>
 
   <!-- Skills Section -->
@@ -690,127 +948,127 @@ Conducted a security assessment of Diva Android application, identifying vulnera
         </h2>
       </div>
 
-      <div class="grid gap-5 md:grid-cols-2">
-        <div class="rounded-2xl border border-border bg-card p-6 card-hover">
-          <div class="mb-4 flex items-center gap-3">
-            <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
-              <i data-lucide="shield" class="h-5 w-5"></i>
-            </div>
-            <h3 class="font-semibold text-foreground">Cybersecurity</h3>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Network Security</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Information Security</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Threat Analysis</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Security Auditing</span>
-          </div>
-        </div>
-
-        <div class="rounded-2xl border border-border bg-card p-6 card-hover">
-          <div class="mb-4 flex items-center gap-3">
-            <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
-              <i data-lucide="cpu" class="h-5 w-5"></i>
-            </div>
-            <h3 class="font-semibold text-foreground">AI & Development</h3>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Machine Learning</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Computer Vision</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">OCR</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Python</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Mobile App Development</span>
-          </div>
-        </div>
-
-        <div class="rounded-2xl border border-border bg-card p-6 card-hover">
-          <div class="mb-4 flex items-center gap-3">
-            <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
-              <i data-lucide="pen-tool" class="h-5 w-5"></i>
-            </div>
-            <h3 class="font-semibold text-foreground">Research & Academia</h3>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Academic Writing</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Research Methodology</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Data Analysis</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Published Author</span>
-          </div>
-        </div>
-
-        <div class="rounded-2xl border border-border bg-card p-6 card-hover">
-          <div class="mb-4 flex items-center gap-3">
-            <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
-              <i data-lucide="messages-square" class="h-5 w-5"></i>
-            </div>
-            <h3 class="font-semibold text-foreground">Soft Skills</h3>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Teamwork</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Public Speaking</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Project Management</span>
-            <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Entrepreneurship</span>
-          </div>
-        </div>
+<div class="grid gap-5 md:grid-cols-2">
+  <div class="rounded-2xl bg-card p-6 card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+    <div class="mb-4 flex items-center gap-3">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+        <i data-lucide="shield" class="h-5 w-5"></i>
       </div>
+      <h3 class="font-semibold text-foreground">Cybersecurity</h3>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">GRC</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Risk Assessment</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Incident Response</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Kali linux</span> 
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Vulnerability Assessment</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Network Security</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Application Security</span>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-card p-6 card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+    <div class="mb-4 flex items-center gap-3">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+        <i data-lucide="cpu" class="h-5 w-5"></i>
+      </div>
+      <h3 class="font-semibold text-foreground">AI & Development</h3>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Flutter</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Python</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Java</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Web Development</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Machine Learning</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Data Mining</span>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-card p-6 card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+    <div class="mb-4 flex items-center gap-3">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+        <i data-lucide="blocks" class="h-5 w-5"></i>
+      </div>
+      <h3 class="font-semibold text-foreground">Software Engineering & Design</h3>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Requirements Analysis</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">System Design</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Technical Documentation</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">UI/UX Design</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Project Management</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Agile / Scrum</span>
+    </div>
+  </div>
+
+  <div class="rounded-2xl bg-card p-6 card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+    <div class="mb-4 flex items-center gap-3">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+        <i data-lucide="messages-square" class="h-5 w-5"></i>
+      </div>
+      <h3 class="font-semibold text-foreground">Soft Skills</h3>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Team Leadership</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Critical Thinking</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">collaboration</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Time Management</span>
+      <span class="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-ocean-bright hover:bg-ocean-mist">Adaptability</span>
+    </div>
+  </div>
+</div>
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section id="contact" class="relative bg-ocean-deep text-white">
-    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
-      <div class="text-center">
-        <div class="mb-3 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
-          <span class="h-px w-8 bg-ocean-sky/60"></span>
-          Contact
-          <span class="h-px w-8 bg-ocean-sky/60"></span>
-        </div>
-        <h2 class="text-3xl font-bold text-white sm:text-5xl">
-          Get in Touch
-        </h2>
-        <p class="mx-auto mt-3 max-w-xl text-sm text-white/60">
-          I'm open to opportunities, collaborations and interesting conversations.
-        </p>
+<!-- Contact Section -->
+<section id="contact" class="relative bg-ocean-deep text-white">
+  <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+    <div class="text-center">
+      <div class="mb-3 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+       <br> <br> <br> <span class="h-px w-8 bg-ocean-sky/60"></span>
+        Contact
+        <span class="h-px w-8 bg-ocean-sky/60"></span>
       </div>
-
-      <div class="mx-auto mt-12 grid max-w-4xl gap-4 md:grid-cols-3">
-        <a href="mailto:fajeralamro@example.com" class="group flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.05] p-6 text-center backdrop-blur transition-all hover:-translate-y-1 hover:border-ocean-sky/40">
-          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-ocean-bright to-ocean-sky text-white transition-transform group-hover:scale-110">
-            <i data-lucide="mail" class="h-5 w-5"></i>
-          </div>
-          <div class="mt-4 text-[11px] font-semibold uppercase tracking-widest text-ocean-sky">Email</div>
-          <div class="mt-1 text-sm font-medium text-white">fajeralamro@example.com</div>
-        </a>
-
-        <a href="tel:+9665000000000" class="group flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.05] p-6 text-center backdrop-blur transition-all hover:-translate-y-1 hover:border-ocean-sky/40">
-          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-ocean-bright to-ocean-sky text-white transition-transform group-hover:scale-110">
-            <i data-lucide="phone" class="h-5 w-5"></i>
-          </div>
-          <div class="mt-4 text-[11px] font-semibold uppercase tracking-widest text-ocean-sky">Phone</div>
-          <div class="mt-1 text-sm font-medium text-white">+966 5X XXX XXXX</div>
-        </a>
-
-        <a href="https://linkedin.com" target="_blank" rel="noreferrer" class="group flex flex-col items-center rounded-2xl border border-ocean-sky/40 bg-gradient-to-br from-ocean-bright to-ocean-royal p-6 text-center transition-all hover:-translate-y-1">
-          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-white text-ocean-royal transition-transform group-hover:scale-110">
-            <i data-lucide="linkedin" class="h-5 w-5"></i>
-          </div>
-          <div class="mt-4 text-[11px] font-semibold uppercase tracking-widest text-ocean-sky">LinkedIn</div>
-          <div class="mt-1 text-sm font-medium text-white">View Profile</div>
-          <span class="mt-4 inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-ocean-royal">
-            Connect
-          </span>
-        </a>
-      </div>
+      <h2 class="text-3xl font-bold text-white sm:text-5xl">
+        Get in Touch
+      </h2>
+      <p class="mx-auto mt-3 max-w-2xl text-sm text-white/60">
+Open to new opportunities, collaborations, and interesting conversations, Feel free to get in touch!      </p>
     </div>
-  </section>
+
+<div class="mx-auto mt-10 sm:mt-14 max-w-4xl">
+  <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-stretch sm:items-center justify-center gap-3 sm:gap-2.5">
+    <a href="mailto:fajeralamro@gmail.com" class="flex flex-row items-center justify-center sm:justify-start gap-2 rounded-xl sm:rounded-full border border-white/15 bg-white/[0.05] px-3 py-3 sm:px-4 sm:py-2.5 backdrop-blur transition-all hover:border-ocean-sky/50 hover:bg-white/[0.1]">
+      <i data-lucide="mail" class="h-4 w-4 shrink-0 text-ocean-sky"></i>
+      <span class="text-xs sm:text-sm font-medium text-white truncate">fajeralamro@gmail.com</span>
+    </a>
+
+    <a href="tel:+966563821256" class="flex flex-row items-center justify-center sm:justify-start gap-2 rounded-xl sm:rounded-full border border-white/15 bg-white/[0.05] px-3 py-3 sm:px-4 sm:py-2.5 backdrop-blur transition-all hover:border-ocean-sky/50 hover:bg-white/[0.1]">
+      <i data-lucide="phone" class="h-4 w-4 shrink-0 text-ocean-sky"></i>
+      <span class="text-xs sm:text-sm font-medium text-white">0563821256</span>
+    </a>
+
+    <div class="flex flex-row items-center justify-center sm:justify-start gap-2 rounded-xl sm:rounded-full border border-white/15 bg-white/[0.05] px-3 py-3 sm:px-4 sm:py-2.5 backdrop-blur">
+      <i data-lucide="map-pin" class="h-4 w-4 shrink-0 text-ocean-sky"></i>
+      <span class="text-xs sm:text-sm font-medium text-white">Riyadh, Saudi Arabia</span>
+    </div>
+
+    <a href="https://www.linkedin.com/in/fajer-alamro-4a9896307/" target="_blank" rel="noreferrer" class="flex flex-row items-center justify-center sm:justify-start gap-2 rounded-xl sm:rounded-full border border-white/15 bg-white/[0.05] px-3 py-3 sm:px-4 sm:py-2.5 backdrop-blur transition-all hover:border-ocean-sky/50 hover:bg-white/[0.1]">
+      <i class="fa-brands fa-linkedin-in text-sm text-ocean-sky shrink-0"></i>
+      <span class="text-xs sm:text-sm font-medium text-white">LinkedIn</span>
+    </a>
+  </div>
+</div>
+  </div>
+  <br></section>
 
   <!-- Footer -->
   <footer class="border-t border-border bg-background">
     <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row">
       <div class="flex items-center gap-2">
         <i data-lucide="code-2" class="h-3.5 w-3.5 text-ocean-royal"></i>
-        <span>Fajr Alamro · Cybersecurity & IT · King Saud University</span>
+        <span>Fajer Mohammed Alamro</span>
       </div>
-      <span id="copyright">© 2026 All rights reserved.</span>
     </div>
   </footer>
 
@@ -848,12 +1106,8 @@ Conducted a security assessment of Diva Android application, identifying vulnera
       setTimeout(type, 500);
     })();
 
-    // Dynamically update Copyright Year
-    document.getElementById('copyright').innerText = `© ${new Date().getFullYear()} All rights reserved.`;
-
     // Header refs
     const header = document.getElementById('header');
-    const headerTitle = document.getElementById('header-title');
     const navItems = document.querySelectorAll('.nav-item');
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
     const menuBtn = document.getElementById('menu-btn');
@@ -867,11 +1121,9 @@ Conducted a security assessment of Diva Android application, identifying vulnera
     function applyNavStyles() {
       if (isScrolled) {
         header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
-        headerTitle.className = "font-display text-sm font-semibold tracking-tight transition-colors text-foreground";
         menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
       } else {
         header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
-        headerTitle.className = "font-display text-sm font-semibold tracking-tight transition-colors text-white";
         menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
       }
 
@@ -942,23 +1194,34 @@ Conducted a security assessment of Diva Android application, identifying vulnera
       });
     });
 
-    // Intersection Observer for Reveal animations
-    const revealEls = document.querySelectorAll('.reveal');
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target;
-            el.classList.add('reveal-in');
-            io.unobserve(el);
-          }
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+// Intersection Observer for Reveal animations
+const revealEls = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        el.classList.add('reveal-in');
+        io.unobserve(el);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }); // رجعناها للقيم الأصلية
 
-      revealEls.forEach((el) => io.observe(el));
-    } else {
-      revealEls.forEach((e) => e.classList.add('reveal-in'));
-    }
+  revealEls.forEach((el) => io.observe(el));
+
+  // شبكة أمان فقط: لو بعد 3 ثواني فيه قسم لسا ما ظهر (مشكلة حقيقية)، أظهره
+  setTimeout(() => {
+    revealEls.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      const alreadyPassed = rect.top < window.innerHeight * 1.5;
+      if (!el.classList.contains('reveal-in') && alreadyPassed) {
+        el.classList.add('reveal-in');
+      }
+    });
+  }, 3000);
+} else {
+  revealEls.forEach((e) => e.classList.add('reveal-in'));
+}
   </script>
 </body>
 </html>
