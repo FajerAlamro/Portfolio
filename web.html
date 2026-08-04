@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Darek | Fajer Alamro</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-deep': '#042E7B',
+            'ocean-royal': '#004EE0',
+            'ocean-bright': '#1883FF',
+            'ocean-sky': '#99CAFF',
+            'ocean-mist': '#E3F2FF',
+            background: '#eef5ff',
+            foreground: '#0f172a',
+            card: '#ffffff',
+            border: '#e2e8f0',
+            muted: '#eaf3ff',
+            'muted-foreground': '#64748b',
+            secondary: '#E3F2FF',
+            'chalet-warm': '#e08a2b',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --ocean-deep: #042E7B;
+      --ocean-royal: #004EE0;
+      --ocean-bright: #1883FF;
+      --ocean-sky: #99CAFF;
+      --ocean-mist: #E3F2FF;
+    }
+    body { font-family: 'Inter', sans-serif; background-color: #eef5ff; color: #0f172a; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+
+    .gradient-hero {
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(24, 131, 255, 0.55), transparent 60%),
+        radial-gradient(800px 400px at 10% 20%, rgba(0, 78, 224, 0.6), transparent 60%),
+        linear-gradient(180deg, #042E7B, #021a47);
+    }
+    .gradient-text { background: linear-gradient(135deg, #042E7B, #1883FF); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .gradient-band { background: linear-gradient(160deg, #dceeff, #f2f8ff 45%, #dceeff); }
+    .band-navy {
+      background:
+        radial-gradient(900px 420px at 85% -10%, rgba(24, 131, 255, 0.35), transparent 60%),
+        radial-gradient(700px 380px at 5% 110%, rgba(0, 78, 224, 0.4), transparent 60%),
+        linear-gradient(160deg, #042E7B, #063a94);
+    }
+    .band-navy .gradient-text { -webkit-text-fill-color: initial; background: none; color: #ffffff; }
+    .band-navy .bento-card, .band-navy .tech-card {
+      background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.28);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset;
+    }
+    .band-navy .bento-card:hover, .band-navy .tech-card:hover {
+      background: rgba(255,255,255,0.14); border-color: rgba(153,202,255,0.6);
+      box-shadow: 0 22px 42px -22px rgba(0,0,0,0.5);
+    }
+    .band-navy .bento-card::before { background: #ffffff; }
+    .band-navy .bento-card h3, .band-navy .tech-card h3 { color: #ffffff; }
+    .band-navy .bento-card p, .band-navy .tech-card p { color: #dbe9ff; }
+    .band-navy .bento-card .bg-ocean-mist { background: rgba(255,255,255,0.12); }
+    .band-navy .bento-card .text-ocean-royal { color: #ffffff; }
+    .band-navy .tech-icon { background: rgba(255,255,255,0.14); box-shadow: none; }
+    .band-navy .eyebrow-line { background: rgba(255,255,255,0.5); }
+    .band-navy .eyebrow-text { color: #99CAFF; }
+    .band-navy .band-sub { color: #b9d3f7; }
+
+    .card-hover { transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 400ms, border-color 300ms; }
+    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 24px 50px -22px rgba(0, 78, 224, 0.4); border-color: rgba(24, 131, 255, 0.55); }
+
+    .grid-pattern {
+      background-image: linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+    @keyframes float-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .float-slow { animation: float-slow 6s ease-in-out infinite; }
+    @keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fade-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+    @keyframes text-shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+    .text-shimmer {
+      background: linear-gradient(90deg, #E3F2FF, #99CAFF, #1883FF, #99CAFF, #E3F2FF);
+      background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: text-shimmer 5s linear infinite;
+    }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 800ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .reveal-in { opacity: 1; transform: translateY(0); }
+
+    .shine { position: relative; overflow: hidden; }
+    @keyframes shine { 0% { transform: translateX(-120%) skewX(-20deg); } 100% { transform: translateX(220%) skewX(-20deg); } }
+    .shine::after { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transform: translateX(-120%) skewX(-20deg); }
+    .shine:hover::after { animation: shine 1.2s ease-in-out; }
+
+    .cyber-icon { position: absolute; color: rgba(255, 255, 255, 0.03); stroke-width: 1; pointer-events: none; }
+    @keyframes cyber-float-1 { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(14px, -22px) rotate(8deg); } }
+    @keyframes cyber-float-2 { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(-18px, 16px) rotate(-6deg); } }
+    @keyframes cyber-float-3 { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(10px, 20px) rotate(10deg); } }
+    @keyframes cyber-drift { 0% { transform: translateY(0); opacity: 0.14; } 50% { opacity: 0.26; } 100% { transform: translateY(-26px); opacity: 0.14; } }
+    .cyber-anim-1 { animation: cyber-float-1 7s ease-in-out infinite; }
+    .cyber-anim-2 { animation: cyber-float-2 9s ease-in-out infinite; }
+    .cyber-anim-3 { animation: cyber-float-3 8s ease-in-out infinite; }
+    .cyber-anim-4 { animation: cyber-drift 10s ease-in-out infinite; }
+
+    .step-badge { font-family: 'Space Grotesk', sans-serif; }
+    .nav-item { position: relative; }
+    .nav-item.active { color: #004EE0 !important; font-weight: 700; }
+    .nav-item.active::after { content: ''; position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2.5px; border-radius: 2px; background: #004EE0; animation: fade-up 300ms ease both; }
+    .mobile-nav-link.active { color: #004EE0 !important; font-weight: 700; background-color: #E3F2FF; }
+
+    .typewriter-cursor { display: inline-block; width: 2px; background: currentColor; margin-left: 2px; animation: cursor-blink 0.8s step-end infinite; }
+    @keyframes cursor-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* ============================================================
+       LIVE DEMO — the signature piece. A working mini rental app:
+       filters that actually filter, a cart that actually adds up,
+       and a Renter/Owner switch that actually changes the screen.
+       ============================================================ */
+    .app-frame {
+      background: #ffffff;
+      border-radius: 22px;
+      border: 1px solid rgba(4,46,123,0.14);
+      box-shadow: 0 40px 80px -30px rgba(4,46,123,0.35);
+      overflow: hidden;
+    }
+    .app-chrome {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px;
+      background: linear-gradient(180deg, #f3f8ff, #eaf3ff);
+      border-bottom: 1px solid rgba(4,46,123,0.1);
+    }
+    .app-dot { width: 9px; height: 9px; border-radius: 9999px; }
+    .app-url {
+      margin-left: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #5b7aa8;
+      background: #fff;
+      border: 1px solid rgba(4,46,123,0.12);
+      border-radius: 9999px;
+      padding: 3px 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .mode-switch {
+      position: relative; display: inline-flex; padding: 3px;
+      border-radius: 9999px; background: rgba(4,46,123,0.07);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .mode-switch button {
+      position: relative; z-index: 2; padding: 7px 16px; border-radius: 9999px;
+      font-size: 12px; font-weight: 700; color: #5b7aa8; transition: color 300ms ease;
+      white-space: nowrap;
+    }
+    .mode-switch button.active { color: #ffffff; }
+    .mode-pill {
+      position: absolute; top: 3px; bottom: 3px; left: 3px;
+      border-radius: 9999px; background: linear-gradient(135deg,#004EE0,#1883FF);
+      box-shadow: 0 6px 16px -4px rgba(0,78,224,0.55);
+      transition: transform 420ms cubic-bezier(0.2,0.8,0.2,1), width 420ms cubic-bezier(0.2,0.8,0.2,1);
+      z-index: 1;
+    }
+
+    .filter-chip {
+      border-radius: 9999px; padding: 6px 14px; font-size: 11.5px; font-weight: 700;
+      border: 1.5px solid rgba(24,131,255,0.28); color: #044; color: #1b3a66;
+      transition: all 220ms ease; cursor: pointer; background: #fff;
+    }
+    .filter-chip.active { background: linear-gradient(135deg,#004EE0,#1883FF); color: #fff; border-color: transparent; }
+
+    .listing-card {
+      border: 1px solid rgba(4,46,123,0.12); border-radius: 16px; overflow: hidden;
+      background: #fff;
+      transition: opacity 380ms cubic-bezier(0.2,0.8,0.2,1), transform 380ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 300ms ease, border-color 300ms ease;
+    }
+    .listing-card:hover { transform: translateY(-4px); box-shadow: 0 18px 34px -18px rgba(4,46,123,0.35); border-color: rgba(24,131,255,0.4); }
+    .listing-card.hide { opacity: 0; transform: scale(0.92); pointer-events: none; position: absolute; visibility: hidden; }
+
+    .listing-thumb {
+      height: 92px; display: flex; align-items: center; justify-content: center; position: relative;
+      color: rgba(255,255,255,0.92);
+    }
+    .listing-thumb.type-apartment { background: linear-gradient(135deg,#004EE0,#1883FF); }
+    .listing-thumb.type-villa { background: linear-gradient(135deg,#042E7B,#0A4FB5); }
+    .listing-thumb.type-chalet { background: linear-gradient(135deg,#c9720f,#e08a2b); }
+    .listing-price-tag {
+      position: absolute; bottom: 8px; right: 8px;
+      background: rgba(255,255,255,0.94); color: #042E7B;
+      font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700;
+      padding: 3px 8px; border-radius: 999px;
+    }
+
+    .icon-btn {
+      display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px;
+      transition: transform 200ms ease, background 200ms ease;
+    }
+    .icon-btn:hover { transform: translateY(-1px); }
+    .icon-btn.add { background: rgba(24,131,255,0.1); color: #004EE0; }
+    .icon-btn.add:hover { background: #004EE0; color: #fff; }
+    .icon-btn.edit { background: rgba(24,131,255,0.1); color: #004EE0; }
+    .icon-btn.edit:hover { background: #004EE0; color: #fff; }
+    .icon-btn.del { background: rgba(224,57,43,0.09); color: #c23c2f; }
+    .icon-btn.del:hover { background: #c23c2f; color: #fff; }
+
+    .add-property-card {
+      border: 2px dashed rgba(24,131,255,0.35); border-radius: 16px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+      color: #5b7aa8; font-weight: 700; font-size: 12px; min-height: 172px;
+      transition: border-color 250ms ease, color 250ms ease, background 250ms ease;
+      cursor: pointer;
+    }
+    .add-property-card:hover { border-color: #1883FF; color: #004EE0; background: rgba(227,242,255,0.5); }
+
+    .cart-fab {
+      position: relative; display: flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg,#004EE0,#1883FF); color: #fff;
+      padding: 9px 16px; border-radius: 9999px; font-size: 12px; font-weight: 700;
+      box-shadow: 0 10px 22px -8px rgba(0,78,224,0.55);
+      transition: transform 200ms ease;
+    }
+    .cart-fab:hover { transform: translateY(-2px); }
+    .cart-badge {
+      position: absolute; top: -6px; right: -6px;
+      background: #e0392b; color: #fff; font-size: 10px; font-weight: 800;
+      width: 18px; height: 18px; border-radius: 9999px; display: grid; place-items: center;
+      border: 2px solid #fff;
+      transition: transform 200ms ease;
+    }
+    .cart-badge.bump { animation: badgeBump 350ms ease; }
+    @keyframes badgeBump { 0% { transform: scale(1); } 40% { transform: scale(1.4); } 100% { transform: scale(1); } }
+
+    .cart-overlay {
+      position: absolute; inset: 0; background: rgba(4,46,123,0.35); backdrop-filter: blur(2px);
+      opacity: 0; pointer-events: none; transition: opacity 300ms ease; z-index: 20;
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .cart-drawer {
+      position: absolute; top: 0; right: 0; bottom: 0; width: min(340px, 88%);
+      background: #fff; z-index: 21;
+      transform: translateX(100%); transition: transform 380ms cubic-bezier(0.2,0.8,0.2,1);
+      display: flex; flex-direction: column;
+      box-shadow: -18px 0 40px -20px rgba(4,46,123,0.4);
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-drawer-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 18px; border-bottom: 1px solid rgba(4,46,123,0.1);
+    }
+    .cart-row {
+      display: flex; align-items: center; gap: 10px; padding: 10px 18px;
+      border-bottom: 1px solid rgba(4,46,123,0.06);
+    }
+    .cart-row .thumb { width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0; }
+    .stepper { display: flex; align-items: center; gap: 6px; }
+    .stepper button {
+      width: 20px; height: 20px; border-radius: 6px; background: rgba(24,131,255,0.1);
+      color: #004EE0; font-weight: 800; font-size: 12px; display: grid; place-items: center;
+    }
+    .stepper button:hover { background: #004EE0; color: #fff; }
+
+    .confirm-btn {
+      background: linear-gradient(135deg,#004EE0,#1883FF); color: #fff; font-weight: 700; font-size: 13px;
+      padding: 12px; border-radius: 12px; width: 100%; transition: transform 200ms ease, box-shadow 200ms ease;
+      box-shadow: 0 12px 24px -10px rgba(0,78,224,0.55);
+    }
+    .confirm-btn:hover { transform: translateY(-2px); }
+    .confirm-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+    .cart-empty { padding: 40px 18px; text-align: center; color: #93a7c4; font-size: 12.5px; }
+
+    /* ============================================================
+       FEATURES — bento grid with a left color rail per card
+       ============================================================ */
+    .bento-card {
+      border-radius: 14px; border: 1px solid rgba(4,46,123,0.1); background: #fff;
+      padding: 14px; position: relative; overflow: hidden;
+      transition: transform 350ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 350ms ease, border-color 300ms ease;
+    }
+    .bento-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(180deg,#004EE0,#1883FF);
+    }
+    .bento-card:hover { transform: translateY(-5px); box-shadow: 0 22px 42px -22px rgba(4,46,123,0.35); border-color: rgba(24,131,255,0.4); }
+    @media (min-width: 640px) {
+      .bento-card { border-radius: 18px; padding: 22px; }
+      .bento-card::before { width: 4px; }
+    }
+
+    /* Tech stack chips */
+    .tech-card {
+      border-radius: 18px; border: 1.5px solid rgba(24,131,255,0.45); background: #fff;
+      padding: 20px; display: flex; align-items: center; gap: 14px;
+      transition: transform 350ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 350ms ease, border-color 300ms ease;
+    }
+    .tech-card:hover { transform: translateY(-5px); box-shadow: 0 22px 42px -22px rgba(4,46,123,0.35); border-color: #1883FF; }
+    .tech-icon {
+      display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; flex-shrink: 0;
+      background: linear-gradient(135deg,#004EE0,#1883FF); color: #fff;
+    }
+
+    /* Interfaces slider (shared viewer mechanism) */
+    .iface-viewport { position: relative; background: transparent; overflow: visible; }
+    .iface-clip { overflow: hidden; }
+    .iface-track {
+      display: flex;
+      transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      will-change: transform;
+    }
+    .iface-slide { flex: 0 0 100%; display: flex; align-items: center; justify-content: center; }
+    .iface-slide-inner { width: 100%; display: flex; align-items: center; justify-content: center; }
+    .iface-slide-inner img { max-height: 50vh; max-width: 100%; width: auto; height: auto; }
+    @media (min-width: 640px) { .iface-slide-inner img { max-height: 70vh; } }
+    .iface-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
+      display: grid; place-items: center; width: 2.75rem; height: 2.75rem;
+      background: transparent; border: none; color: #004EE0;
+      transition: transform 250ms, color 250ms; cursor: pointer;
+    }
+    .iface-arrow i { width: 1.5rem; height: 1.5rem; stroke-width: 3; }
+    .iface-arrow:hover { color: #1883FF; transform: translateY(-50%) scale(1.12); }
+    @media (min-width: 640px) {
+      .iface-arrow i { width: 4rem; height: 4rem; stroke-width: 4; }
+      .iface-arrow.prev { left: -1.4rem; }
+      .iface-arrow.next { right: -1.4rem; }
+    }
+    .iface-caption { text-align: center; margin-top: 0.75rem; }
+.laptop-frame {
+  position: relative;
+  padding: 1rem;
+  padding-top: 1.8rem;
+    margin-bottom: 3rem;
+  border: 8px solid #0b1830;
+  border-radius: 1.25rem 1.25rem 0.7rem 0.7rem;
+  background: #0b1830;
+  box-shadow: 0 28px 55px -25px rgba(4, 46, 123, 0.6);
+}
+
+.laptop-frame::before {
+  content: '';
+  position: absolute;
+  top: 0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.52rem;
+  height: 0.52rem;
+  border-radius: 50%;
+  background: #344866;
+}
+
+.laptop-frame::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+    bottom: -3rem;
+  width: 115%;
+  height: 1rem;
+  border-radius: 0 0 1rem 1rem;
+  background: linear-gradient(180deg, #dce7f5, #91a7c2);
+  box-shadow: 0 10px 15px -10px rgba(4, 46, 123, 0.55);
+}
+
+.laptop-screen {
+  overflow: hidden;
+  border-radius: 0.3rem;
+  background: white;
+}
+@media (max-width: 639px) {
+  .iface-slide-inner img {
+    max-height: 55vh;
+  }
+
+  .iface-arrow {
+    width: 2rem;
+    height: 2rem;
+  }
+  .iface-arrow.prev { left: -1rem; }
+  .iface-arrow.next { right: -1rem; }
+
+  .laptop-frame {
+    padding: 0.55rem;
+    padding-top: 1.25rem;
+    margin-bottom: 2.25rem;
+    border-width: 5px;
+    border-radius: 0.95rem 0.95rem 0.45rem 0.45rem;
+  }
+
+  .laptop-frame::before {
+    top: 0.38rem;
+    width: 0.38rem;
+    height: 0.38rem;
+  }
+
+  .laptop-frame::after {
+    width: 110%;
+    height: 0.7rem;
+    bottom: -2.25rem;
+  }
+}
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground">
+
+  <!-- Header -->
+  <header id="header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-4">
+        <a href="index.html#projects" id="back-link" class="group hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full border-[6px] border-ocean-sky/80 transition-all hover:border-ocean-sky hover:bg-white/10">
+          <i data-lucide="arrow-left" class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"></i>
+        </a>
+        <a href="index.html" class="group flex items-center gap-5">
+          <span class="relative flex h-9 items-center font-display text-2xl font-bold tracking-tight">
+            <span class="relative z-10 text-ocean-royal transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">F</span>
+            <span class="relative -ml-1 text-ocean-sky transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5">A</span>
+          </span>
+        </a>
+      </div>
+
+      <nav class="hidden items-center gap-1 md:flex">
+        <a href="#idea" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Idea</a>
+        <a href="#features" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Features</a>
+        <a href="#interfaces" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Interfaces</a>
+                <a href="#tech" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Technologies</a>
+             <a href="#visit" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Demo</a> </nav>
+
+      <button id="menu-btn" class="md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white" aria-label="Menu">Menu</button>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-background">
+      <div class="mx-auto flex max-w-6xl flex-col px-5 py-3">
+        <a href="index.html#projects" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">← Back to Portfolio</a>
+        <a href="#idea" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Idea</a>
+        <a href="#features" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Features</a>
+        <a href="#interfaces" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Interfaces</a>
+                <a href="#tech" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Technologies</a>
+        <a href="#visit" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Demo</a>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="top" class="relative overflow-hidden gradient-hero">
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+    <div class="absolute -left-24 top-40 h-72 w-72 rounded-full bg-ocean-bright/30 blur-3xl float-slow"></div>
+    <div class="absolute -right-16 top-24 h-64 w-64 rounded-full bg-ocean-sky/25 blur-3xl float-slow [animation-delay:1.5s]"></div>
+
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <i data-lucide="key-round" class="cyber-icon cyber-anim-1" style="top:10%; left:5%; width:120px; height:120px;"></i>
+      <i data-lucide="home" class="cyber-icon cyber-anim-2" style="top:14%; right:6%; width:110px; height:110px; animation-delay:0.6s;"></i>
+      <i data-lucide="building-2" class="cyber-icon cyber-anim-3" style="bottom:18%; left:6%; width:100px; height:100px; animation-delay:1.2s;"></i>
+      <i data-lucide="shopping-cart" class="cyber-icon cyber-anim-1" style="bottom:12%; right:7%; width:100px; height:100px; animation-delay:1.8s;"></i>
+      <i data-lucide="sliders-horizontal" class="cyber-icon cyber-anim-4" style="top:46%; right:3%; width:85px; height:85px; animation-delay:1.5s;"></i>
+      <i data-lucide="map-pin" class="cyber-icon cyber-anim-2" style="top:44%; left:3%; width:80px; height:80px; animation-delay:2.4s;"></i>
+    </div>
+
+    <div class="relative mx-auto flex min-h-[86vh] max-w-6xl flex-col items-center justify-center px-5 pt-28 pb-16 text-center">
+      <p id="typewriter" class="fade-up mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-ocean-sky [animation-delay:0ms]">
+        <span id="typewriter-text"></span><span class="typewriter-cursor">&nbsp;</span>
+      </p>
+      <h1 class="fade-up text-5xl font-bold leading-[1.05] sm:text-6xl md:text-7xl [animation-delay:80ms]">
+        <span class="text-shimmer">Darek</span>
+      </h1>
+      <p class="fade-up mt-8 max-w-2xl text-sm text-white/85 sm:text-base [animation-delay:160ms]">
+An interactive front-end rental marketplace      </p>
+    </div>
+  </section>
+
+  <!-- Idea -->
+<section id="idea" class="relative gradient-band overflow-hidden">
+  <div class="reveal mx-auto max-w-6xl px-5 py-12 sm:py-20 md:py-24">
+
+    <!-- Heading -->
+    <div class="mx-auto mb-8 sm:mb-10 max-w-3xl">
+      <div class="mb-3 flex items-center gap-2 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-6 sm:w-8 bg-ocean-royal/50"></span>
+        The Idea
+      </div>
+
+      <h2 class="text-2xl sm:text-4xl font-bold tracking-tight leading-tight gradient-text">
+        What is Darek?
+      </h2>
+    </div>
+
+    <!-- Card -->
+    <div
+      class="mx-auto w-full max-w-3xl rounded-2xl border border-border bg-card p-5 sm:p-10 shadow-sm card-hover"
+      style="border:1px solid rgba(24,131,255,0.4);">
+
+      <p class="text-sm sm:text-base text-justify leading-7 sm:leading-relaxed text-muted-foreground">
+        Darek is an interactive front-end property rental website built for two user roles: renters and property owners. Renters browse and book apartments, villas, and chalets, while owners list and manage their own properties from the same platform.
+      </p>
+
+      <p class="mt-4 sm:mt-5 text-sm sm:text-base text-justify leading-7 sm:leading-relaxed text-muted-foreground">
+        The site centers on
+        <span class="font-semibold text-ocean-deep">dynamic property filtering</span>,
+        detailed property pages, and an
+        <span class="font-semibold text-ocean-deep">interactive booking cart</span>,
+        built with a strong focus on usability, smooth navigation, and a seamless marketplace experience for both sides.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+  
+  <!-- Features -->
+  <section id="features" class="relative overflow-hidden band-navy">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-12 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] eyebrow-text">
+          <span class="h-px w-8 eyebrow-line"></span>
+          Under the Hood
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">Core Features</h2>
+      </div>
+
+      <div class="grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="bento-card">
+          <div class="mb-2 sm:mb-3 grid h-8 w-8 sm:h-10 sm:w-10 place-items-center rounded-xl bg-ocean-mist text-ocean-royal">
+            <i data-lucide="sliders-horizontal" class="h-4 w-4 sm:h-5 sm:w-5"></i>
+          </div>
+          <h3 class="text-xs sm:text-sm font-bold text-ocean-deep">Dynamic filtering</h3>
+          <p class="mt-1.5 sm:mt-2 text-[11px] sm:text-xs leading-snug sm:leading-relaxed text-slate-500">Narrow results instantly by property type, price, and location.</p>
+        </div>
+        <div class="bento-card">
+          <div class="mb-2 sm:mb-3 grid h-8 w-8 sm:h-10 sm:w-10 place-items-center rounded-xl bg-ocean-mist text-ocean-royal">
+            <i data-lucide="file-text" class="h-4 w-4 sm:h-5 sm:w-5"></i>
+          </div>
+          <h3 class="text-xs sm:text-sm font-bold text-ocean-deep">Detailed property pages</h3>
+          <p class="mt-1.5 sm:mt-2 text-[11px] sm:text-xs leading-snug sm:leading-relaxed text-slate-500">Photos, amenities, and pricing laid out for a quick decision.</p>
+        </div>
+        <div class="bento-card">
+          <div class="mb-2 sm:mb-3 grid h-8 w-8 sm:h-10 sm:w-10 place-items-center rounded-xl bg-ocean-mist text-ocean-royal">
+            <i data-lucide="shopping-cart" class="h-4 w-4 sm:h-5 sm:w-5"></i>
+          </div>
+          <h3 class="text-xs sm:text-sm font-bold text-ocean-deep">Interactive booking cart</h3>
+          <p class="mt-1.5 sm:mt-2 text-[11px] sm:text-xs leading-snug sm:leading-relaxed text-slate-500">Collect stays, adjust nights, and see the total before confirming.</p>
+        </div>
+        <div class="bento-card">
+          <div class="mb-2 sm:mb-3 grid h-8 w-8 sm:h-10 sm:w-10 place-items-center rounded-xl bg-ocean-mist text-ocean-royal">
+            <i data-lucide="layout-dashboard" class="h-4 w-4 sm:h-5 sm:w-5"></i>
+          </div>
+          <h3 class="text-xs sm:text-sm font-bold text-ocean-deep">Owner dashboard</h3>
+          <p class="mt-1.5 sm:mt-2 text-[11px] sm:text-xs leading-snug sm:leading-relaxed text-slate-500">Add, edit, or remove listings without leaving the platform.</p>
+        </div>
+        <div class="bento-card">
+          <div class="mb-2 sm:mb-3 grid h-8 w-8 sm:h-10 sm:w-10 place-items-center rounded-xl bg-ocean-mist text-ocean-royal">
+            <i data-lucide="users-round" class="h-4 w-4 sm:h-5 sm:w-5"></i>
+          </div>
+          <h3 class="text-xs sm:text-sm font-bold text-ocean-deep">Dual-role accounts</h3>
+          <p class="mt-1.5 sm:mt-2 text-[11px] sm:text-xs leading-snug sm:leading-relaxed text-slate-500">One platform, two distinct flows for renters and owners.</p>
+        </div>
+        <div class="bento-card">
+          <div class="mb-2 sm:mb-3 grid h-8 w-8 sm:h-10 sm:w-10 place-items-center rounded-xl bg-ocean-mist text-ocean-royal">
+            <i data-lucide="compass" class="h-4 w-4 sm:h-5 sm:w-5"></i>
+          </div>
+          <h3 class="text-xs sm:text-sm font-bold text-ocean-deep">Smooth navigation</h3>
+          <p class="mt-1.5 sm:mt-2 text-[11px] sm:text-xs leading-snug sm:leading-relaxed text-slate-500">A consistent path from search all the way to a confirmed booking.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interfaces -->
+<section id="interfaces" class="relative overflow-hidden gradient-band">
+  <div class="reveal mx-auto max-w-5xl px-5 py-20 sm:py-24">
+    <div class="mb-12 max-w-2xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        A Look Inside
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+        Interfaces
+      </h2>
+    </div>
+
+    <div class="relative mx-auto max-w-3xl px-6 sm:px-10">
+      <div class="laptop-frame">
+        <div class="laptop-screen">
+          <div id="iface-viewport" class="iface-viewport">
+            <div class="iface-clip">
+              <div id="iface-track" class="iface-track">
+                <div class="iface-slide" data-caption="Home Page">
+                  <div class="iface-slide-inner">
+                    <img src="home.png" alt="Home Page">
+                  </div>
+                </div>
+
+                <div class="iface-slide" data-caption="Categories">
+                  <div class="iface-slide-inner">
+                    <img src="category.png" alt="Categories">
+                  </div>
+                </div>
+
+                <div class="iface-slide" data-caption="User Page">
+                  <div class="iface-slide-inner">
+                    <img src="user.png" alt="User Page">
+                  </div>
+                </div>
+
+                <div class="iface-slide" data-caption="Seller Dashboard">
+                  <div class="iface-slide-inner">
+                    <img src="seler.png" alt="Seller Dashboard">
+                  </div>
+                </div>
+
+                <div class="iface-slide" data-caption="Add Product">
+                  <div class="iface-slide-inner">
+                    <img src="add.png" alt="Add Product">
+                  </div>
+                </div>
+
+                <div class="iface-slide" data-caption="Edit Offers">
+                  <div class="iface-slide-inner">
+                    <img src="edit.png" alt="Edit Offers">
+                  </div>
+                </div>
+
+                <div class="iface-slide" data-caption="Browse Properties">
+                  <div class="iface-slide-inner">
+                    <img src="explore.png" alt="Browse Properties">
+                  </div>
+                </div>
+
+                <div class="iface-slide" data-caption="Booking Cart">
+                  <div class="iface-slide-inner">
+                    <img src="cart.png" alt="Booking Cart">
+                  </div>
+                </div>
+
+                <div class="iface-slide" data-caption="Booking Confirmation">
+                  <div class="iface-slide-inner">
+                    <img src="buy.png" alt="Booking Confirmation">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button id="iface-prev" class="iface-arrow prev" aria-label="Previous">
+        <i data-lucide="chevron-left" class="h-5 w-5"></i>
+      </button>
+
+      <button id="iface-next" class="iface-arrow next" aria-label="Next">
+        <i data-lucide="chevron-right" class="h-5 w-5"></i>
+      </button>
+
+      <p id="iface-caption" class="iface-caption text-2xl font-semibold text-ocean-deep" style="font-family: 'Caveat', cursive;"></p>
+      <p id="iface-counter" class="mt-3 text-center text-lg font-semibold text-ocean-deep" style="font-family: 'Caveat', cursive;"></p>
+    </div>
+  </div>
+</section>
+<!-- Technologies -->
+  <section id="tech" class="relative gradient-band overflow-hidden">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-12 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Under the Hood
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight gradient-text">Technologies Used</h2>
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="tech-card">
+          <div class="tech-icon"><i data-lucide="code-2" class="h-5 w-5"></i></div>
+          <div>
+            <h3 class="text-sm font-bold text-ocean-deep">HTML</h3>
+            <p class="mt-1 text-xs leading-relaxed text-slate-500">Semantic structure for every page</p>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><i data-lucide="palette" class="h-5 w-5"></i></div>
+          <div>
+            <h3 class="text-sm font-bold text-ocean-deep">CSS</h3>
+            <p class="mt-1 text-xs leading-relaxed text-slate-500">Custom animations and layout styling</p>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><i data-lucide="braces" class="h-5 w-5"></i></div>
+          <div>
+            <h3 class="text-sm font-bold text-ocean-deep">JavaScript</h3>
+            <p class="mt-1 text-xs leading-relaxed text-slate-500">Interactive filtering, cart, and navigation logic</p>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><i data-lucide="shapes" class="h-5 w-5"></i></div>
+          <div>
+            <h3 class="text-sm font-bold text-ocean-deep">Lucide Icons</h3>
+            <p class="mt-1 text-xs leading-relaxed text-slate-500">Icon set used throughout the interface</p>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><i data-lucide="type" class="h-5 w-5"></i></div>
+          <div>
+            <h3 class="text-sm font-bold text-ocean-deep">Google Fonts</h3>
+            <p class="mt-1 text-xs leading-relaxed text-slate-500">Inter, Space Grotesk, and JetBrains Mono</p>
+          </div>
+        </div>
+        <div class="tech-card">
+          <div class="tech-icon"><i data-lucide="globe" class="h-5 w-5"></i></div>
+          <div>
+            <h3 class="text-sm font-bold text-ocean-deep">GitHub Pages</h3>
+            <p class="mt-1 text-xs leading-relaxed text-slate-500">Hosting for the live site</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="visit" class="relative overflow-hidden band-navy">
+    <div class="reveal mx-auto max-w-4xl px-5 py-16 sm:py-20 text-center">
+      <div class="mx-auto mb-4 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] eyebrow-text">
+        <span class="h-px w-8 eyebrow-line"></span>
+        Try It Yourself
+        <span class="h-px w-8 eyebrow-line"></span>
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text mb-4">Visit Darek</h2>
+      <p class="mx-auto mb-8 max-w-xl text-sm band-sub">Explore the full website and see it in action!</p>
+<a href="https://ramaalomair.github.io/darekk/" target="_blank" rel="noopener noreferrer"
+   class="shine group inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-ocean-bright to-ocean-sky px-6 py-3 sm:px-8 sm:py-3.5 text-sm sm:text-sm font-semibold text-ocean-deep shadow-lg shadow-black/20 transition-transform duration-300 hover:-translate-y-0.5">
+  <i data-lucide="external-link" class="h-4 w-4"></i>
+  Darek Website
+</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-border bg-background">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row">
+      <div class="flex items-center gap-2">
+        <i data-lucide="code-2" class="h-3.5 w-3.5 text-ocean-royal"></i>
+        <span>Fajer Mohammed Alamro</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    /* Typewriter */
+    (function () {
+      const text = "Front-End Development";
+      const el = document.getElementById('typewriter-text');
+      let i = 0;
+      function type() { if (i < text.length) { el.textContent += text.charAt(i); i++; setTimeout(type, 45); } else { setTimeout(erase, 2200); } }
+      function erase() { if (i > 0) { el.textContent = text.substring(0, i - 1); i--; setTimeout(erase, 25); } else { setTimeout(type, 400); } }
+      setTimeout(type, 500);
+    })();
+
+    /* Header / nav scroll behavior */
+    const header = document.getElementById('header');
+    const backLink = document.getElementById('back-link');
+    const navItems = document.querySelectorAll('.nav-item');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const menuBtn = document.getElementById('menu-btn');
+    const sections = document.querySelectorAll('section[id]');
+    let isScrolled = false;
+    let activeSection = 'top';
+
+    function applyNavStyles() {
+      if (isScrolled) {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
+        menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-royal/40 px-3.5 py-1.5 text-xs font-medium text-ocean-royal transition-all hover:border-ocean-royal hover:bg-ocean-mist";
+      } else {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
+        menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-sky/50 px-3.5 py-1.5 text-xs font-medium text-white/90 transition-all hover:border-ocean-sky hover:bg-white/10";
+      }
+      navItems.forEach(item => {
+        const targetId = item.getAttribute('href').replace('#', '');
+        const isActive = targetId === activeSection;
+        const baseClasses = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors";
+        const inactiveColor = isScrolled ? "text-muted-foreground hover:text-ocean-royal" : "text-white/75 hover:text-white";
+        item.className = isActive ? `${baseClasses} active` : `${baseClasses} ${inactiveColor}`;
+      });
+      mobileNavLinks.forEach(link => {
+        const targetId = link.getAttribute('href').replace(/^.*#/, '');
+        const isActive = targetId === activeSection;
+        const base = "mobile-nav-link rounded-md px-2 py-2 text-sm hover:bg-secondary";
+        link.className = isActive ? `${base} active` : `${base} text-foreground`;
+      });
+    }
+    window.addEventListener('scroll', () => { isScrolled = window.scrollY > 12; applyNavStyles(); });
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) { activeSection = entry.target.id; applyNavStyles(); } });
+      }, { threshold: 0, rootMargin: '-45% 0px -50% 0px' });
+      sections.forEach((section) => sectionObserver.observe(section));
+    }
+    applyNavStyles();
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (isHidden) { mobileMenu.classList.remove('hidden'); menuBtn.innerText = 'Close'; }
+      else { mobileMenu.classList.add('hidden'); menuBtn.innerText = 'Menu'; }
+    });
+    mobileNavLinks.forEach(link => { link.addEventListener('click', () => { mobileMenu.classList.add('hidden'); menuBtn.innerText = 'Menu'; }); });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('reveal-in'); io.unobserve(entry.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach((el) => io.observe(el));
+    } else { revealEls.forEach((e) => e.classList.add('reveal-in')); }
+
+    /* Interfaces slider */
+    (function () {
+      const track = document.getElementById('iface-track');
+      const counterEl = document.getElementById('iface-counter');
+      const prevBtn = document.getElementById('iface-prev');
+      const nextBtn = document.getElementById('iface-next');
+      const viewport = document.getElementById('iface-viewport');
+      if (!track || !prevBtn || !nextBtn) return;
+      const slides = Array.from(track.children);
+      let index = 0;
+      const captionEl = document.getElementById('iface-caption');
+      function render() {
+        track.style.transform = `translateX(-${index * 100}%)`;
+        if (captionEl) captionEl.textContent = slides[index].dataset.caption || '';
+        if (counterEl) counterEl.textContent = `${index + 1} / ${slides.length}`;
+      }
+      function goTo(i) { index = (i + slides.length) % slides.length; render(); }
+      prevBtn.addEventListener('click', () => goTo(index - 1));
+      nextBtn.addEventListener('click', () => goTo(index + 1));
+      let startX = 0, isDown = false;
+      viewport.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDown = true; }, { passive: true });
+      viewport.addEventListener('touchend', (e) => {
+        if (!isDown) return; isDown = false;
+        const diff = e.changedTouches[0].clientX - startX;
+        if (Math.abs(diff) > 40) { diff < 0 ? goTo(index + 1) : goTo(index - 1); }
+      });
+      viewport.setAttribute('tabindex', '0');
+      viewport.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') goTo(index + 1); if (e.key === 'ArrowLeft') goTo(index - 1); });
+      render();
+    })();
+  </script>
+</body>
+</html>
