@@ -149,8 +149,16 @@
     @media (max-width: 1023px) { #flow .track { display:none; } }
 
     /* ===== Terminal / queries ===== */
-    .term-window { background:#0b1220; border-radius:14px; overflow:hidden; box-shadow:0 24px 50px -20px rgba(4,46,123,0.55); }
-    .term-bar { background:#131c2f; padding:10px 14px; display:flex; align-items:center; gap:6px; }
+.term-window{
+    width:100%;
+    max-width:700px;
+    margin:0 auto;
+    background:#0b1220;
+    border-radius:14px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    box-shadow:0 24px 50px -20px rgba(4,46,123,0.55);
+}    .term-bar { background:#131c2f; padding:10px 14px; display:flex; align-items:center; gap:6px; }
     .term-dot { width:10px; height:10px; border-radius:999px; }
     .term-body { padding:18px 20px 22px; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.85; color:#cfe6ff; }
     .term-prompt { color:#4fd1a5; }
@@ -179,7 +187,7 @@
     .rel-mult { font-family:'JetBrains Mono',monospace; font-size:9px; color:#64748b; }
 
     /* ===== Transactions ===== */
-    .txn-card { background:#fff; border:1px solid rgba(24,131,255,0.25); border-radius:16px; padding:22px 24px; transition:transform 350ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 350ms; }
+    .txn-card { background:#fff; border:1px solid rgba(18, 95, 184, 0.886); border-radius:16px; padding:22px 24px; transition:transform 350ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 350ms; }
     .txn-card:hover { transform:translateY(-5px); box-shadow:0 20px 40px -16px rgba(0,78,224,0.3); border-color:rgba(24,131,255,0.5); }
     .txn-badge { display:inline-flex; align-items:center; gap:5px; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; padding:3px 10px; border-radius:999px; letter-spacing:0.05em; }
     .txn-insert { background:#dcfce7; color:#166534; }
@@ -207,13 +215,11 @@
       <nav class="hidden items-center gap-1 md:flex">
         <a href="#idea" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Idea</a>
         <a href="#entities" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Entities</a>
-        <a href="#flow" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Flow</a>
         <a href="#data" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Queries</a>
 
         <!-- NEW nav links -->
         <a href="#relationships" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Relations</a>
-        <a href="#transactions" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Transactions</a>
-        <a href="#more-queries" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">More Queries</a>
+        <a href="#transactions" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Operations</a>
       </nav>
 
       <button id="menu-btn" class="md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white" aria-label="Menu">Menu</button>
@@ -224,11 +230,9 @@
         <a href="index.html#projects" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">← Back to Portfolio</a>
         <a href="#idea" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Idea</a>
         <a href="#entities" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Entities</a>
-        <a href="#flow" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Flow</a>
         <a href="#data" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Queries</a>
         <a href="#relationships" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Relations</a>
-        <a href="#transactions" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Transactions</a>
-        <a href="#more-queries" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">More Queries</a>
+        <a href="#transactions" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Operations</a>
       </div>
     </div>
   </header>
@@ -414,50 +418,46 @@ DATABASE STRUCTURE
       </h2>
     </div>
 
-    <!-- Query Tabs -->
-    <div class="mb-6 flex flex-wrap gap-2">
-      <button
-        data-q="donors"
-        class="qtab active rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep"
-      >
-        Donors
-      </button>
+   <!-- Query Tabs -->
+<div class="mb-6 grid grid-cols-2 gap-3 md:flex md:flex-wrap">
 
-      <button
-        data-q="charity"
-        class="qtab rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep"
-      >
-        Nearby Charity
-      </button>
+  <button
+    data-q="donors"
+    class="qtab active w-full rounded-full border border-ocean-royal/30 bg-card px-4 py-2 text-center text-sm font-semibold text-ocean-deep md:w-auto">
+    Donors
+  </button>
 
-      <button
-        data-q="frequent"
-        class="qtab rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep"
-      >
-        Frequent Givers
-      </button>
+  <button
+    data-q="charity"
+    class="qtab w-full rounded-full border border-ocean-royal/30 bg-card px-4 py-2 text-center text-sm font-semibold text-ocean-deep md:w-auto">
+    Nearby Charity
+  </button>
 
-      <button
-        data-q="items"
-        class="qtab rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep"
-      >
-        Show Items
-      </button>
+  <button
+    data-q="frequent"
+    class="qtab w-full rounded-full border border-ocean-royal/30 bg-card px-4 py-2 text-center text-sm font-semibold text-ocean-deep md:w-auto">
+    Frequent Givers
+  </button>
 
-      <button
-        data-q="recent"
-        class="qtab rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep"
-      >
-        Recent Donations
-      </button>
+  <button
+    data-q="items"
+    class="qtab w-full rounded-full border border-ocean-royal/30 bg-card px-4 py-2 text-center text-sm font-semibold text-ocean-deep md:w-auto">
+    Show Items
+  </button>
 
-      <button
-        data-q="total"
-        class="qtab rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep"
-      >
-        Total Donations
-      </button>
-    </div>
+  <button
+    data-q="recent"
+    class="qtab w-full rounded-full border border-ocean-royal/30 bg-card px-4 py-2 text-center text-sm font-semibold text-ocean-deep md:w-auto">
+    Recent Donations
+  </button>
+
+  <button
+    data-q="total"
+    class="qtab w-full rounded-full border border-ocean-royal/30 bg-card px-4 py-2 text-center text-sm font-semibold text-ocean-deep md:w-auto">
+    Total Donations
+  </button>
+
+</div>
 
     <!-- Query Console -->
     <div class="term-window">
@@ -716,120 +716,118 @@ DATABASE STRUCTURE
   </div>
 </section>
  
-
 <!-- EER Diagram -->
 <section id="relationships" class="relative overflow-hidden bg-ocean-deep">
+  <!-- Background Blobs -->
   <div class="pointer-events-none absolute top-0 right-0 h-96 w-96 rounded-full bg-ocean-bright/10 blur-3xl"></div>
   <div class="pointer-events-none absolute bottom-0 left-0 h-72 w-72 rounded-full bg-ocean-sky/10 blur-3xl"></div>
 
-  <div class="relative mx-auto max-w-7xl px-5 py-24">
+  <div class="relative mx-auto max-w-7xl px-5 py-20">
 
     <!-- Heading -->
-<div class="mb-10 ml-10 text-left">  <div class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
-    <span class="h-px w-8 bg-ocean-sky/60"></span>
-    Entity Relationship Diagram
-  </div>
+    <div class="mb-8 ml-8 text-left">
 
-  <h2 class="mt-4 text-4xl font-bold text-white">
-    Database Structure
-  </h2>
 
-  <p class="mt-4 max-w-2xl text-white/60">
-    The EER diagram illustrates how the four main entities are connected,
-    including their cardinalities and relationship constraints.
-  </p>
-</div>
-<div class="mx-auto mt-6 max-w-3xl rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl shadow-2xl">
-  <img
-    src="eer.png"
-    alt="Entity Relationship Diagram"
-    class="w-full rounded-xl bg-white object-contain transition duration-500 hover:scale-[1.02]">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+        <span class="h-px w-8 bg-ocean-sky/60"></span>
+Entity Relationship Diagram      </div>
 
-</div>
-</div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-white">
+        Database Structure
+      </h2>
+    </div>
+
+    <!-- Diagram -->
+    <div class="mx-auto max-w-3xl rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl shadow-xl " onclick="openLightbox('eer.png')">
+      <img
+        src="eer.png"
+        alt="Entity Relationship Diagram"
+        class="w-full rounded-xl bg-white object-contain transition duration-500 hover:scale-[1.02]">
+    </div>
 
     <!-- Summary Cards -->
-<div class="-mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">      <!-- Card -->
-      <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-ocean-sky/40 hover:bg-white/10">
+    <div class="mx-auto mt-8 grid max-w-5xl gap-4 md:grid-cols-2 lg:grid-cols-4">
 
-        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ocean-bright/20 text-xl">
-          👤
+      <!-- Donor -->
+      <div class="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-ocean-sky/40 hover:bg-white/10">
+
+        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-ocean-bright/20">
+          <i data-lucide="user-round" class="h-5 w-5 text-ocean-sky"></i>
         </div>
 
         <h3 class="text-lg font-semibold text-white">
           Donor
         </h3>
 
-        <p class="mt-2 text-sm text-white/60">
-          Connected with <span class="text-ocean-sky font-medium">Item</span>
+        <p class="mt-2 text-sm leading-6 text-white/60">
+          Connected with <span class="font-medium text-ocean-sky">Item</span>
           through the <strong>Donates</strong> relationship.
         </p>
 
-        <div class="mt-4 inline-flex rounded-full border border-ocean-sky/30 px-3 py-1 text-xs font-mono text-ocean-sky">
+        <div class="mt-4 inline-flex rounded-full border border-ocean-sky/30 px-3 py-1 text-[11px] font-mono text-ocean-sky">
           1 : N
         </div>
 
       </div>
 
-      <!-- Card -->
-      <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-ocean-sky/40 hover:bg-white/10">
+      <!-- Item -->
+      <div class="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-ocean-sky/40 hover:bg-white/10">
 
-        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ocean-bright/20 text-xl">
-          📦
+        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-ocean-bright/20">
+          <i data-lucide="package" class="h-5 w-5 text-ocean-sky"></i>
         </div>
 
         <h3 class="text-lg font-semibold text-white">
           Item
         </h3>
 
-        <p class="mt-2 text-sm text-white/60">
-          Acts as the central entity connecting donors,
-          charities, and supervisors.
+        <p class="mt-2 text-sm leading-6 text-white/60">
+          Acts as the central entity connecting donors, charities, and supervisors.
         </p>
 
-        <div class="mt-4 inline-flex rounded-full border border-ocean-sky/30 px-3 py-1 text-xs font-mono text-ocean-sky">
+        <div class="mt-4 inline-flex rounded-full border border-ocean-sky/30 px-3 py-1 text-[11px] font-mono text-ocean-sky">
           3 Connections
         </div>
 
       </div>
 
-      <!-- Card -->
-      <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-ocean-sky/40 hover:bg-white/10">
+      <!-- Charity -->
+      <div class="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-ocean-sky/40 hover:bg-white/10">
 
-        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ocean-bright/20 text-xl">
-          🏢
+        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-ocean-bright/20">
+          <i data-lucide="heart-handshake" class="h-5 w-5 text-ocean-sky"></i>
         </div>
 
         <h3 class="text-lg font-semibold text-white">
           Charity
         </h3>
 
-        <p class="mt-2 text-sm text-white/60">
+        <p class="mt-2 text-sm leading-6 text-white/60">
           Receives donated items and is supervised by a supervisor.
         </p>
 
-        <div class="mt-4 inline-flex rounded-full border border-ocean-sky/30 px-3 py-1 text-xs font-mono text-ocean-sky">
+        <div class="mt-4 inline-flex rounded-full border border-ocean-sky/30 px-3 py-1 text-[11px] font-mono text-ocean-sky">
           M : N
         </div>
 
       </div>
 
-      <!-- Card -->
-      <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-ocean-sky/40 hover:bg-white/10">
+      <!-- Supervisor -->
+      <div class="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-ocean-sky/40 hover:bg-white/10">
 
-        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ocean-bright/20 text-xl">
-          👨🏻‍💼
+        <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-ocean-bright/20">
+          <i data-lucide="briefcase-business" class="h-5 w-5 text-ocean-sky"></i>
         </div>
 
         <h3 class="text-lg font-semibold text-white">
           Supervisor
         </h3>
 
-        <p class="mt-2 text-sm text-white/60">
+        <p class="mt-2 text-sm leading-6 text-white/60">
           Manages donated items and supervises charities.
         </p>
 
-        <div class="mt-4 inline-flex rounded-full border border-ocean-sky/30 px-3 py-1 text-xs font-mono text-ocean-sky">
+        <div class="mt-4 inline-flex rounded-full border border-ocean-sky/30 px-3 py-1 text-[11px] font-mono text-ocean-sky">
           1 : N
         </div>
 
@@ -849,7 +847,6 @@ DATABASE STRUCTURE
           Transaction Requirements
         </div>
         <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">Data Operations</h2>
-        <p class="mt-3 text-sm text-muted-foreground">All insert, update, and delete operations supported by the database</p>
       </div>
 
       <!-- INSERT -->
@@ -1073,5 +1070,24 @@ DATABASE STRUCTURE
       });
     })();
   </script>
+  <script>
+  lucide.createIcons();
+</script>
+<div id="lightbox" class="fixed inset-0 hidden items-center justify-center bg-black/90 z-[9999]">
+  <img id="lightboxImage" class="max-w-[90%] max-h-[90%] rounded-xl">
+</div>
+
+<script>
+function openLightbox(src) {
+  document.getElementById("lightboxImage").src = src;
+  document.getElementById("lightbox").classList.remove("hidden");
+  document.getElementById("lightbox").classList.add("flex");
+}
+
+document.getElementById("lightbox").onclick = function () {
+  this.classList.remove("flex");
+  this.classList.add("hidden");
+};
+</script>
 </body>
 </html>
