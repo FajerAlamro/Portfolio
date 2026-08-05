@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kasa | Fajer Alamro</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-deep': '#042E7B',
+            'ocean-royal': '#004EE0',
+            'ocean-bright': '#1883FF',
+            'ocean-sky': '#99CAFF',
+            'ocean-mist': '#E3F2FF',
+            background: '#f8fafc',
+            foreground: '#0f172a',
+            card: '#ffffff',
+            border: '#e2e8f0',
+            muted: '#f1f5f9',
+            'muted-foreground': '#64748b',
+            secondary: '#E3F2FF',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --ocean-deep: #042E7B;
+      --ocean-royal: #004EE0;
+      --ocean-bright: #1883FF;
+      --ocean-sky: #99CAFF;
+      --ocean-mist: #E3F2FF;
+    }
+    body { font-family:'Inter',sans-serif; background:#f8fafc; color:#0f172a; -webkit-font-smoothing:antialiased; }
+    h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; letter-spacing:-0.02em; }
+
+    .gradient-hero {
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(24,131,255,0.55), transparent 60%),
+        radial-gradient(800px 400px at 10% 20%, rgba(0,78,224,0.6), transparent 60%),
+        linear-gradient(180deg, #042E7B, #021a47);
+    }
+    .gradient-band { background: linear-gradient(135deg, rgba(227,242,255,0.6), #ffffff); }
+    .gradient-text { background: linear-gradient(135deg,#042E7B,#1883FF); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+    .grid-pattern {
+      background-image: linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+    @keyframes float-slow { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+    .float-slow { animation: float-slow 6s ease-in-out infinite; }
+    @keyframes fade-up { from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);} }
+    .fade-up { animation: fade-up 700ms cubic-bezier(0.2,0.8,0.2,1) both; }
+    @keyframes text-shimmer { 0%{background-position:0% 50%;} 100%{background-position:200% 50%;} }
+    .text-shimmer {
+      background: linear-gradient(90deg,#E3F2FF,#99CAFF,#1883FF,#99CAFF,#E3F2FF);
+      background-size:200% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
+      animation: text-shimmer 5s linear infinite;
+    }
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 800ms cubic-bezier(0.2,0.8,0.2,1), transform 800ms cubic-bezier(0.2,0.8,0.2,1); }
+    .reveal-in { opacity:1; transform:translateY(0); }
+
+    .cyber-icon { position:absolute; color:rgba(255,255,255,0.05); stroke-width:1; pointer-events:none; }
+    @keyframes cyber-float-1 { 0%,100%{transform:translate(0,0) rotate(0deg);} 50%{transform:translate(14px,-22px) rotate(8deg);} }
+    @keyframes cyber-float-2 { 0%,100%{transform:translate(0,0) rotate(0deg);} 50%{transform:translate(-18px,16px) rotate(-6deg);} }
+    @keyframes cyber-float-3 { 0%,100%{transform:translate(0,0) rotate(0deg);} 50%{transform:translate(10px,20px) rotate(10deg);} }
+    @keyframes cyber-drift { 0%{transform:translateY(0); opacity:0.14;} 50%{opacity:0.26;} 100%{transform:translateY(-26px); opacity:0.14;} }
+    .cyber-anim-1 { animation: cyber-float-1 7s ease-in-out infinite; }
+    .cyber-anim-2 { animation: cyber-float-2 9s ease-in-out infinite; }
+    .cyber-anim-3 { animation: cyber-float-3 8s ease-in-out infinite; }
+    .cyber-anim-4 { animation: cyber-drift 10s ease-in-out infinite; }
+
+    .typewriter-cursor { display:inline-block; width:2px; background:currentColor; margin-left:2px; animation:cursor-blink 0.8s step-end infinite; }
+    @keyframes cursor-blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+    .step-badge { font-family:'Space Grotesk',sans-serif; }
+    .nav-item { position:relative; }
+    .nav-item.active { color:#004EE0 !important; font-weight:700; }
+    .nav-item.active::after { content:''; position:absolute; left:14px; right:14px; bottom:2px; height:2.5px; border-radius:2px; background:#004EE0; animation:fade-up 300ms ease both; }
+    .mobile-nav-link.active { color:#004EE0 !important; font-weight:700; background-color:#E3F2FF; }
+
+    .record-pulse { box-shadow:0 0 0 0 rgba(24,131,255,0.5); animation:recordPulse 2.4s ease-out infinite; }
+    @keyframes recordPulse { 0%{box-shadow:0 0 0 0 rgba(24,131,255,0.45);} 70%{box-shadow:0 0 0 12px rgba(24,131,255,0);} 100%{box-shadow:0 0 0 0 rgba(24,131,255,0);} }
+
+    .card-hover { transition:transform 400ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 400ms, border-color 300ms; }
+    .card-hover:hover { transform:translateY(-6px); box-shadow:0 24px 50px -22px rgba(0,78,224,0.4); border-color:rgba(24,131,255,0.55); }
+
+    /* ===== Clothesline entity tags ===== */
+    #entities .line-svg path { opacity:.55; }
+    #entities .line-svg .draw { stroke-dasharray:1400; stroke-dashoffset:1400; }
+    #entities.in-view .line-svg .draw { animation: drawClothesline 2.2s ease forwards; }
+    @keyframes drawClothesline { to { stroke-dashoffset:0; } }
+
+    .tag-card {
+      position: relative;
+      background:#ffffff;
+      clip-path: polygon(16px 0, 100% 0, 100% 100%, 16px 100%, 0 50%);
+      padding: 30px 22px 22px 34px;
+      border: 1px solid rgba(24,131,255,0.28);
+      transition: transform 380ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 380ms, border-color 300ms;
+    }
+    .tag-card:hover { transform: translateY(-8px) rotate(-1deg); box-shadow:0 26px 48px -20px rgba(0,78,224,0.45); border-color:rgba(24,131,255,0.6); }
+    .tag-hole {
+      position:absolute; top:14px; left:12px; width:9px; height:9px; border-radius:9999px;
+      background:#f8fafc; border:1.5px solid rgba(4,46,123,0.35);
+    }
+    .tag-string {
+      position:absolute; top:-26px; left:12px; width:2px; height:26px;
+      background: repeating-linear-gradient(180deg, rgba(4,46,123,0.4) 0 4px, transparent 4px 8px);
+    }
+    .tag-clip {
+      position:absolute; top:-32px; left:5px; width:16px; height:10px; border-radius:3px;
+      background: linear-gradient(160deg,#99CAFF,#004EE0);
+      box-shadow:0 3px 8px -2px rgba(0,78,224,0.5);
+    }
+    .attr-chip {
+      display:inline-flex; align-items:center; gap:4px; font-family:'JetBrains Mono',monospace;
+      font-size:10px; padding:2px 7px; border-radius:5px; background:#E3F2FF; color:#042E7B; font-weight:600;
+    }
+    .attr-chip.pk { background:#004EE0; color:#fff; }
+
+    /* ===== Flow pipeline ===== */
+    #flow .track { position:absolute; top:34px; left:6%; right:6%; height:2px; background: rgba(255,255,255,0.14); }
+    #flow .track-fill {
+      position:absolute; inset:0 100% 0 0;
+      background: linear-gradient(90deg, var(--ocean-sky), var(--ocean-bright));
+    }
+    #flow.in-view .track-fill { animation: flowFill 2.4s ease-in-out .3s both; }
+    @keyframes flowFill { to { inset:0 0 0 0; } }
+    .flow-node { transition: transform 400ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 400ms; }
+    .flow-card:hover .flow-node { transform: scale(1.12); box-shadow:0 0 0 8px rgba(153,202,255,0.15), 0 12px 26px -6px rgba(24,131,255,0.55); }
+    @media (max-width: 1023px) { #flow .track { display:none; } }
+
+    /* ===== Terminal / queries ===== */
+    .term-window { background:#0b1220; border-radius:14px; overflow:hidden; box-shadow:0 24px 50px -20px rgba(4,46,123,0.55); }
+    .term-bar { background:#131c2f; padding:10px 14px; display:flex; align-items:center; gap:6px; }
+    .term-dot { width:10px; height:10px; border-radius:999px; }
+    .term-body { padding:18px 20px 22px; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.85; color:#cfe6ff; }
+    .term-prompt { color:#4fd1a5; }
+    .term-cmd { color:#ffffff; }
+    .term-comment { color:#6b87ad; }
+    .term-out { color:#99CAFF; }
+    .term-key { color:#ffd166; }
+    .qtab { transition:all 250ms ease; }
+    .qtab.active { background:#004EE0; color:#fff; box-shadow:0 10px 20px -8px rgba(0,78,224,0.55); }
+
+    /* ===== Corkboard team ===== */
+    .corkboard { background-color:#eef4ff; background-image: radial-gradient(rgba(24,131,255,0.16) 1.4px, transparent 1.4px); background-size:16px 16px; border:1px solid rgba(24,131,255,0.25); }
+    .pin-card { transition: transform 350ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 350ms; box-shadow:0 18px 34px -16px rgba(4,46,123,0.35); }
+    .pin-card:hover { transform: translateY(-6px) rotate(0deg) !important; box-shadow:0 26px 44px -16px rgba(0,78,224,0.45); }
+    .pin-dot { width:14px; height:14px; border-radius:9999px; background: radial-gradient(circle at 32% 30%,#ffffff,#99CAFF 40%,#004EE0 100%); box-shadow:0 3px 6px rgba(0,0,0,0.35); }
+    .meter-track { height:5px; border-radius:999px; background:#dbe8ff; overflow:hidden; }
+    .meter-fill { height:100%; border-radius:999px; background: linear-gradient(90deg,var(--ocean-royal),var(--ocean-bright)); width:0%; transition: width 1.1s cubic-bezier(0.2,0.8,0.2,1); }
+    #team.in-view .meter-fill { width:25%; }
+
+    /* ===== Relationships ===== */
+    .rel-row { display:flex; align-items:center; gap:0; }
+    .rel-entity { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; padding:9px 18px; border-radius:10px; background:#fff; border:1.5px solid rgba(24,131,255,0.4); color:#042E7B; white-space:nowrap; box-shadow:0 4px 14px -6px rgba(0,78,224,0.2); }
+    .rel-arrow { display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1; min-width:60px; padding:0 4px; }
+    .rel-line { height:2px; width:100%; background:linear-gradient(90deg,rgba(24,131,255,0.5),rgba(24,131,255,0.9)); }
+    .rel-label { font-family:'JetBrains Mono',monospace; font-size:10px; color:#004EE0; font-weight:600; white-space:nowrap; margin-bottom:3px; }
+    .rel-mult { font-family:'JetBrains Mono',monospace; font-size:9px; color:#64748b; }
+
+    /* ===== Transactions ===== */
+    .txn-card { background:#fff; border:1px solid rgba(24,131,255,0.25); border-radius:16px; padding:22px 24px; transition:transform 350ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 350ms; }
+    .txn-card:hover { transform:translateY(-5px); box-shadow:0 20px 40px -16px rgba(0,78,224,0.3); border-color:rgba(24,131,255,0.5); }
+    .txn-badge { display:inline-flex; align-items:center; gap:5px; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; padding:3px 10px; border-radius:999px; letter-spacing:0.05em; }
+    .txn-insert { background:#dcfce7; color:#166534; }
+    .txn-update { background:#fef9c3; color:#854d0e; }
+    .txn-delete { background:#fee2e2; color:#991b1b; }
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground">
+
+  <!-- Header -->
+  <header id="header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-4">
+        <a href="index.html#projects" id="back-link" class="group hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full border-[6px] border-ocean-sky/80 transition-all hover:border-ocean-sky hover:bg-white/10">
+          <i data-lucide="arrow-left" class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"></i>
+        </a>
+        <a href="index.html" class="group flex items-center gap-5">
+          <span class="relative flex h-9 items-center font-display text-2xl font-bold tracking-tight">
+            <span class="relative z-10 text-ocean-royal transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">F</span>
+            <span class="relative -ml-1 text-ocean-sky transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5">A</span>
+          </span>
+        </a>
+      </div>
+
+      <nav class="hidden items-center gap-1 md:flex">
+        <a href="#idea" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Idea</a>
+        <a href="#entities" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Entities</a>
+        <a href="#flow" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Flow</a>
+        <a href="#data" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Queries</a>
+
+        <!-- NEW nav links -->
+        <a href="#relationships" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Relations</a>
+        <a href="#transactions" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Transactions</a>
+        <a href="#more-queries" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">More Queries</a>
+      </nav>
+
+      <button id="menu-btn" class="md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white" aria-label="Menu">Menu</button>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-background">
+      <div class="mx-auto flex max-w-6xl flex-col px-5 py-3">
+        <a href="index.html#projects" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">← Back to Portfolio</a>
+        <a href="#idea" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Idea</a>
+        <a href="#entities" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Entities</a>
+        <a href="#flow" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Flow</a>
+        <a href="#data" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Queries</a>
+        <a href="#relationships" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Relations</a>
+        <a href="#transactions" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Transactions</a>
+        <a href="#more-queries" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">More Queries</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════════════ EXISTING SECTIONS (UNTOUCHED) ══════════════════ -->
+
+  <!-- Hero -->
+  <section id="top" class="relative overflow-hidden gradient-hero">
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+    <div class="absolute -left-24 top-40 h-72 w-72 rounded-full bg-ocean-bright/30 blur-3xl float-slow"></div>
+    <div class="absolute -right-16 top-24 h-64 w-64 rounded-full bg-ocean-sky/25 blur-3xl float-slow [animation-delay:1.5s]"></div>
+
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <i data-lucide="shirt" class="cyber-icon cyber-anim-1" style="top:10%; left:5%; width:110px; height:110px;"></i>
+      <i data-lucide="database" class="cyber-icon cyber-anim-2" style="top:14%; right:6%; width:110px; height:110px; animation-delay:0.6s;"></i>
+      <i data-lucide="recycle" class="cyber-icon cyber-anim-3" style="bottom:18%; left:6%; width:100px; height:100px; animation-delay:1.2s;"></i>
+      <i data-lucide="handshake" class="cyber-icon cyber-anim-1" style="bottom:12%; right:7%; width:100px; height:100px; animation-delay:1.8s;"></i>
+      <i data-lucide="heart" class="cyber-icon cyber-anim-4" style="top:46%; right:3%; width:80px; height:80px; animation-delay:1.5s;"></i>
+      <i data-lucide="package" class="cyber-icon cyber-anim-2" style="top:44%; left:3%; width:75px; height:75px; animation-delay:2.4s;"></i>
+    </div>
+
+    <div class="relative mx-auto flex min-h-[86vh] max-w-6xl flex-col items-center justify-center px-5 pt-28 pb-16 text-center">
+      <p id="typewriter" class="fade-up mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-ocean-sky [animation-delay:0ms]">
+        <span id="typewriter-text"></span><span class="typewriter-cursor">&nbsp;</span>
+      </p>
+
+      <h1 class="fade-up text-5xl font-bold leading-[1.05] sm:text-6xl md:text-7xl [animation-delay:80ms]">
+        <span class="text-shimmer">Kasa</span>
+      </h1>
+
+      <p class="fade-up mt-8 max-w-2xl text-sm text-white/85 sm:text-base [animation-delay:160ms]">
+Designed a database to support data analysis      </p>
+    </div>
+  </section>
+
+  <!-- Idea -->
+  <section id="idea" class="relative">
+    <div class="reveal mx-auto max-w-6xl px-5 py-14 sm:py-20 md:py-24">
+      <div class="mx-auto mb-10 max-w-3xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          The Idea
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">What is Kasa?</h2>
+      </div>
+
+      <div class="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-6 sm:p-10 shadow-sm card-hover" style="border:1px solid rgba(24,131,255,0.4);">
+        <p class="text-base text-justify leading-relaxed text-muted-foreground">
+Designed and implemented a <span class="font-semibold text-ocean-deep">relational database</span> to organize and manage donation data. The project included database modeling, table creation, relationships, SQL queries, and data manipulation to support efficient data retrieval and analysis.        </p>
+
+        <div class="mt-8 flex items-center justify-center gap-3 rounded-2xl bg-ocean-mist/60 px-4 py-3 sm:px-6 sm:py-4">
+          <i data-lucide="shield-check" class="h-5 w-5 shrink-0 text-ocean-royal"></i>
+          <p class="text-xs sm:text-sm font-medium text-ocean-deep">
+Supervisor view: managing donations, items, and charities          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Entities: clothesline -->
+  <section id="entities" class="relative gradient-band overflow-hidden">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-16 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+DATABASE STRUCTURE
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">Four Core Entities</h2>
+      </div>
+
+      <div class="relative">
+        <svg class="line-svg pointer-events-none absolute left-0 right-0 top-0 hidden h-10 w-full lg:block" viewBox="0 0 1000 60" preserveAspectRatio="none">
+          <path class="draw" d="M10,20 Q130,45 260,20 T510,20 T760,20 T990,20" fill="none" stroke="#1883FF" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+
+        <div class="grid gap-x-6 gap-y-14 pt-10 sm:grid-cols-2 lg:grid-cols-4 lg:pt-14">
+
+          <!-- Donor -->
+          <div class="relative">
+            <div class="tag-clip"></div>
+            <div class="tag-string"></div>
+            <div class="tag-card rounded-r-xl">
+              <span class="tag-hole"></span>
+              <div class="mb-3 flex items-center gap-2.5">
+                <div class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+                  <i data-lucide="hand-heart" class="h-4 w-4"></i>
+                </div>
+                <h3 class="text-sm font-bold text-ocean-deep">Donor</h3>
+              </div>
+              <p class="mb-3 text-xs leading-relaxed text-slate-600">Gives clothes a second life. One donor can give one to many items</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="attr-chip pk">DID · PK</span>
+                <span class="attr-chip">DFName</span>
+                <span class="attr-chip">DLName</span>
+                <span class="attr-chip">DPNO</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item -->
+          <div class="relative">
+            <div class="tag-clip"></div>
+            <div class="tag-string"></div>
+            <div class="tag-card rounded-r-xl">
+              <span class="tag-hole"></span>
+              <div class="mb-3 flex items-center gap-2.5">
+                <div class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+                  <i data-lucide="shirt" class="h-4 w-4"></i>
+                </div>
+                <h3 class="text-sm font-bold text-ocean-deep">Item</h3>
+              </div>
+              <p class="mb-3 text-xs leading-relaxed text-slate-600">The donated piece itself, tagged, categorized, and dated the moment it's logged</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="attr-chip pk">IID · PK</span>
+                <span class="attr-chip">IName</span>
+                <span class="attr-chip">ICategory</span>
+                <span class="attr-chip">DODonation</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charity -->
+          <div class="relative">
+            <div class="tag-clip"></div>
+            <div class="tag-string"></div>
+            <div class="tag-card rounded-r-xl">
+              <span class="tag-hole"></span>
+              <div class="mb-3 flex items-center gap-2.5">
+                <div class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+                  <i data-lucide="handshake" class="h-4 w-4"></i>
+                </div>
+                <h3 class="text-sm font-bold text-ocean-deep">Charity</h3>
+              </div>
+              <p class="mb-3 text-xs leading-relaxed text-slate-600">An organization that receives donated items</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="attr-chip pk">CID · PK</span>
+                <span class="attr-chip">CName</span>
+                <span class="attr-chip">CLocation</span>
+                <span class="attr-chip">CContact</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Supervisor -->
+          <div class="relative">
+            <div class="tag-clip"></div>
+            <div class="tag-string"></div>
+            <div class="tag-card rounded-r-xl">
+              <span class="tag-hole"></span>
+              <div class="mb-3 flex items-center gap-2.5">
+                <div class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-ocean-royal to-ocean-bright text-white">
+                  <i data-lucide="shield-check" class="h-4 w-4"></i>
+                </div>
+                <h3 class="text-sm font-bold text-ocean-deep">Supervisor</h3>
+              </div>
+              <p class="mb-3 text-xs leading-relaxed text-slate-600">Supervises, views, and manages charities and donation items</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="attr-chip pk">SID · PK</span>
+                <span class="attr-chip">SEmailAddress</span>
+                <span class="attr-chip">SPNO</span>
+                <span class="attr-chip">SPassword</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Data / Queries -->
+<section id="data" class="relative gradient-band">
+  <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+
+    <div class="mb-10 max-w-2xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        What the Supervisor Can Ask
+      </div>
+
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">
+        Behind the Database
+      </h2>
+    </div>
+
+    <!-- Query Tabs -->
+    <div class="mb-6 flex flex-wrap gap-2">
+      <button
+        data-q="donors"
+        class="qtab active rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep"
+      >
+        Donors
+      </button>
+
+      <button
+        data-q="charity"
+        class="qtab rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep"
+      >
+        Nearby Charity
+      </button>
+
+      <button
+        data-q="frequent"
+        class="qtab rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep"
+      >
+        Frequent Givers
+      </button>
+
+      <button
+        data-q="items"
+        class="qtab rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep"
+      >
+        Show Items
+      </button>
+
+      <button
+        data-q="recent"
+        class="qtab rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep"
+      >
+        Recent Donations
+      </button>
+
+      <button
+        data-q="total"
+        class="qtab rounded-full border border-ocean-royal/30 bg-card px-5 py-2 text-sm font-semibold text-ocean-deep"
+      >
+        Total Donations
+      </button>
+    </div>
+
+    <!-- Query Console -->
+    <div class="term-window">
+      <div class="term-bar">
+        <span class="term-dot" style="background:#ff5f57;"></span>
+        <span class="term-dot" style="background:#febc2e;"></span>
+        <span class="term-dot" style="background:#28c840;"></span>
+
+        <span class="ml-2 text-[11px] text-white/40">
+          kasa_db — query console
+        </span>
+      </div>
+
+      <!-- Donors -->
+      <div id="q-donors" class="term-body q-panel">
+        <div class="term-comment">
+          -- List the names of the donors
+        </div>
+
+        <div class="mt-1">
+          <span class="term-key">SELECT</span>
+          DID <span class="term-key">AS</span> ID,
+          DFName <span class="term-key">AS</span> First_Name,
+          DLName <span class="term-key">AS</span> Last_Name
+        </div>
+
+        <div>
+          <span class="term-key">FROM</span> Donor;
+        </div>
+
+        <div class="term-out mt-3">
+          ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          First_Name&nbsp;&nbsp;&nbsp;Last_Name
+        </div>
+
+        <div class="term-out">
+          1234567890&nbsp;&nbsp;Nada&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rashed
+        </div>
+
+        <div class="term-out">
+          3334781190&nbsp;&nbsp;Shayar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nasser
+        </div>
+
+        <div class="term-out">
+          1224481981&nbsp;&nbsp;Aljawharah&nbsp;Alsubaie
+        </div>
+      </div>
+
+      <!-- Nearby Charity -->
+      <div id="q-charity" class="term-body q-panel hidden">
+        <div class="term-comment">
+          -- View the location of the charity in a specific neighborhood
+        </div>
+
+        <div class="mt-1">
+          <span class="term-key">SELECT</span>
+          CName <span class="term-key">AS</span> Charity_Name,
+          CLocation <span class="term-key">AS</span> Charity_Location
+        </div>
+
+        <div>
+          <span class="term-key">FROM</span> Charity
+        </div>
+
+        <div>
+          <span class="term-key">WHERE</span>
+          CLocation <span class="term-key">LIKE</span>
+          '%Al-Shifa district%';
+        </div>
+
+        <div class="term-out mt-3">
+          Charity_Name&nbsp;&nbsp;Charity_Location
+        </div>
+
+        <div class="term-out">
+          Awon&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Jeddah, Al-Shifa district
+        </div>
+      </div>
+
+      <!-- Frequent Givers -->
+      <div id="q-frequent" class="term-body q-panel hidden">
+        <div class="term-comment">
+          -- Phone numbers of donors whose total donations are more than 2
+        </div>
+
+        <div class="mt-1">
+          <span class="term-key">SELECT</span>
+          D.DPNO, D.DFName, D.DLName,
+          <span class="term-key">COUNT</span>(I.DID)
+          <span class="term-key">AS</span> Total_Donations
+        </div>
+
+        <div>
+          <span class="term-key">FROM</span> Donor D, Item I
+          <span class="term-key">WHERE</span> D.DID = I.DID
+        </div>
+
+        <div>
+          <span class="term-key">GROUP BY</span>
+          D.DPNO, D.DFName, D.DLName
+          <span class="term-key">HAVING COUNT</span>(*) &gt; 2;
+        </div>
+
+        <div class="term-out mt-3">
+          DonorPhoneNumber&nbsp;&nbsp;First_Name&nbsp;&nbsp;Last_Name&nbsp;&nbsp;Total
+        </div>
+
+        <div class="term-out">
+          0505373468&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Shayar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nasser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3
+        </div>
+      </div>
+
+      <!-- Show Items - NEW -->
+      <div id="q-items" class="term-body q-panel hidden">
+        <div class="term-comment">
+          -- Show the names of the items
+        </div>
+
+        <div class="mt-1">
+          <span class="term-key">SELECT</span>
+          IID <span class="term-key">AS</span> Item_ID,
+          IName <span class="term-key">AS</span> Item_Name,
+          Icategory <span class="term-key">AS</span> Category
+        </div>
+
+        <div>
+          <span class="term-key">FROM</span> Item;
+        </div>
+
+        <div class="term-out mt-3">
+          Item_ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Item_Name&nbsp;&nbsp;Category
+        </div>
+
+        <div class="term-out">
+          9987347199&nbsp;&nbsp;Boots&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shoes
+        </div>
+
+        <div class="term-out">
+          8855831782&nbsp;&nbsp;Coat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Top
+        </div>
+
+        <div class="term-out">
+          0766512349&nbsp;&nbsp;Heels&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shoes
+        </div>
+
+        <div class="term-out">
+          4545778799&nbsp;&nbsp;Shirt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Top
+        </div>
+
+        <div class="term-out">
+          9876678900&nbsp;&nbsp;Dress&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;One-piece
+        </div>
+      </div>
+
+      <!-- Recent Donations - NEW -->
+      <div id="q-recent" class="term-body q-panel hidden">
+        <div class="term-comment">
+          -- List all items donated in the last two months
+        </div>
+
+        <div class="mt-1">
+          <span class="term-key">SELECT</span>
+          i.IID <span class="term-key">AS</span> item_id,
+          i.IName <span class="term-key">AS</span> item_name,
+        </div>
+
+        <div>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          d.DFName <span class="term-key">AS</span> First_name,
+          d.DLName <span class="term-key">AS</span> Last_Name
+        </div>
+
+        <div>
+          <span class="term-key">FROM</span> Item i, Donor d
+        </div>
+
+        <div>
+          <span class="term-key">WHERE</span> i.DID = d.DID
+        </div>
+
+        <div>
+          &nbsp;&nbsp;<span class="term-key">AND</span>
+          DODonation <span class="term-key">BETWEEN</span>
+          <span class="text-amber-400">'2024-03-01'</span>
+          <span class="term-key">AND</span>
+          <span class="text-amber-400">'2024-05-01'</span>;
+        </div>
+
+        <div class="term-out mt-3">
+          item_id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item_name&nbsp;&nbsp;
+          First_name&nbsp;&nbsp;Last_Name
+        </div>
+
+        <div class="term-out">
+          8855831782&nbsp;&nbsp;Coat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Shayar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nasser
+        </div>
+
+        <div class="term-out">
+          7654765499&nbsp;&nbsp;Coat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Shayar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nasser
+        </div>
+
+        <div class="term-out">
+          0766512349&nbsp;&nbsp;Heels&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Shayar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nasser
+        </div>
+      </div>
+
+      <!-- Total Donations - NEW -->
+      <div id="q-total" class="term-body q-panel hidden">
+        <div class="term-comment">
+          -- List the total donation amount per donor
+        </div>
+
+        <div class="mt-1">
+          <span class="term-key">SELECT</span>
+          D.DFName, D.DLName,
+          <span class="term-key">COUNT</span>(I.IID)
+          <span class="term-key">AS</span> Total_Donations
+        </div>
+
+        <div>
+          <span class="term-key">FROM</span> Donor D, Item I
+        </div>
+
+        <div>
+          <span class="term-key">WHERE</span> D.DID = I.DID
+        </div>
+
+        <div>
+          <span class="term-key">GROUP BY</span>
+          D.DFName, D.DLName;
+        </div>
+
+        <div class="term-out mt-3">
+          DFName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DLName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Total_Donations
+        </div>
+
+        <div class="term-out">
+          Shayar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nasser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3
+        </div>
+
+        <div class="term-out">
+          Aljawharah&nbsp;Alsubaie&nbsp;&nbsp;&nbsp;2
+        </div>
+
+        <div class="term-out">
+          Nora&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alrfdan&nbsp;&nbsp;&nbsp;&nbsp;1
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+
+<!-- EER Diagram -->
+<section id="relationships" class="relative overflow-hidden bg-ocean-deep">
+  <div class="pointer-events-none absolute top-0 right-0 h-96 w-96 rounded-full bg-ocean-bright/10 blur-3xl"></div>
+  <div class="pointer-events-none absolute bottom-0 left-0 h-72 w-72 rounded-full bg-ocean-sky/10 blur-3xl"></div>
+
+  <div class="relative mx-auto max-w-7xl px-5 py-24">
+
+    <!-- Heading -->
+<div class="mb-10 ml-10 text-left">  <div class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+    <span class="h-px w-8 bg-ocean-sky/60"></span>
+    Entity Relationship Diagram
+  </div>
+
+  <h2 class="mt-4 text-4xl font-bold text-white">
+    Database Structure
+  </h2>
+
+  <p class="mt-4 max-w-2xl text-white/60">
+    The EER diagram illustrates how the four main entities are connected,
+    including their cardinalities and relationship constraints.
+  </p>
+</div>
+<div class="mx-auto mt-6 max-w-3xl rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl shadow-2xl">
+  <img
+    src="eer.png"
+    alt="Entity Relationship Diagram"
+    class="w-full rounded-xl bg-white object-contain transition duration-500 hover:scale-[1.02]">
+
+</div>
+</div>
+
+    <!-- Summary Cards -->
+<div class="-mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">      <!-- Card -->
+      <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-ocean-sky/40 hover:bg-white/10">
+
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ocean-bright/20 text-xl">
+          👤
+        </div>
+
+        <h3 class="text-lg font-semibold text-white">
+          Donor
+        </h3>
+
+        <p class="mt-2 text-sm text-white/60">
+          Connected with <span class="text-ocean-sky font-medium">Item</span>
+          through the <strong>Donates</strong> relationship.
+        </p>
+
+        <div class="mt-4 inline-flex rounded-full border border-ocean-sky/30 px-3 py-1 text-xs font-mono text-ocean-sky">
+          1 : N
+        </div>
+
+      </div>
+
+      <!-- Card -->
+      <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-ocean-sky/40 hover:bg-white/10">
+
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ocean-bright/20 text-xl">
+          📦
+        </div>
+
+        <h3 class="text-lg font-semibold text-white">
+          Item
+        </h3>
+
+        <p class="mt-2 text-sm text-white/60">
+          Acts as the central entity connecting donors,
+          charities, and supervisors.
+        </p>
+
+        <div class="mt-4 inline-flex rounded-full border border-ocean-sky/30 px-3 py-1 text-xs font-mono text-ocean-sky">
+          3 Connections
+        </div>
+
+      </div>
+
+      <!-- Card -->
+      <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-ocean-sky/40 hover:bg-white/10">
+
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ocean-bright/20 text-xl">
+          🏢
+        </div>
+
+        <h3 class="text-lg font-semibold text-white">
+          Charity
+        </h3>
+
+        <p class="mt-2 text-sm text-white/60">
+          Receives donated items and is supervised by a supervisor.
+        </p>
+
+        <div class="mt-4 inline-flex rounded-full border border-ocean-sky/30 px-3 py-1 text-xs font-mono text-ocean-sky">
+          M : N
+        </div>
+
+      </div>
+
+      <!-- Card -->
+      <div class="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-ocean-sky/40 hover:bg-white/10">
+
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ocean-bright/20 text-xl">
+          👨🏻‍💼
+        </div>
+
+        <h3 class="text-lg font-semibold text-white">
+          Supervisor
+        </h3>
+
+        <p class="mt-2 text-sm text-white/60">
+          Manages donated items and supervises charities.
+        </p>
+
+        <div class="mt-4 inline-flex rounded-full border border-ocean-sky/30 px-3 py-1 text-xs font-mono text-ocean-sky">
+          1 : N
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+  <!-- Transactions -->
+  <section id="transactions" class="relative gradient-band">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          Transaction Requirements
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">Data Operations</h2>
+        <p class="mt-3 text-sm text-muted-foreground">All insert, update, and delete operations supported by the database</p>
+      </div>
+
+      <!-- INSERT -->
+      <div class="mb-8">
+        <div class="mb-4 flex items-center gap-2">
+          <span class="txn-badge txn-insert"><i data-lucide="plus" class="h-3 w-3"></i> INSERT</span>
+          <span class="text-sm font-semibold text-foreground">Data Entry</span>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="txn-card">
+            <div class="mb-2 flex items-center gap-2">
+              <div class="grid h-8 w-8 place-items-center rounded-lg bg-ocean-mist text-ocean-royal"><i data-lucide="handshake" class="h-4 w-4"></i></div>
+              <span class="text-sm font-bold text-ocean-deep">Add Charity</span>
+            </div>
+            <p class="mb-3 text-xs text-muted-foreground">Register a new charity with its ID and name</p>
+            <div class="rounded-lg bg-slate-50 px-4 py-3 font-mono text-[11px] text-ocean-deep border border-slate-100">
+              <span class="text-green-700 font-bold">INSERT INTO</span> Charity<br>
+              <span class="text-slate-400">&nbsp;&nbsp;(CID, CName)</span><br>
+              <span class="text-green-700 font-bold">VALUES</span> (<span class="text-amber-600">'6654098722'</span>, <span class="text-amber-600">'Awon'</span>);
+            </div>
+          </div>
+          <div class="txn-card">
+            <div class="mb-2 flex items-center gap-2">
+              <div class="grid h-8 w-8 place-items-center rounded-lg bg-ocean-mist text-ocean-royal"><i data-lucide="shirt" class="h-4 w-4"></i></div>
+              <span class="text-sm font-bold text-ocean-deep">Add Item</span>
+            </div>
+            <p class="mb-3 text-xs text-muted-foreground">Log a new donation item with its ID, name, and category</p>
+            <div class="rounded-lg bg-slate-50 px-4 py-3 font-mono text-[11px] text-ocean-deep border border-slate-100">
+              <span class="text-green-700 font-bold">INSERT INTO</span> Item<br>
+              <span class="text-slate-400">&nbsp;&nbsp;(IID, IName, ICategory)</span><br>
+              <span class="text-green-700 font-bold">VALUES</span> (<span class="text-amber-600">'9987347199'</span>, <span class="text-amber-600">'Boots'</span>, <span class="text-amber-600">'Shoes'</span>);
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPDATE / DELETE -->
+      <div>
+        <div class="mb-4 flex items-center gap-3">
+          <span class="txn-badge txn-update"><i data-lucide="pencil" class="h-3 w-3"></i> UPDATE</span>
+          <span class="txn-badge txn-delete"><i data-lucide="trash-2" class="h-3 w-3"></i> DELETE</span>
+          <span class="text-sm font-semibold text-foreground">Data Modification</span>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="txn-card">
+            <div class="mb-2 flex items-center gap-2">
+              <div class="grid h-8 w-8 place-items-center rounded-lg bg-red-50 text-red-500"><i data-lucide="trash-2" class="h-4 w-4"></i></div>
+              <span class="text-sm font-bold text-ocean-deep">Delete Category</span>
+            </div>
+            <p class="mb-3 text-xs text-muted-foreground">Remove a specific item category from the system</p>
+            <div class="rounded-lg bg-slate-50 px-4 py-3 font-mono text-[11px] text-ocean-deep border border-slate-100">
+              <span class="text-red-600 font-bold">DELETE FROM</span> Item<br>
+              <span class="text-blue-600 font-bold">WHERE</span> ICategory =<br>
+              <span class="text-amber-600">&nbsp;&nbsp;'Shoes'</span>;
+            </div>
+          </div>
+          <div class="txn-card">
+            <div class="mb-2 flex items-center gap-2">
+              <div class="grid h-8 w-8 place-items-center rounded-lg bg-yellow-50 text-yellow-600"><i data-lucide="map-pin" class="h-4 w-4"></i></div>
+              <span class="text-sm font-bold text-ocean-deep">Update Location</span>
+            </div>
+            <p class="mb-3 text-xs text-muted-foreground">Update a charity's location address</p>
+            <div class="rounded-lg bg-slate-50 px-4 py-3 font-mono text-[11px] text-ocean-deep border border-slate-100">
+              <span class="text-yellow-600 font-bold">UPDATE</span> Charity<br>
+              <span class="text-blue-600 font-bold">SET</span> CLocation =<br>
+              &nbsp;&nbsp;<span class="text-amber-600">'Riyadh, Al-Manar'</span><br>
+              <span class="text-blue-600 font-bold">WHERE</span> CID = <span class="text-amber-600">'9986544320'</span>;
+            </div>
+          </div>
+          <div class="txn-card">
+            <div class="mb-2 flex items-center gap-2">
+              <div class="grid h-8 w-8 place-items-center rounded-lg bg-yellow-50 text-yellow-600"><i data-lucide="mail" class="h-4 w-4"></i></div>
+              <span class="text-sm font-bold text-ocean-deep">Update Email</span>
+            </div>
+            <p class="mb-3 text-xs text-muted-foreground">Update a supervisor's email address</p>
+            <div class="rounded-lg bg-slate-50 px-4 py-3 font-mono text-[11px] text-ocean-deep border border-slate-100">
+              <span class="text-yellow-600 font-bold">UPDATE</span> Supervisor<br>
+              <span class="text-blue-600 font-bold">SET</span> SEmailAddress =<br>
+              &nbsp;&nbsp;<span class="text-amber-600">'new@email.com'</span><br>
+              <span class="text-blue-600 font-bold">WHERE</span> SID = <span class="text-amber-600">'5577341123'</span>;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-border bg-background">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row">
+      <div class="flex items-center gap-2">
+        <i data-lucide="code-2" class="h-3.5 w-3.5 text-ocean-royal"></i>
+        <span>Fajer Mohammed Alamro</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // Typewriter
+    (function () {
+      const text = "Database Principles";
+      const el = document.getElementById('typewriter-text');
+      let i = 0;
+      function type() {
+        if (i < text.length) { el.textContent += text.charAt(i); i++; setTimeout(type, 45); }
+        else { setTimeout(erase, 2200); }
+      }
+      function erase() {
+        if (i > 0) { el.textContent = text.substring(0, i - 1); i--; setTimeout(erase, 25); }
+        else { setTimeout(type, 400); }
+      }
+      setTimeout(type, 500);
+    })();
+
+    // Nav + scroll state
+    const header = document.getElementById('header');
+    const backLink = document.getElementById('back-link');
+    const navItems = document.querySelectorAll('.nav-item');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const menuBtn = document.getElementById('menu-btn');
+    const sections = document.querySelectorAll('section[id]');
+    let isScrolled = false;
+    let activeSection = 'top';
+
+    function applyNavStyles() {
+      if (isScrolled) {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
+        menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-royal/40 px-3.5 py-1.5 text-xs font-medium text-ocean-royal transition-all hover:border-ocean-royal hover:bg-ocean-mist";
+      } else {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
+        menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-sky/50 px-3.5 py-1.5 text-xs font-medium text-white/90 transition-all hover:border-ocean-sky hover:bg-white/10";
+      }
+      navItems.forEach(item => {
+        const targetId = item.getAttribute('href').replace('#', '');
+        const isActive = targetId === activeSection;
+        const baseClasses = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors";
+        const inactiveColor = isScrolled ? "text-muted-foreground hover:text-ocean-royal" : "text-white/75 hover:text-white";
+        item.className = isActive ? `${baseClasses} active` : `${baseClasses} ${inactiveColor}`;
+      });
+      mobileNavLinks.forEach(link => {
+        const targetId = link.getAttribute('href').replace(/^.*#/, '');
+        const isActive = targetId === activeSection;
+        const base = "mobile-nav-link rounded-md px-2 py-2 text-sm hover:bg-secondary";
+        link.className = isActive ? `${base} active` : `${base} text-foreground`;
+      });
+    }
+    window.addEventListener('scroll', () => { isScrolled = window.scrollY > 12; applyNavStyles(); });
+
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) { activeSection = entry.target.id; applyNavStyles(); } });
+      }, { threshold: 0, rootMargin: '-45% 0px -50% 0px' });
+      sections.forEach((section) => sectionObserver.observe(section));
+    }
+    applyNavStyles();
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (isHidden) { mobileMenu.classList.remove('hidden'); menuBtn.innerText = 'Close'; }
+      else { mobileMenu.classList.add('hidden'); menuBtn.innerText = 'Menu'; }
+    });
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => { mobileMenu.classList.add('hidden'); menuBtn.innerText = 'Menu'; });
+    });
+
+    // Reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('reveal-in'); io.unobserve(entry.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach((el) => io.observe(el));
+    } else { revealEls.forEach((e) => e.classList.add('reveal-in')); }
+
+    // In-view triggers for animated sections
+    ['entities', 'flow', 'team'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) { el.classList.add('in-view'); obs.disconnect(); } });
+      }, { threshold: 0.25 });
+      obs.observe(el);
+    });
+
+    // Original query tabs
+    (function () {
+      const tabs = document.querySelectorAll('.qtab');
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const q = tab.dataset.q;
+          tabs.forEach((t) => t.classList.toggle('active', t === tab));
+          document.querySelectorAll('.q-panel').forEach((p) => p.classList.add('hidden'));
+          document.getElementById('q-' + q).classList.remove('hidden');
+        });
+      });
+    })();
+
+    // NEW: Extended query tabs
+    (function () {
+      const tabs = document.querySelectorAll('.mqtab');
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const q = tab.dataset.mq;
+          tabs.forEach((t) => {
+            if (t === tab) {
+              t.classList.remove('bg-white/10', 'text-white/75');
+              t.classList.add('bg-ocean-royal', 'text-white', 'shadow-lg', 'shadow-ocean-royal/40');
+            } else {
+              t.classList.remove('bg-ocean-royal', 'text-white', 'shadow-lg', 'shadow-ocean-royal/40');
+              t.classList.add('bg-white/10', 'text-white/75');
+            }
+          });
+          document.querySelectorAll('.mq-panel').forEach((p) => p.classList.add('hidden'));
+          document.getElementById('mq-' + q).classList.remove('hidden');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

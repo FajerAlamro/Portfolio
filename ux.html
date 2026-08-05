@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Cart | Fajer Alamro</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-deep': '#042E7B',
+            'ocean-royal': '#004EE0',
+            'ocean-bright': '#1883FF',
+            'ocean-sky': '#99CAFF',
+            'ocean-mist': '#E3F2FF',
+            background: '#f8fafc',
+            foreground: '#0f172a',
+            card: '#ffffff',
+            border: '#e2e8f0',
+            muted: '#f1f5f9',
+            'muted-foreground': '#64748b',
+            secondary: '#E3F2FF',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --ocean-deep: #042E7B;
+      --ocean-royal: #004EE0;
+      --ocean-bright: #1883FF;
+      --ocean-sky: #99CAFF;
+      --ocean-mist: #E3F2FF;
+    }
+    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    .gradient-hero {
+      background:
+        radial-gradient(1000px 500px at 80% -10%, rgba(24, 131, 255, 0.55), transparent 60%),
+        radial-gradient(800px 400px at 10% 20%, rgba(0, 78, 224, 0.6), transparent 60%),
+        linear-gradient(180deg, #042E7B, #021a47);
+    }
+    .gradient-band { background: linear-gradient(135deg, rgba(227, 242, 255, 0.6), #ffffff); }
+    .gradient-text {
+      background: linear-gradient(135deg, #042E7B, #1883FF);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .card-hover { transition: transform 400ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 400ms, border-color 300ms; }
+    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 24px 50px -22px rgba(0,78,224,0.4); border-color: rgba(24,131,255,0.55); }
+
+    .grid-pattern {
+      background-image: linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+    @keyframes float-slow { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .float-slow { animation: float-slow 6s ease-in-out infinite; }
+    @keyframes fade-up { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+    .fade-up { animation: fade-up 700ms cubic-bezier(0.2,0.8,0.2,1) both; }
+    @keyframes text-shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+    .text-shimmer {
+      background: linear-gradient(90deg, #E3F2FF, #99CAFF, #1883FF, #99CAFF, #E3F2FF);
+      background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: text-shimmer 5s linear infinite;
+    }
+    .reveal { opacity:0; transform: translateY(28px); transition: opacity 800ms cubic-bezier(0.2,0.8,0.2,1), transform 800ms cubic-bezier(0.2,0.8,0.2,1); }
+    .reveal-in { opacity:1; transform: translateY(0); }
+
+    .cyber-icon { position:absolute; color: rgba(255,255,255,0.05); stroke-width:1; pointer-events:none; }
+    @keyframes cyber-float-1 { 0%,100% { transform: translate(0,0) rotate(0deg);} 50% { transform: translate(14px,-22px) rotate(8deg);} }
+    @keyframes cyber-float-2 { 0%,100% { transform: translate(0,0) rotate(0deg);} 50% { transform: translate(-18px,16px) rotate(-6deg);} }
+    @keyframes cyber-float-3 { 0%,100% { transform: translate(0,0) rotate(0deg);} 50% { transform: translate(10px,20px) rotate(10deg);} }
+    @keyframes cyber-drift { 0% { transform: translateY(0); opacity:0.14;} 50% { opacity:0.26;} 100% { transform: translateY(-26px); opacity:0.14;} }
+    .cyber-anim-1 { animation: cyber-float-1 7s ease-in-out infinite; }
+    .cyber-anim-2 { animation: cyber-float-2 9s ease-in-out infinite; }
+    .cyber-anim-3 { animation: cyber-float-3 8s ease-in-out infinite; }
+    .cyber-anim-4 { animation: cyber-drift 10s ease-in-out infinite; }
+
+    .typewriter-cursor { display:inline-block; width:2px; background: currentColor; margin-left:2px; animation: cursor-blink 0.8s step-end infinite; }
+    @keyframes cursor-blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+    .step-badge { font-family: 'Space Grotesk', sans-serif; }
+    .nav-item { position:relative; }
+    .nav-item.active { color:#004EE0 !important; font-weight:700; }
+    .nav-item.active::after { content:''; position:absolute; left:14px; right:14px; bottom:2px; height:2.5px; border-radius:2px; background:#004EE0; animation: fade-up 300ms ease both; }
+    .mobile-nav-link.active { color:#004EE0 !important; font-weight:700; background-color:#E3F2FF; }
+
+    /* ============ SIGNATURE: live cart screen ============ */
+    .cart-screen {
+      background: linear-gradient(145deg, #ffffff, #faf7ff 85%);
+      border-radius: 20px;
+      border: 1px solid #a78bfa;
+      box-shadow: 0 24px 50px -24px rgba(91,33,182,0.45), 0 2px 7px rgba(76,29,149,0.14);
+      overflow: hidden;
+      position: relative;
+    }
+    .cart-screen-bar {
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 12px 18px; border-bottom: 1px solid #e9ddff;
+      background: linear-gradient(90deg, #f7f2ff, #ffffff);
+    }
+    .cart-screen-body { padding: 16px 18px 18px; min-height: 236px; display:flex; flex-direction:column; }
+    .scan-row {
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 9px 0; border-bottom: 1px dashed #e5d7ff;
+      font-family:'JetBrains Mono',monospace; font-size:12.5px; color:#5b3d7b;
+      opacity:0; transform: translateX(14px);
+      animation: rowIn 420ms cubic-bezier(0.2,0.8,0.2,1) forwards;
+    }
+    @keyframes rowIn { to { opacity:1; transform: translateX(0); } }
+    .scan-row .qty { color:#6d28d9; width:26px; text-align:center; }
+    .scan-row .name { flex:1; padding: 0 10px; color:#2e1065; }
+    .scan-row .price { color:#5b21b6; font-weight:600; }
+    .scan-beam {
+      position:absolute; left:0; right:0; height:34px;
+      background: linear-gradient(180deg, rgba(109,40,217,0), rgba(109,40,217,0.2), rgba(109,40,217,0));
+      transform: translateY(-40px);
+      animation: beamSweep 1.9s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes beamSweep { 0% { transform: translateY(56px); opacity:0; } 8% { opacity:1; } 92% { opacity:1; } 100% { transform: translateY(260px); opacity:0; } }
+    .cart-total-row {
+      margin-top:auto; padding-top: 14px; border-top: 1px solid #e9ddff;
+      display:flex; align-items:baseline; justify-content:space-between;
+    }
+    .cart-total-num { font-family:'Space Grotesk',sans-serif; font-size: 26px; font-weight:700; color:#2e1065; }
+    .cart-total-num sup { font-size: 13px; color:#6d28d9; margin-left:2px; }
+    .scan-pulse-dot { width:7px; height:7px; border-radius:9999px; background:#6d28d9; box-shadow: 0 0 0 0 rgba(109,40,217,0.5); animation: dotPulse 1.6s ease-out infinite; transition: background 300ms; }
+    @keyframes dotPulse { 0% { box-shadow: 0 0 0 0 rgba(109,40,217,0.5); } 70% { box-shadow: 0 0 0 7px rgba(109,40,217,0); } 100% { box-shadow: 0 0 0 0 rgba(109,40,217,0); } }
+
+    /* Feature rows (editorial, not cards) */
+    .feat-row {
+      display:flex; align-items:flex-start; gap:16px;
+      padding: 20px 4px; border-bottom: 1px solid rgba(24,131,255,0.16);
+      transition: padding-left 350ms cubic-bezier(0.2,0.8,0.2,1), background 350ms;
+      border-radius: 12px;
+    }
+    .feat-row:hover { padding-left: 14px; background: linear-gradient(90deg, rgba(24,131,255,0.07), transparent); }
+    .feat-num { font-family:'Space Grotesk',sans-serif; font-size: 12px; font-weight:700; letter-spacing:0.05em; color: rgba(0,78,224,0.35); width: 28px; padding-top: 3px; flex-shrink:0; transition: color 350ms; }
+    .feat-row:hover .feat-num { color: var(--ocean-royal); }
+    .feat-icon {
+      display:grid; place-items:center; width:38px; height:38px; border-radius: 11px; flex-shrink:0;
+      background: rgba(24,131,255,0.1); color: var(--ocean-royal);
+      transition: background 350ms, color 350ms, transform 350ms;
+    }
+    .feat-row:hover .feat-icon, .feat-row.flash .feat-icon { background: linear-gradient(135deg, var(--ocean-royal), var(--ocean-bright)); color:#fff; transform: scale(1.08); }
+    .feat-row.flash { padding-left: 14px; background: linear-gradient(90deg, rgba(24,131,255,0.09), transparent); }
+    .feat-row p.text-sm.leading-relaxed.text-slate-600 {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 400ms ease, opacity 300ms ease;
+    }
+    .feat-row.flash p.text-sm.leading-relaxed.text-slate-600 {
+      max-height: 60px;
+      opacity: 1;
+      transition: max-height 400ms ease 100ms, opacity 400ms ease 150ms;
+    }
+    /* Persona badge cards */
+    .badge-card { border-radius: 22px; overflow:hidden; background:#fff; border:1px solid rgba(24,131,255,0.25); box-shadow: 0 18px 40px -22px rgba(4,46,123,0.35); transition: transform 350ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 350ms; }
+    .badge-card:hover { transform: translateY(-6px); box-shadow: 0 26px 50px -20px rgba(0,78,224,0.4); }
+    .badge-head { padding: 22px 22px 44px; position:relative; color:#fff; }
+    .badge-avatar { position:absolute; bottom:-26px; left:22px; width:56px; height:56px; border-radius:9999px; background:#fff; display:grid; place-items:center; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.35); border:3px solid #fff; }
+    .badge-punch { position:absolute; top:14px; right:16px; width:14px; height:14px; border-radius:9999px; background:rgba(255,255,255,0.35); box-shadow: inset 0 1px 3px rgba(0,0,0,0.25); }
+
+    /* Process: checkout conveyor belt */
+    .belt-line {
+      position:absolute; left:6%; right:6%; top:34px; height:4px; border-radius:4px;
+      background-image: repeating-linear-gradient(90deg, var(--ocean-royal) 0 14px, transparent 14px 26px);
+      background-size: 40px 100%;
+      opacity: 0.45;
+      animation: beltScroll 1.1s linear infinite;
+    }
+    @keyframes beltScroll { from { background-position: 0 0; } to { background-position: -40px 0; } }
+    .belt-cart { position:absolute; top:12px; left:6%; color: var(--ocean-royal); animation: cartTravel 6s ease-in-out infinite; z-index: 5; }
+    @keyframes cartTravel { 0% { left:6%; opacity:0; } 6% { opacity:1; } 94% { opacity:1; } 100% { left:88%; opacity:0; } }
+    .belt-node {
+      width:56px; height:56px; border-radius:9999px; background:#fff;
+      border:2px solid rgba(24,131,255,0.3); display:grid; place-items:center;
+      box-shadow: 0 10px 24px -12px rgba(4,46,123,0.35); position:relative; z-index:10;
+      transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 300ms, border-color 300ms;
+    }
+    .belt-station:hover .belt-node { transform: translateY(-4px) scale(1.06); box-shadow: 0 16px 30px -12px rgba(0,78,224,0.5); border-color: var(--ocean-royal); }
+    .belt-num { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.15em; color: var(--ocean-royal); margin-top:10px; }
+    .belt-num-inline { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; color: var(--ocean-royal); text-transform:uppercase; }
+    .belt-line-v { position:absolute; left:27px; top:8px; bottom:8px; width:2px; background-image: repeating-linear-gradient(180deg, rgba(0,78,224,0.4) 0 8px, transparent 8px 16px); }
+    .belt-station-m { position:relative; z-index:2; }
+
+    /* Design process: navy section with high-contrast white elements */
+    #process {
+      background: #042E7B;
+      color: #fff;
+    }
+    #process .gradient-text {
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      color: #fff;
+    }
+    #process .text-ocean-royal,
+    #process .text-ocean-deep,
+    #process .belt-num,
+    #process .belt-num-inline {
+      color: #fff !important;
+    }
+    #process .text-muted-foreground,
+    #process .text-slate-500 {
+      color: rgba(255, 255, 255, 0.72) !important;
+    }
+    #process .bg-ocean-royal\/50 { background-color: rgba(255, 255, 255, 0.55) !important; }
+    #process .belt-line {
+      background-image: repeating-linear-gradient(90deg, #fff 0 14px, transparent 14px 26px);
+      opacity: 0.72;
+    }
+    #process .belt-line-v {
+      background-image: repeating-linear-gradient(180deg, rgba(255,255,255,0.72) 0 8px, transparent 8px 16px);
+    }
+    #process .belt-cart { color: #fff; }
+    #process .belt-node {
+      background: #fff;
+      border-color: rgba(255,255,255,0.7);
+      box-shadow: 0 10px 24px -12px rgba(0,0,0,0.5);
+    }
+    #process .belt-node .text-ocean-royal {
+      color: #1883FF !important;
+    }
+    #process .belt-cart-mobile {
+      position: absolute;
+      top: 0;
+      left: 19px;
+      z-index: 5;
+      color: #fff;
+      animation: cartTravelVertical 6s ease-in-out infinite;
+    }
+    @keyframes cartTravelVertical {
+      0% { top: 8px; opacity: 0; }
+      6% { opacity: 1; }
+      94% { opacity: 1; }
+      100% { top: calc(100% - 28px); opacity: 0; }
+    }
+
+    /* Usability result cards */
+    .result-card { border-radius:18px; border:1px solid rgba(24,131,255,0.28); background:#fff; padding:20px; box-shadow: 0 14px 30px -18px rgba(4,46,123,0.25); transition: transform 300ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 300ms; }
+    .result-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -18px rgba(0,78,224,0.35); }
+    .bar-track { height:8px; border-radius:9999px; background: rgba(24,131,255,0.12); overflow:hidden; }
+    .bar-fill { height:100%; border-radius:9999px; background: linear-gradient(90deg,#004EE0,#1883FF); width:0%; transition: width 1.1s cubic-bezier(0.2,0.8,0.2,1); }
+    .sat-dot { width:8px; height:8px; border-radius:9999px; background: rgba(24,131,255,0.18); }
+    .sat-dot.on { background: linear-gradient(145deg,#1883FF,#004EE0); }
+
+    .shine { position:relative; overflow:hidden; }
+    @keyframes shine { 0% { transform: translateX(-120%) skewX(-20deg); } 100% { transform: translateX(220%) skewX(-20deg); } }
+    .shine::after { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transform: translateX(-120%) skewX(-20deg); }
+    .shine:hover::after { animation: shine 1.2s ease-in-out; }
+
+    .video-frame { border-radius: 18px; overflow:hidden; border:1px solid rgba(255,255,255,0.15); box-shadow: 0 30px 60px -20px rgba(4,46,123,0.55); }
+
+    /* ============ Scene system: cart screen content synced to features ============ */
+    .scene-fade { animation: sceneFade 420ms cubic-bezier(0.2,0.8,0.2,1) both; }
+    @keyframes sceneFade { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
+    .scene-icon-circle { width:46px; height:46px; border-radius:9999px; display:grid; place-items:center; flex-shrink:0; }
+    .scene-title { font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; color:#2e1065; }
+    .scene-sub { font-size:11.5px; color:#684681; margin-top:2px; line-height:1.5; }
+    .cart-screen .scene-icon-circle { background:#e9ddff !important; color:#5b21b6 !important; }
+    .cart-screen .text-white { color:#2e1065 !important; }
+    .cart-screen .text-white\/50 { color:#9475ad !important; }
+    .cart-screen .text-white\/85 { color:#4c3268 !important; }
+    .cart-screen .text-white\/30, .cart-screen .text-white\/40 { color:#a78bba !important; }
+    .cart-screen [style*="#66aaff"] { color:#5b21b6 !important; }
+    .cart-screen-bar #scene-label { color:#5b21b6 !important; }
+
+    .pay-bar-track { height:5px; border-radius:9999px; background:#ede9fe; overflow:hidden; }
+    .pay-bar-fill { height:100%; border-radius:9999px; background:linear-gradient(90deg,#5b21b6,#8b5cf6); width:0%; animation: payFill 1100ms ease forwards; }
+    @keyframes payFill { to { width:100%; } }
+    .pay-check { opacity:0; animation: payCheckIn 400ms ease 1050ms forwards; }
+    @keyframes payCheckIn { to { opacity:1; transform: scale(1); } }
+
+    .alert-banner { border:1px solid rgba(248,113,113,0.45); background:rgba(248,113,113,0.09); border-radius:14px; }
+    .alert-icon-wrap { background:rgba(248,113,113,0.18); color:#f87171; }
+    @keyframes alertPulse { 0%,100% { opacity:1; } 50% { opacity:0.45; } }
+    .alert-pulse { animation: alertPulse 1s ease-in-out infinite; }
+
+    .budget-track-mini { height:9px; border-radius:9999px; background:#ede9fe; overflow:hidden; }
+    .budget-fill-ok { background:linear-gradient(90deg,#5b21b6,#8b5cf6); }
+    .budget-fill-over { background:linear-gradient(90deg,#f97316,#ef4444); }
+    .budget-fill-anim { height:100%; border-radius:9999px; width:0%; animation: budgetGrow 1200ms cubic-bezier(0.2,0.8,0.2,1) forwards; }
+    @keyframes budgetGrow { to { width: var(--w, 70%); } }
+
+    .map-pin-bounce { animation: pinBounce 1.4s ease-in-out infinite; }
+    @keyframes pinBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    .map-dotted-path { border-left: 2px dashed #c4b5fd; }
+
+    .offer-tag { background:linear-gradient(135deg,#4ade80,#16a34a); opacity:0; transform: scale(0.8); animation: offerPop 400ms cubic-bezier(0.34,1.56,0.64,1) 350ms forwards; }
+    @keyframes offerPop { to { opacity:1; transform: scale(1); } }
+
+    .allergy-icon-wrap { background:rgba(248,113,113,0.18); color:#f87171; animation: allergyShake 700ms ease 200ms; }
+    @keyframes allergyShake { 10%,90% { transform: translateX(-1px);} 20%,80% { transform: translateX(2px);} 30%,50%,70% { transform: translateX(-3px);} 40%,60% { transform: translateX(3px);} }
+
+    .menu-item-in { opacity:0; transform: translateX(-8px); animation: menuItemIn 380ms ease forwards; }
+    @keyframes menuItemIn { to { opacity:1; transform: translateX(0); } }
+  </style>
+</head>
+<body class="min-h-screen bg-background text-foreground">
+
+  <!-- Header -->
+  <header id="header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-4">
+        <a href="index.html#projects" id="back-link" class="group hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full border-[6px] border-ocean-sky/80 transition-all hover:border-ocean-sky hover:bg-white/10">
+          <i data-lucide="arrow-left" class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"></i>
+        </a>
+        <a href="index.html" class="group flex items-center gap-5">
+          <span class="relative flex h-9 items-center font-display text-2xl font-bold tracking-tight">
+            <span class="relative z-10 text-ocean-royal transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5">F</span>
+            <span class="relative -ml-1 text-ocean-sky transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5">A</span>
+          </span>
+        </a>
+      </div>
+
+      <nav class="hidden items-center gap-1 md:flex">
+        <a href="#idea" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Idea</a>
+        <a href="#features" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Features</a>
+        <a href="#process" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Process</a>
+        <a href="#results" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Results</a>
+        <a href="#demo" class="nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors text-white/75 hover:text-white">Demo</a>
+      </nav>
+
+      <button id="menu-btn" class="md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white" aria-label="Menu">Menu</button>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-background">
+      <div class="mx-auto flex max-w-6xl flex-col px-5 py-3">
+        <a href="index.html#projects" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">← Back to Portfolio</a>
+        <a href="#idea" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Idea</a>
+        <a href="#features" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Features</a>
+        <a href="#process" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Process</a>
+        <a href="#results" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Results</a>
+        <a href="#demo" class="mobile-nav-link rounded-md px-2 py-2 text-sm text-foreground hover:bg-secondary">Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="top" class="relative overflow-hidden gradient-hero">
+    <div class="absolute inset-0 grid-pattern opacity-30"></div>
+    <div class="absolute -left-24 top-40 h-72 w-72 rounded-full bg-ocean-bright/30 blur-3xl float-slow"></div>
+    <div class="absolute -right-16 top-24 h-64 w-64 rounded-full bg-ocean-sky/25 blur-3xl float-slow [animation-delay:1.5s]"></div>
+
+    <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <i data-lucide="shopping-cart" class="cyber-icon cyber-anim-1" style="top:10%; left:5%; width:120px; height:120px;"></i>
+      <i data-lucide="scan-barcode" class="cyber-icon cyber-anim-2" style="top:14%; right:6%; width:110px; height:110px; animation-delay:0.6s;"></i>
+      <i data-lucide="credit-card" class="cyber-icon cyber-anim-3" style="bottom:18%; left:6%; width:100px; height:100px; animation-delay:1.2s;"></i>
+      <i data-lucide="wallet" class="cyber-icon cyber-anim-1" style="bottom:12%; right:7%; width:100px; height:100px; animation-delay:1.8s;"></i>
+      <i data-lucide="tag" class="cyber-icon cyber-anim-4" style="top:46%; right:3%; width:80px; height:80px; animation-delay:1.5s;"></i>
+      <i data-lucide="map-pin" class="cyber-icon cyber-anim-2" style="top:44%; left:3%; width:75px; height:75px; animation-delay:2.4s;"></i>
+    </div>
+
+    <div class="relative mx-auto flex min-h-[86vh] max-w-6xl flex-col items-center justify-center px-5 pt-28 pb-16 text-center">
+
+      <p id="typewriter" class="fade-up mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-ocean-sky [animation-delay:0ms]">
+        <span id="typewriter-text"></span><span class="typewriter-cursor">&nbsp;</span>
+      </p>
+
+      <h1 class="fade-up text-5xl font-bold leading-[1.05] sm:text-5xl md:text-7xl [animation-delay:80ms]">
+        <span class="text-shimmer">Smart Cart</span>
+      </h1>
+
+      <p class="fade-up mt-8 max-w-2xl text-sm text-white/85 sm:text-base [animation-delay:160ms]">
+A UX case study for a smart cart that eliminates checkout lines     </p>
+    </div>
+  </section>
+
+  <!-- Idea -->
+  <section id="idea" class="relative">
+    <div class="reveal mx-auto max-w-6xl px-5 py-14 sm:py-20 md:py-24">
+      <div class="mx-auto mb-10 max-w-3xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          The Idea
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">What is Smart Cart?</h2>
+      </div>
+
+      <div class="grid gap-8">
+        <div class="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-5 sm:p-10 shadow-sm card-hover" style="border: 1px solid rgba(24,131,255,0.4);">
+          <p class="text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+Smart Cart  <span class="font-semibold text-ocean-deep">redefines grocery shopping</span> by making it faster, easier, and more convenient through automatic scanning, real-time calculations, and an intuitive interface.          </p>
+          <p class="mt-4 sm:mt-5 text-sm sm:text-base text-justify leading-relaxed text-muted-foreground">
+            <span class="font-semibold text-ocean-deep">Built on user research</span>, it addresses common shopping challenges to deliver a seamless and enjoyable experience for shoppers of all ages.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="relative gradient-band overflow-hidden">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-12 max-w-2xl">
+        <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+          <span class="h-px w-8 bg-ocean-royal/50"></span>
+          On the Screen
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">Features</h2>
+      </div>
+
+      <div class="grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:items-start">
+
+        <!-- Feature list: editorial rows, not cards -->
+        <div class="order-2 lg:order-1">
+          <div id="feat-row-1" class="feat-row group">
+            <span class="feat-num">01</span>
+            <div class="feat-icon"><i data-lucide="calculator" class="h-4 w-4"></i></div>
+            <div>
+              <h3 class="text-base font-bold text-ocean-deep">Auto Calculation</h3>
+              <p class="mt-1 text-sm leading-relaxed text-slate-600">Every item added or removed updates the total instantly.</p>
+            </div>
+          </div>
+          <div id="feat-row-2" class="feat-row group">
+            <span class="feat-num">02</span>
+            <div class="feat-icon"><i data-lucide="bell-ring" class="h-4 w-4"></i></div>
+            <div>
+              <h3 class="text-base font-bold text-ocean-deep">Payment Alerts</h3>
+              <p class="mt-1 text-sm leading-relaxed text-slate-600">A clear alert if the checkout area is passed before paying.</p>
+            </div>
+          </div>
+          <div id="feat-row-3" class="feat-row group">
+            <span class="feat-num">03</span>
+            <div class="feat-icon"><i data-lucide="wallet" class="h-4 w-4"></i></div>
+            <div>
+              <h3 class="text-base font-bold text-ocean-deep">Budget Setting</h3>
+              <p class="mt-1 text-sm leading-relaxed text-slate-600">Set a budget and get warned the moment it's exceeded.</p>
+            </div>
+          </div>
+          <div id="feat-row-4" class="feat-row group">
+            <span class="feat-num">04</span>
+            <div class="feat-icon"><i data-lucide="map-pin" class="h-4 w-4"></i></div>
+            <div>
+              <h3 class="text-base font-bold text-ocean-deep">Find Items & Sections</h3>
+              <p class="mt-1 text-sm leading-relaxed text-slate-600">A guided map leads shoppers straight to what they need.</p>
+            </div>
+          </div>
+          <div id="feat-row-5" class="feat-row group">
+            <span class="feat-num">05</span>
+            <div class="feat-icon"><i data-lucide="tag" class="h-4 w-4"></i></div>
+            <div>
+              <h3 class="text-base font-bold text-ocean-deep">Similar Offers</h3>
+              <p class="mt-1 text-sm leading-relaxed text-slate-600">Relevant deals surface the moment a product is scanned.</p>
+            </div>
+          </div>
+          <div id="feat-row-6" class="feat-row group border-b-0">
+            <span class="feat-num">06</span>
+            <div class="feat-icon"><i data-lucide="shield-alert" class="h-4 w-4"></i></div>
+            <div>
+              <h3 class="text-base font-bold text-ocean-deep">Allergy Alerts</h3>
+              <p class="mt-1 text-sm leading-relaxed text-slate-600">A warning appears the instant an allergen enters the cart.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIGNATURE: live cart screen, content driven by the active feature -->
+        <div class="order-1 lg:sticky lg:top-28 lg:order-2">
+<div class="cart-screen mx-auto max-w-[300px] sm:max-w-sm">            <div class="scan-beam"></div>
+            <div class="cart-screen-bar">
+              <div class="flex items-center gap-2">
+                <span id="scene-dot" class="scan-pulse-dot"></span>
+                <span id="scene-label" class="mono text-[10px] uppercase tracking-[0.2em] text-ocean-sky/80">Live Scan</span>
+              </div>
+              <i data-lucide="shopping-cart" class="h-4 w-4 text-white/40"></i>
+            </div>
+            <div class="cart-screen-body">
+              <div id="scene-content"></div>
+            </div>
+          </div>
+          <p class="mx-auto mt-3 max-w-sm text-center text-[11px] text-muted-foreground">Watch the screen change as each feature takes its turn</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  
+  <!-- Process -->
+  <section id="process" class="relative gradient-band overflow-hidden">
+    <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+      <div class="mb-14 max-w-2xl">
+<div class="mb-3 flex items-center gap-2 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-ocean-royal">
+  <span class="h-px w-6 sm:w-8 bg-ocean-royal/50"></span>
+  From Research to Prototype
+</div>
+
+<h2 class="text-2xl sm:text-4xl font-bold tracking-tight gradient-text">
+  The Design Process
+</h2>
+      </div>
+
+      <!-- Desktop: conveyor belt -->
+      <div class="relative hidden md:block pt-4">
+        <div class="belt-line"></div>
+        <div class="belt-cart"><i data-lucide="shopping-cart" class="h-5 w-5"></i></div>
+
+        <div class="relative grid grid-cols-5 gap-3">
+          <div class="belt-station flex flex-col items-center text-center">
+            <div class="belt-node"><i data-lucide="search" class="h-6 w-6 text-ocean-royal"></i></div>
+            <span class="belt-num">01</span>
+            <h3 class="text-sm font-bold text-ocean-deep">Discover</h3>
+            <p class="mt-1 text-[11px] leading-relaxed text-slate-500">8 interviews & 257 survey response</p>
+          </div>
+          <div class="belt-station flex flex-col items-center text-center">
+            <div class="belt-node"><i data-lucide="target" class="h-6 w-6 text-ocean-royal"></i></div>
+            <span class="belt-num">02</span>
+            <h3 class="text-sm font-bold text-ocean-deep">Define</h3>
+            <p class="mt-1 text-[11px] leading-relaxed text-slate-500">Problem statement & personas</p>
+          </div>
+          <div class="belt-station flex flex-col items-center text-center">
+            <div class="belt-node"><i data-lucide="pencil-ruler" class="h-6 w-6 text-ocean-royal"></i></div>
+            <span class="belt-num">03</span>
+            <h3 class="text-sm font-bold text-ocean-deep">Design</h3>
+            <p class="mt-1 text-[11px] leading-relaxed text-slate-500">From User Stories to Sketches</p>
+          </div>
+          <div class="belt-station flex flex-col items-center text-center">
+            <div class="belt-node"><i data-lucide="layout-grid" class="h-6 w-6 text-ocean-royal"></i></div>
+            <span class="belt-num">04</span>
+            <h3 class="text-sm font-bold text-ocean-deep">Prototype</h3>
+            <p class="mt-1 text-[11px] leading-relaxed text-slate-500">Feature-Complete Figma Prototype</p>
+          </div>
+          <div class="belt-station flex flex-col items-center text-center">
+            <div class="belt-node"><i data-lucide="check-check" class="h-6 w-6 text-ocean-royal"></i></div>
+            <span class="belt-num">05</span>
+            <h3 class="text-sm font-bold text-ocean-deep">Validate</h3>
+            <p class="mt-1 text-[11px] leading-relaxed text-slate-500">6 Users & 5 Tasks</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile: vertical belt -->
+      <div class="md:hidden">
+        <div class="relative flex flex-col gap-6 pl-2">
+          <div class="belt-line-v"></div>
+          <div class="belt-cart-mobile"><i data-lucide="shopping-cart" class="h-4 w-4"></i></div>
+
+          <div class="belt-station-m flex items-start gap-4">
+            <div class="belt-node shrink-0"><i data-lucide="search" class="h-5 w-5 text-ocean-royal"></i></div>
+            <div class="pt-1">
+              <span class="belt-num-inline">01 · Discover</span>
+              <p class="mt-1 text-xs text-slate-500">8 interviews & 257 survey response</p>
+            </div>
+          </div>
+          <div class="belt-station-m flex items-start gap-4">
+            <div class="belt-node shrink-0"><i data-lucide="target" class="h-5 w-5 text-ocean-royal"></i></div>
+            <div class="pt-1">
+              <span class="belt-num-inline">02 · Define</span>
+              <p class="mt-1 text-xs text-slate-500">Problem statement & personas</p>
+            </div>
+          </div>
+          <div class="belt-station-m flex items-start gap-4">
+            <div class="belt-node shrink-0"><i data-lucide="pencil-ruler" class="h-5 w-5 text-ocean-royal"></i></div>
+            <div class="pt-1">
+              <span class="belt-num-inline">03 · Design</span>
+              <p class="mt-1 text-xs text-slate-500">From User Stories to Sketches</p>
+            </div>
+          </div>
+          <div class="belt-station-m flex items-start gap-4">
+            <div class="belt-node shrink-0"><i data-lucide="layout-grid" class="h-5 w-5 text-ocean-royal"></i></div>
+            <div class="pt-1">
+              <span class="belt-num-inline">04 · Prototype</span>
+              <p class="mt-1 text-xs text-slate-500">Feature-Complete Figma Prototype</p>
+            </div>
+          </div>
+          <div class="belt-station-m flex items-start gap-4">
+            <div class="belt-node shrink-0"><i data-lucide="check-check" class="h-5 w-5 text-ocean-royal"></i></div>
+            <div class="pt-1">
+              <span class="belt-num-inline">05 · Validate</span>
+              <p class="mt-1 text-xs text-slate-500">6 Users & 5 Tasks</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- Results -->
+<section id="results" class="relative">
+  <div class="reveal mx-auto max-w-6xl px-5 py-20 sm:py-24">
+    <div class="mb-10 max-w-2xl">
+      <div class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-royal">
+        <span class="h-px w-8 bg-ocean-royal/50"></span>
+        Prototype Validation
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl gradient-text">Usability Testing</h2>
+      <p class="mt-3 text-sm text-muted-foreground">6 Participants · 5 Tasks · Completion & Satisfaction</p>
+    </div>
+
+    <!-- Summary strip -->
+    <div class="mb-8 grid grid-cols-2 gap-4 sm:max-w-md">
+      <div class="rounded-2xl p-5 text-center shadow-lg" style="background: linear-gradient(135deg, #042E7B, #004EE0);">
+        <div class="font-display text-3xl font-bold text-white">86%</div>
+        <div class="mt-1 text-[11px] uppercase tracking-wide text-white/75">Avg. Completion</div>
+      </div>
+      <div class="rounded-2xl p-5 text-center shadow-lg" style="background: linear-gradient(135deg, #042E7B, #004EE0);">
+        <div class="font-display text-3xl font-bold text-white">4.42<span class="text-base text-white/75">/5</span></div>
+        <div class="mt-1 text-[11px] uppercase tracking-wide text-white/75">Avg. Satisfaction</div>
+      </div>
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-5" id="results-grid">
+
+      <div class="result-card" data-completion="100" data-sat="4.7">
+        <div class="mb-3 flex items-center justify-between">
+          <div class="grid h-9 w-9 place-items-center rounded-lg bg-ocean-mist text-ocean-royal"><i data-lucide="credit-card" class="h-4 w-4"></i></div>
+          <span class="rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-semibold text-green-700">Top</span>
+        </div>
+        <h3 class="text-sm font-bold text-ocean-deep">Electronic Payment</h3>
+        <div class="mt-3 flex items-center justify-between text-[11px] text-slate-500"><span>Completion</span><span class="font-semibold text-ocean-deep">100%</span></div>
+        <div class="bar-track mt-1"><div class="bar-fill" data-target="100"></div></div>
+        <p class="mt-3 text-[11px] leading-relaxed text-slate-500">"The fastest step”, one participant noted</p>
+      </div>
+
+      <div class="result-card" data-completion="100" data-sat="4.58">
+        <div class="mb-3 flex items-center justify-between">
+          <div class="grid h-9 w-9 place-items-center rounded-lg bg-ocean-mist text-ocean-royal"><i data-lucide="shield-alert" class="h-4 w-4"></i></div>
+          <span class="rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-semibold text-green-700">Top</span>
+        </div>
+        <h3 class="text-sm font-bold text-ocean-deep">Identify Allergens</h3>
+        <div class="mt-3 flex items-center justify-between text-[11px] text-slate-500"><span>Completion</span><span class="font-semibold text-ocean-deep">100%</span></div>
+        <div class="bar-track mt-1"><div class="bar-fill" data-target="100"></div></div>
+        <p class="mt-3 text-[11px] leading-relaxed text-slate-500">Clear and immediate for all participants</p>
+      </div>
+
+      <div class="result-card" data-completion="83" data-sat="4.52">
+        <div class="mb-3 flex items-center justify-between">
+          <div class="grid h-9 w-9 place-items-center rounded-lg bg-ocean-mist text-ocean-royal"><i data-lucide="map-pin" class="h-4 w-4"></i></div>
+        </div>
+        <h3 class="text-sm font-bold text-ocean-deep">Find Items & Sections</h3>
+        <div class="mt-3 flex items-center justify-between text-[11px] text-slate-500"><span>Completion</span><span class="font-semibold text-ocean-deep">83%</span></div>
+        <div class="bar-track mt-1"><div class="bar-fill" data-target="83"></div></div>
+        <p class="mt-3 text-[11px] leading-relaxed text-slate-500">Minor hesitation from one participant</p>
+      </div>
+
+      <div class="result-card" data-completion="83" data-sat="4.34">
+        <div class="mb-3 flex items-center justify-between">
+          <div class="grid h-9 w-9 place-items-center rounded-lg bg-ocean-mist text-ocean-royal"><i data-lucide="wallet" class="h-4 w-4"></i></div>
+        </div>
+        <h3 class="text-sm font-bold text-ocean-deep">Set the Budget</h3>
+        <div class="mt-3 flex items-center justify-between text-[11px] text-slate-500"><span>Completion</span><span class="font-semibold text-ocean-deep">83%</span></div>
+        <div class="bar-track mt-1"><div class="bar-fill" data-target="83"></div></div>
+        <p class="mt-3 text-[11px] leading-relaxed text-slate-500">SBudget setup was clear, alert needed clarity</p>
+      </div>
+
+      <div class="result-card" data-completion="67" data-sat="3.94">
+        <div class="mb-3 flex items-center justify-between">
+          <div class="grid h-9 w-9 place-items-center rounded-lg bg-ocean-mist text-ocean-royal"><i data-lucide="tag" class="h-4 w-4"></i></div>
+        </div>
+        <h3 class="text-sm font-bold text-ocean-deep">Similar Offers</h3>
+        <div class="mt-3 flex items-center justify-between text-[11px] text-slate-500"><span>Completion</span><span class="font-semibold text-ocean-deep">67%</span></div>
+        <div class="bar-track mt-1"><div class="bar-fill" data-target="67"></div></div>
+        <p class="mt-3 text-[11px] leading-relaxed text-slate-500">Most noticed the offer only after prompting</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Demo -->
+<section id="demo" class="relative bg-ocean-deep text-white overflow-hidden">
+    <div class="pointer-events-none absolute top-1/3 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-ocean-sky/10 blur-3xl"></div>
+    <div class="reveal mx-auto max-w-4xl px-5 py-20 text-left sm:py-24">
+      <div class="mb-3 flex items-center justify-start gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-ocean-sky">
+        <span class="h-px w-8 bg-ocean-sky/60"></span>
+        See It In Motion
+      </div>
+      <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Smart Cart Demo</h2>
+
+      <div class="video-frame mx-auto mt-10 w-full max-w-3xl">
+        <div class="relative aspect-video w-full overflow-hidden rounded-xl">
+          <iframe
+            class="absolute inset-0 h-full w-full"
+            src="https://www.youtube.com/embed/8BmL8Yb1xw0?si=UJrC-V74BXKocN6x"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+      <div class="mt-8 flex justify-center"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-border bg-background">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground sm:flex-row">
+      <div class="flex items-center gap-2">
+        <i data-lucide="code-2" class="h-3.5 w-3.5 text-ocean-royal"></i>
+        <span>Fajer Mohammed Alamro</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    // Typewriter
+    (function () {
+      const text = "UI/UX Design";
+      const el = document.getElementById('typewriter-text');
+      let i = 0;
+      function type() {
+        if (i < text.length) { el.textContent += text.charAt(i); i++; setTimeout(type, 45); }
+        else { setTimeout(erase, 2200); }
+      }
+      function erase() {
+        if (i > 0) { el.textContent = text.substring(0, i - 1); i--; setTimeout(erase, 25); }
+        else { setTimeout(type, 400); }
+      }
+      setTimeout(type, 500);
+    })();
+
+    // ====================================================================
+    // Signature: the live cart screen now performs each feature in turn.
+    // Every ~2.6s it moves to the next feature row (1-6), lights that row
+    // up on the left, and re-renders the phone screen to actually DO that
+    // feature: calculation shows the total tick up, allergy shows a
+    // warning, etc.
+    // ====================================================================
+    (function () {
+      const sceneEl = document.getElementById('scene-content');
+      const labelEl = document.getElementById('scene-label');
+      const dotEl = document.getElementById('scene-dot');
+      const featRowCount = 6;
+      let lastFeatRow = null;
+      let sceneIndex = 0; // 0-based, maps to feat-row-(index+1)
+      let cartTotal = 0;
+      const cartItems = ["Milk", "Chips", "Bread", "Apples", "Yogurt", "Cheese", "Juice", "Water x5"];
+      let itemPtr = 0;
+
+      function setDot(color) {
+        const projectColor = {
+          '#1883FF': '#6d28d9',
+          '#66aaff': '#6d28d9',
+          '#99CAFF': '#8b5cf6',
+          '#4ade80': '#6d28d9'
+        }[color] || color;
+        dotEl.style.background = projectColor;
+      }
+
+      function iconSpan(name, bg, fg) {
+        return '<div class="scene-icon-circle" style="background:' + bg + '; color:' + fg + ';"><i data-lucide="' + name + '" class="h-5 w-5"></i></div>';
+      }
+
+      function render(html) {
+        sceneEl.innerHTML = '<div class="scene-fade h-full flex flex-col">' + html + '</div>';
+        if (window.lucide) lucide.createIcons();
+      }
+
+      // ---- Scene 1: Auto Calculation ----
+      function sceneAutoCalculation() {
+        labelEl.textContent = 'Calculating Total';
+        setDot('#1883FF');
+        render(
+          '<div class="flex items-center gap-3 mb-2">' + iconSpan('calculator', 'rgba(24,131,255,0.18)', '#66aaff') +
+          '<div><div class="scene-title">Auto Calculation</div><div class="scene-sub">Every scan updates the running total.</div></div></div>' +
+          '<div id="calc-rows" class="flex-1"></div>' +
+          '<div class="cart-total-row"><span class="mono text-[11px] uppercase tracking-[0.15em] text-white/50">Total</span>' +
+          '<span class="cart-total-num"><span id="calc-total">' + cartTotal + '</span><sup>SAR</sup></span></div>'
+        );
+        const rowsEl = document.getElementById('calc-rows');
+        const totalEl = document.getElementById('calc-total');
+        let added = 0;
+        const addOne = () => {
+          if (added >= 3 || !rowsEl) return;
+          const name = cartItems[itemPtr % cartItems.length];
+          const price = 6 + ((itemPtr * 7) % 15);
+          itemPtr++; added++;
+          cartTotal += price;
+          const row = document.createElement('div');
+          row.className = 'scan-row';
+          row.innerHTML = '<span class="qty">1x</span><span class="name">' + name + '</span><span class="price">' + price + ' SAR</span>';
+          rowsEl.appendChild(row);
+          while (rowsEl.children.length > 3) rowsEl.removeChild(rowsEl.firstChild);
+          if (totalEl) totalEl.textContent = cartTotal;
+          if (added < 3) setTimeout(addOne, 650);
+        };
+        addOne();
+      }
+
+      // ---- Scene 2: Payment Alerts ----
+      function scenePaymentAlert() {
+        labelEl.textContent = 'Alert';
+        setDot('#f87171');
+        render(
+          '<div class="flex items-center gap-3">' + iconSpan('bell-ring', 'rgba(24,131,255,0.18)', '#66aaff') +
+          '<div><div class="scene-title">Payment Alerts</div><div class="scene-sub">Watches the checkout boundary for you.</div></div></div>' +
+          '<div class="alert-banner mt-6 flex-1 flex items-center gap-3 p-4">' +
+            '<div class="alert-icon-wrap alert-pulse grid h-10 w-10 flex-shrink-0 place-items-center rounded-full"><i data-lucide="octagon-alert" class="h-5 w-5"></i></div>' +
+            '<div><div class="text-[13px] font-semibold text-white">Checkout line passed</div>' +
+            '<div class="scene-sub">You still have an unpaid balance of <span style="color:#f87171;font-weight:600;">84 SAR</span>.</div></div>' +
+          '</div>'
+        );
+      }
+
+      // ---- Scene 3: Budget Setting ----
+      function sceneBudget() {
+        labelEl.textContent = 'Budget Check';
+        const spent = 275, budget = 250, over = spent > budget;
+        setDot(over ? '#f97316' : '#4ade80');
+        render(
+          '<div class="flex items-center gap-3">' + iconSpan('wallet', 'rgba(24,131,255,0.18)', '#66aaff') +
+          '<div><div class="scene-title">Budget Setting</div><div class="scene-sub">Set a limit, get warned before you cross it.</div></div></div>' +
+          '<div class="mt-6 flex-1 flex flex-col justify-center">' +
+            '<div class="flex items-center justify-between mono text-[11px] text-white/50 mb-2"><span>Spent</span><span>' + spent + ' / ' + budget + ' SAR</span></div>' +
+            '<div class="budget-track-mini"><div class="budget-fill-anim ' + (over ? 'budget-fill-over' : 'budget-fill-ok') + '" style="--w:' + Math.min(100, (spent / budget) * 100) + '%"></div></div>' +
+            '<div class="mt-4 flex items-center gap-2 text-[12px] font-semibold" style="color:' + (over ? '#fb923c' : '#4ade80') + ';">' +
+              '<i data-lucide="' + (over ? 'alert-triangle' : 'check-circle-2') + '" class="h-4 w-4"></i>' +
+              (over ? 'Budget exceeded by 25 SAR' : 'Within budget') +
+            '</div>' +
+          '</div>'
+        );
+      }
+
+      // ---- Scene 4: Find Items & Sections ----
+      function sceneFindItems() {
+        labelEl.textContent = 'Wayfinding';
+        setDot('#66aaff');
+        render(
+          '<div class="flex items-center gap-3">' + iconSpan('map-pin', 'rgba(24,131,255,0.18)', '#66aaff') +
+          '<div><div class="scene-title">Find Items & Sections</div><div class="scene-sub">Guides shoppers straight there.</div></div></div>' +
+          '<div class="mt-6 flex-1 flex items-center gap-4">' +
+            '<div class="map-pin-bounce"><i data-lucide="navigation" class="h-8 w-8" style="color:#66aaff;"></i></div>' +
+            '<div class="map-dotted-path pl-4">' +
+              '<div class="text-[13px] font-semibold text-white">Aisle 4 · Dairy & Eggs</div>' +
+              '<div class="scene-sub">120m ahead, turn left after Bakery</div>' +
+            '</div>' +
+          '</div>'
+        );
+      }
+
+      // ---- Scene 5: Similar Offers ----
+      function sceneSimilarOffers() {
+        labelEl.textContent = 'Offer Found';
+        setDot('#4ade80');
+        render(
+          '<div class="flex items-center gap-3">' + iconSpan('tag', 'rgba(24,131,255,0.18)', '#66aaff') +
+          '<div><div class="scene-title">Similar Offers</div><div class="scene-sub">Surfaced right after a scan.</div></div></div>' +
+          '<div class="mt-6 flex-1 flex items-center justify-between rounded-xl p-4" style="background:rgba(255,255,255,0.04); border:1px solid rgba(153,202,255,0.16);">' +
+            '<div><div class="text-[13px] font-semibold text-white">Oat Milk 1L</div><div class="scene-sub">Similar to what\'s in your cart</div></div>' +
+            '<span class="offer-tag rounded-full px-3 py-1 text-[11px] font-bold text-white">-15%</span>' +
+          '</div>'
+        );
+      }
+
+      // ---- Scene 6: Allergy Alerts ----
+      function sceneAllergy() {
+        labelEl.textContent = 'Allergy Check';
+        setDot('#f87171');
+        render(
+          '<div class="flex items-center gap-3">' + iconSpan('shield-alert', 'rgba(24,131,255,0.18)', '#66aaff') +
+          '<div><div class="scene-title">Allergy Alerts</div><div class="scene-sub">Flags the moment an allergen is scanned.</div></div></div>' +
+          '<div class="alert-banner mt-6 flex-1 flex items-center gap-3 p-4">' +
+            '<div class="allergy-icon-wrap grid h-10 w-10 flex-shrink-0 place-items-center rounded-full"><i data-lucide="shield-alert" class="h-5 w-5"></i></div>' +
+            '<div><div class="text-[13px] font-semibold text-white">Contains peanuts</div>' +
+            '<div class="scene-sub">Matches an allergy on your profile</div></div>' +
+          '</div>'
+        );
+      }
+
+      const scenes = [
+        sceneAutoCalculation,
+        scenePaymentAlert,
+        sceneBudget,
+        sceneFindItems,
+        sceneSimilarOffers,
+        sceneAllergy,
+      ];
+
+      function playScene() {
+        if (lastFeatRow) lastFeatRow.classList.remove('flash');
+        const row = document.getElementById('feat-row-' + (sceneIndex + 1));
+        if (row) { row.classList.add('flash'); lastFeatRow = row; }
+
+        scenes[sceneIndex]();
+
+        sceneIndex = (sceneIndex + 1) % featRowCount;
+        if (sceneIndex === 0) cartTotal = 0; // fresh cart each full pass
+      }
+
+      // Only rotate features while their section is on screen. This prevents
+      // hidden rows from opening and changing the page height while the user
+      // is reading a later section on mobile.
+      const featuresSection = document.getElementById('features');
+      let sceneTimer = null;
+
+      function startScenes() {
+        if (sceneTimer) return;
+        playScene();
+        sceneTimer = setInterval(playScene, 2700);
+      }
+
+      function stopScenes() {
+        if (!sceneTimer) return;
+        clearInterval(sceneTimer);
+        sceneTimer = null;
+      }
+
+      if ('IntersectionObserver' in window && featuresSection) {
+        const sceneObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) startScenes();
+            else stopScenes();
+          });
+        }, { threshold: 0.12 });
+        sceneObserver.observe(featuresSection);
+      } else {
+        startScenes();
+      }
+    })();
+
+    // Header / nav behavior
+    const header = document.getElementById('header');
+    const backLink = document.getElementById('back-link');
+    const navItems = document.querySelectorAll('.nav-item');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const menuBtn = document.getElementById('menu-btn');
+    const sections = document.querySelectorAll('section[id]');
+
+    let isScrolled = false;
+    let activeSection = 'top';
+
+    function applyNavStyles() {
+      if (isScrolled) {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-md bg-background/75 border-b border-border";
+        menuBtn.className = "md:hidden rounded-lg border border-border px-3 py-1.5 text-xs text-foreground";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-royal/40 px-3.5 py-1.5 text-xs font-medium text-ocean-royal transition-all hover:border-ocean-royal hover:bg-ocean-mist";
+      } else {
+        header.className = "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-transparent";
+        menuBtn.className = "md:hidden rounded-lg border border-white/30 px-3 py-1.5 text-xs text-white";
+        backLink.className = "group hidden sm:inline-flex items-center gap-2 rounded-full border-[1.5px] border-ocean-sky/50 px-3.5 py-1.5 text-xs font-medium text-white/90 transition-all hover:border-ocean-sky hover:bg-white/10";
+      }
+      navItems.forEach(item => {
+        const targetId = item.getAttribute('href').replace('#', '');
+        const isActive = targetId === activeSection;
+        const baseClasses = "nav-item rounded-full px-3 py-1.5 text-sm font-medium transition-colors";
+        const inactiveColor = isScrolled ? "text-muted-foreground hover:text-ocean-royal" : "text-white/75 hover:text-white";
+        item.className = isActive ? `${baseClasses} active` : `${baseClasses} ${inactiveColor}`;
+      });
+      mobileNavLinks.forEach(link => {
+        const targetId = link.getAttribute('href').replace(/^.*#/, '');
+        const isActive = targetId === activeSection;
+        const base = "mobile-nav-link rounded-md px-2 py-2 text-sm hover:bg-secondary";
+        link.className = isActive ? `${base} active` : `${base} text-foreground`;
+      });
+    }
+
+    window.addEventListener('scroll', () => { isScrolled = window.scrollY > 12; applyNavStyles(); });
+
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) { activeSection = entry.target.id; applyNavStyles(); } });
+      }, { threshold: 0, rootMargin: '-45% 0px -50% 0px' });
+      sections.forEach((section) => sectionObserver.observe(section));
+    }
+    applyNavStyles();
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (isHidden) { mobileMenu.classList.remove('hidden'); menuBtn.innerText = 'Close'; }
+      else { mobileMenu.classList.add('hidden'); menuBtn.innerText = 'Menu'; }
+    });
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => { mobileMenu.classList.add('hidden'); menuBtn.innerText = 'Menu'; });
+    });
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('reveal-in'); io.unobserve(entry.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach((el) => io.observe(el));
+    } else {
+      revealEls.forEach((e) => e.classList.add('reveal-in'));
+    }
+
+    // Journey timeline fill
+    (function () {
+      const wrap = document.getElementById('timeline');
+      const progress = document.getElementById('timeline-progress');
+      if (!wrap || !progress) return;
+      const nodes = Array.from(document.querySelectorAll('.timeline-step'));
+      function update() {
+        const rect = wrap.getBoundingClientRect();
+        const viewportH = window.innerHeight;
+        const total = rect.height;
+        const raw = (viewportH * 0.6 - rect.top) / total;
+        const pct = Math.max(0, Math.min(1, raw));
+        progress.style.height = (pct * 100) + '%';
+        nodes.forEach((node) => {
+          const nRect = node.getBoundingClientRect();
+          const nodeCenter = nRect.top + nRect.height / 2;
+          const lit = nodeCenter < viewportH * 0.62;
+          const nodeEl = node.querySelector('.timeline-node');
+          const cardEl = node.querySelector('.timeline-card');
+          if (lit) { nodeEl.classList.add('lit'); cardEl.classList.add('lit'); }
+          else { nodeEl.classList.remove('lit'); cardEl.classList.remove('lit'); }
+        });
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+    // Results bar fill on scroll into view
+    (function () {
+      const grid = document.getElementById('results-grid');
+      if (!grid) return;
+      const fills = grid.querySelectorAll('.bar-fill');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            fills.forEach((f) => { f.style.width = f.dataset.target + '%'; });
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.2 });
+      obs.observe(grid);
+    })();
+  </script>
+</body>
+</html>
